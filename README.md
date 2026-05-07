@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Private Lab Test is a Next.js prototype for safe, affordable cash-pay lab access for older adults and the loved ones helping them.
+
+The product is now shaped around:
+
+- Clinician-authorized wellness lab orders
+- Prepaid cash prices with no insurance or Medicare billing in the launch flow
+- Concierge scheduling and family assurance milestones
+- CLIA-focused lab partner tracking
+- An aggregator-first supply strategy with regional, mobile, and national lab expansion paths
 
 ## Getting Started
 

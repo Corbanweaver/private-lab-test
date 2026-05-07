@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Private Lab Test",
   description:
-    "Private, general-wellness blood work ordering with custom panels, transparent pricing, and secure results.",
+    "Safe, cash-pay wellness lab testing with clinician authorization, concierge scheduling, and trusted lab partners.",
 };
 
 export default function RootLayout({

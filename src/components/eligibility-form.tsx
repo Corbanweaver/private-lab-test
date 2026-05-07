@@ -42,7 +42,7 @@ export function EligibilityForm() {
         <ShieldAlert size={18} />
         <p>
           {result.message} ZIP <span className="font-mono">{zip || "not entered"}</span> will be used for lab location
-          availability.
+          availability and concierge scheduling.
         </p>
       </div>
     </section>

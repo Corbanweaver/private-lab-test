@@ -1,4 +1,5 @@
 import { labTests, panels, restrictedStates } from "@/data/catalog";
+import { getLabAccessRule, normalizeState } from "@/lib/lab-access";
 
 export function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", {
@@ -31,15 +32,18 @@ export function calculateCustomPanelPrice(testIds: string[]) {
 }
 
 export function checkStateEligibility(state: string) {
-  const normalized = state.trim().toUpperCase();
-  const eligible = normalized.length === 2 && !restrictedStates.includes(normalized as never);
+  const normalized = normalizeState(state);
+  const accessRule = getLabAccessRule(normalized);
+  const eligible = normalized.length === 2 && accessRule.mode !== "blocked" && !restrictedStates.includes(normalized as never);
 
   return {
     state: normalized,
     eligible,
+    accessMode: accessRule.mode,
+    requiresClinicianAuthorization: accessRule.mode === "clinician_authorized",
     message: eligible
-      ? "Eligible for mock provider checkout."
-      : "Direct ordering is not available for this state in the conservative MVP rules.",
+      ? "Eligible for cash-pay checkout after clinician authorization."
+      : accessRule.note || "Lab ordering is not available for this state in the launch rules.",
   };
 }
 

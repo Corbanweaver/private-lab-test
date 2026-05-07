@@ -1,12 +1,17 @@
-import { Database, FileWarning, Settings2, ShieldCheck } from "lucide-react";
+import { Database, FileWarning, Handshake, MapPinned, Settings2, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels, restrictedStates } from "@/data/catalog";
+import { labPartners } from "@/data/lab-partners";
+import { summarizeLabSupply } from "@/lib/lab-access";
 
 export default function AdminPage() {
+  const supply = summarizeLabSupply();
   const metrics: Array<[string, number, LucideIcon]> = [
     ["Tests", labTests.length, Database],
     ["Panels", panels.length, Settings2],
+    ["Lab partners", supply.partners, Handshake],
+    ["States mapped", supply.states, MapPinned],
     ["Blocked states", restrictedStates.length, ShieldCheck],
     ["Review queue", 3, FileWarning],
   ];
@@ -16,7 +21,7 @@ export default function AdminPage() {
       <section className="page-section">
         <p className="eyebrow">Admin</p>
         <h1 className="page-title mt-2">Catalog, orders, provider sync, and compliance controls</h1>
-        <div className="mt-8 grid gap-4 md:grid-cols-4">
+        <div className="mt-8 grid gap-4 md:grid-cols-3 xl:grid-cols-6">
           {metrics.map(([label, value, Icon]) => (
             <div key={String(label)} className="premium-card p-5">
               <Icon className="text-[var(--brand)]" size={22} />
@@ -24,6 +29,37 @@ export default function AdminPage() {
               <p className="text-3xl font-semibold">{value}</p>
             </div>
           ))}
+        </div>
+        <div className="table-shell mt-8 overflow-x-auto">
+          <table className="w-full min-w-[1040px] text-left text-sm">
+            <thead className="bg-[var(--soft)] text-xs uppercase text-[var(--brand-dark)]">
+              <tr>
+                <th className="px-4 py-3">Lab partner</th>
+                <th className="px-4 py-3">Tier</th>
+                <th className="px-4 py-3">CLIA</th>
+                <th className="px-4 py-3">States served</th>
+                <th className="px-4 py-3">Cash menu</th>
+                <th className="px-4 py-3">Result delivery</th>
+                <th className="px-4 py-3">Critical result policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {labPartners.map((partner) => (
+                <tr key={partner.id} className="border-t border-[var(--line)] align-top">
+                  <td className="px-4 py-3">
+                    <p className="font-medium">{partner.name}</p>
+                    <p className="text-xs text-[var(--muted)]">{partner.contact.name} - {partner.contact.email}</p>
+                  </td>
+                  <td className="px-4 py-3 capitalize">{partner.tier}</td>
+                  <td className="px-4 py-3 capitalize">{partner.cliaStatus}</td>
+                  <td className="px-4 py-3">{partner.statesServed.join(", ")}</td>
+                  <td className="px-4 py-3">{partner.cashPriceMenu.length} prices</td>
+                  <td className="px-4 py-3 uppercase">{partner.resultDelivery.replace("_", " ")}</td>
+                  <td className="px-4 py-3 text-[var(--muted)]">{partner.criticalResultPolicy}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div className="table-shell mt-8 overflow-x-auto">
           <table className="w-full min-w-[760px] text-left text-sm">

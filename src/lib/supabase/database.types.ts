@@ -56,8 +56,12 @@ export type Database = {
       lab_orders: {
         Row: {
           appointment_url: string | null;
+          clinician_authorization_id: string | null;
+          concierge_status: string | null;
           created_at: string;
           id: string;
+          lab_partner_id: string | null;
+          order_model: string;
           order_number: string;
           panel_id: string | null;
           provider_name: string | null;
@@ -73,8 +77,12 @@ export type Database = {
         };
         Insert: {
           appointment_url?: string | null;
+          clinician_authorization_id?: string | null;
+          concierge_status?: string | null;
           created_at?: string;
           id?: string;
+          lab_partner_id?: string | null;
+          order_model?: string;
           order_number: string;
           panel_id?: string | null;
           provider_name?: string | null;
@@ -90,8 +98,12 @@ export type Database = {
         };
         Update: {
           appointment_url?: string | null;
+          clinician_authorization_id?: string | null;
+          concierge_status?: string | null;
           created_at?: string;
           id?: string;
+          lab_partner_id?: string | null;
+          order_model?: string;
           order_number?: string;
           panel_id?: string | null;
           provider_name?: string | null;
@@ -104,6 +116,139 @@ export type Database = {
           updated_at?: string;
           user_id?: string;
           zip?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "lab_orders_lab_partner_id_fkey";
+            columns: ["lab_partner_id"];
+            isOneToOne: false;
+            referencedRelation: "lab_partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      lab_partner_locations: {
+        Row: {
+          address: string;
+          id: string;
+          name: string;
+          partner_id: string;
+          state: string;
+          zip: string;
+        };
+        Insert: {
+          address: string;
+          id: string;
+          name: string;
+          partner_id: string;
+          state: string;
+          zip: string;
+        };
+        Update: {
+          address?: string;
+          id?: string;
+          name?: string;
+          partner_id?: string;
+          state?: string;
+          zip?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "lab_partner_locations_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "lab_partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      lab_partner_prices: {
+        Row: {
+          cash_price_cents: number;
+          id: string;
+          partner_id: string;
+          test_id: string;
+        };
+        Insert: {
+          cash_price_cents: number;
+          id?: string;
+          partner_id: string;
+          test_id: string;
+        };
+        Update: {
+          cash_price_cents?: number;
+          id?: string;
+          partner_id?: string;
+          test_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "lab_partner_prices_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "lab_partners";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "lab_partner_prices_test_id_fkey";
+            columns: ["test_id"];
+            isOneToOne: false;
+            referencedRelation: "lab_tests";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      lab_partners: {
+        Row: {
+          clia_status: Database["public"]["Enums"]["lab_partner_clia_status"];
+          contact_email: string;
+          contact_name: string;
+          contact_title: string;
+          created_at: string;
+          critical_result_policy: string;
+          id: string;
+          name: string;
+          order_workflow: string;
+          requisition_process: string;
+          result_delivery: Database["public"]["Enums"]["result_delivery_method"];
+          states_served: string[];
+          supported_test_ids: string[];
+          tier: Database["public"]["Enums"]["lab_partner_tier"];
+          turnaround: string;
+        };
+        Insert: {
+          clia_status?: Database["public"]["Enums"]["lab_partner_clia_status"];
+          contact_email: string;
+          contact_name: string;
+          contact_title: string;
+          created_at?: string;
+          critical_result_policy: string;
+          id: string;
+          name: string;
+          order_workflow: string;
+          requisition_process: string;
+          result_delivery: Database["public"]["Enums"]["result_delivery_method"];
+          states_served?: string[];
+          supported_test_ids?: string[];
+          tier: Database["public"]["Enums"]["lab_partner_tier"];
+          turnaround: string;
+        };
+        Update: {
+          clia_status?: Database["public"]["Enums"]["lab_partner_clia_status"];
+          contact_email?: string;
+          contact_name?: string;
+          contact_title?: string;
+          created_at?: string;
+          critical_result_policy?: string;
+          id?: string;
+          name?: string;
+          order_workflow?: string;
+          requisition_process?: string;
+          result_delivery?: Database["public"]["Enums"]["result_delivery_method"];
+          states_served?: string[];
+          supported_test_ids?: string[];
+          tier?: Database["public"]["Enums"]["lab_partner_tier"];
+          turnaround?: string;
         };
         Relationships: [];
       };
@@ -254,9 +399,13 @@ export type Database = {
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
+      lab_partner_clia_status: "verified" | "pending";
+      lab_partner_tier: "aggregator" | "regional" | "mobile" | "national";
       order_status:
         | "draft"
         | "eligible"
+        | "clinician_review"
+        | "authorized"
         | "paid"
         | "submitted_to_provider"
         | "lab_order_ready"
@@ -264,6 +413,7 @@ export type Database = {
         | "results_received"
         | "reviewed"
         | "released";
+      result_delivery_method: "api" | "sftp" | "portal" | "manual_pdf";
     };
     CompositeTypes: Record<string, never>;
   };
@@ -272,9 +422,13 @@ export type Database = {
 export const Constants = {
   public: {
     Enums: {
+      lab_partner_clia_status: ["verified", "pending"],
+      lab_partner_tier: ["aggregator", "regional", "mobile", "national"],
       order_status: [
         "draft",
         "eligible",
+        "clinician_review",
+        "authorized",
         "paid",
         "submitted_to_provider",
         "lab_order_ready",
@@ -283,6 +437,7 @@ export const Constants = {
         "reviewed",
         "released",
       ],
+      result_delivery_method: ["api", "sftp", "portal", "manual_pdf"],
     },
   },
 } as const;

@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkStateEligibility } from "@/lib/catalog";
+import { getPreferredPartner } from "@/lib/lab-access";
+import { getProviderAdapter } from "@/lib/provider";
 import { hasStripeConfig, getStripe } from "@/lib/stripe";
 
 export async function POST(request: Request) {
@@ -13,8 +15,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: eligibility.message }, { status: 400 });
   }
 
+  const provider = getProviderAdapter("aggregator");
+  const authorization = await provider.authorizeOrder({
+    userId: "checkout-user",
+    panelId,
+    state: eligibility.state,
+    total: amount,
+  });
+
+  if (authorization.status !== "approved") {
+    return NextResponse.json({ error: authorization.reason }, { status: 400 });
+  }
+
+  const partner = getPreferredPartner(eligibility.state, "aggregator");
+
   if (!hasStripeConfig()) {
-    return NextResponse.redirect(new URL(`/checkout?mock=1&panel=${panelId}`, request.url), 303);
+    return NextResponse.redirect(
+      new URL(`/checkout?mock=1&panel=${panelId}&auth=${authorization.id}&partner=${partner.id}`, request.url),
+      303,
+    );
   }
 
   const stripe = getStripe();
@@ -37,6 +56,9 @@ export async function POST(request: Request) {
     metadata: {
       panelId,
       state: eligibility.state,
+      authorizationId: authorization.id,
+      partnerId: partner.id,
+      paymentModel: "cash_pay_only",
     },
   });
 

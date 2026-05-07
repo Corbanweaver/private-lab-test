@@ -1,0 +1,148 @@
+import Link from "next/link";
+import { BadgeDollarSign, CheckCircle2, ClipboardList, Handshake, ShieldCheck } from "lucide-react";
+import { PageShell } from "@/components/page-shell";
+import { labPartners, outreachWaves, partnerPacketNeeds } from "@/data/lab-partners";
+import { summarizeLabSupply } from "@/lib/lab-access";
+
+export default function PartnersPage() {
+  const supply = summarizeLabSupply();
+
+  return (
+    <PageShell>
+      <section className="page-section">
+        <div className="max-w-4xl">
+          <p className="eyebrow">Lab partnership growth</p>
+          <h1 className="page-title mt-2">Prepaid cash-pay volume for reliable lab partners</h1>
+          <p className="page-copy mt-4">
+            We help older adults and families order affordable wellness labs through clinician authorization, clear cash
+            prices, concierge scheduling, and partner labs that can support trustworthy result delivery.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-4">
+          {[
+            ["Partners tracked", supply.partners],
+            ["CLIA verified", supply.verifiedPartners],
+            ["States mapped", supply.states],
+            ["Cash prices", supply.cashMenuCount],
+          ].map(([label, value]) => (
+            <div key={label} className="premium-card p-5">
+              <ShieldCheck className="text-[var(--brand)]" size={22} />
+              <p className="mt-3 text-sm text-[var(--muted)]">{label}</p>
+              <p className="text-3xl font-semibold">{value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--line)] bg-white">
+        <div className="page-section">
+          <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+            <div>
+              <p className="eyebrow">Partner packet</p>
+              <h2 className="mt-2 text-3xl font-semibold">What we bring and what we need</h2>
+              <p className="mt-3 text-[var(--muted)]">
+                Outreach starts with a clear, respectful offer: prepaid cash-pay orders, fewer confused patients, and
+                concierge support before and after collection.
+              </p>
+              <div className="mt-5 rounded-md bg-[var(--soft)] p-4">
+                <p className="font-semibold text-[var(--brand-dark)]">Simple pitch</p>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                  We send prepaid cash-pay lab orders from older adults and families, with concierge support so patients
+                  arrive prepared and understand next steps. We are looking for reliable lab partners with transparent
+                  pricing and electronic results.
+                </p>
+              </div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {partnerPacketNeeds.map((need) => (
+                <div key={need} className="premium-card flex items-start gap-3 p-4">
+                  <CheckCircle2 className="mt-1 text-[var(--brand)]" size={18} />
+                  <p className="font-medium">{need}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">Supply strategy</p>
+            <h2 className="mt-2 text-3xl font-semibold">Aggregator first, direct contracts second</h2>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {outreachWaves.map((wave) => (
+            <article key={wave.label} className="premium-card p-5">
+              <span className="icon-tile">
+                <Handshake size={21} />
+              </span>
+              <p className="mt-4 text-sm font-semibold text-[var(--accent)]">{wave.label}</p>
+              <h3 className="mt-1 text-xl font-semibold">{wave.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{wave.goal}</p>
+              <p className="mt-4 text-sm font-semibold text-[var(--brand-dark)]">{wave.target}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-[var(--line)] bg-white">
+        <div className="page-section">
+          <div className="flex items-center gap-3">
+            <span className="icon-tile">
+              <ClipboardList size={21} />
+            </span>
+            <div>
+              <p className="eyebrow">Partner admin</p>
+              <h2 className="text-3xl font-semibold">Tracked lab supply fields</h2>
+            </div>
+          </div>
+          <div className="table-shell mt-6 overflow-x-auto">
+            <table className="w-full min-w-[980px] text-left text-sm">
+              <thead className="bg-[var(--soft)] text-xs uppercase text-[var(--brand-dark)]">
+                <tr>
+                  <th className="px-4 py-3">Lab partner</th>
+                  <th className="px-4 py-3">Tier</th>
+                  <th className="px-4 py-3">CLIA</th>
+                  <th className="px-4 py-3">States</th>
+                  <th className="px-4 py-3">Result delivery</th>
+                  <th className="px-4 py-3">Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {labPartners.map((partner) => (
+                  <tr key={partner.id} className="border-t border-[var(--line)] align-top">
+                    <td className="px-4 py-3">
+                      <p className="font-semibold">{partner.name}</p>
+                      <p className="text-xs text-[var(--muted)]">{partner.orderWorkflow}</p>
+                    </td>
+                    <td className="px-4 py-3 capitalize">{partner.tier}</td>
+                    <td className="px-4 py-3 capitalize">{partner.cliaStatus}</td>
+                    <td className="px-4 py-3">{partner.statesServed.join(", ")}</td>
+                    <td className="px-4 py-3 uppercase">{partner.resultDelivery.replace("_", " ")}</td>
+                    <td className="px-4 py-3">
+                      <p>{partner.contact.name}</p>
+                      <p className="text-xs text-[var(--muted)]">{partner.contact.email}</p>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/catalog" className="focus-ring primary-action">
+              <BadgeDollarSign size={18} />
+              View cash-pay catalog
+            </Link>
+            <Link href="/admin" className="focus-ring secondary-action">
+              <ClipboardList size={18} />
+              Open admin controls
+            </Link>
+          </div>
+        </div>
+      </section>
+    </PageShell>
+  );
+}

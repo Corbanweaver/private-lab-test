@@ -1,21 +1,31 @@
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, CheckCircle2, FileText, Search, ShieldCheck, TestTube2 } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeDollarSign,
+  CheckCircle2,
+  Handshake,
+  Headphones,
+  Search,
+  Stethoscope,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { PanelCard } from "@/components/panel-card";
 import { panels } from "@/data/catalog";
+import { customerTrustFeatures } from "@/data/lab-partners";
+import { summarizeLabSupply } from "@/lib/lab-access";
 
 export default function Home() {
+  const supply = summarizeLabSupply();
   const steps: Array<[string, string, LucideIcon]> = [
-    ["Choose", "Pick a ready-made panel or search for a specific test.", Search],
-    ["Pay", "See the price clearly before you checkout.", BadgeDollarSign],
-    ["Get results", "Receive simple instructions and private results online.", FileText],
+    ["Choose", "Pick a ready-made panel or ask concierge for help.", Search],
+    ["Clinician review", "A licensed clinician authorizes eligible cash-pay orders.", Stethoscope],
+    ["Get support", "Concierge helps with scheduling, prep, results, and family sharing.", Headphones],
   ];
-
-  const trustItems = [
-    "Large, easy buttons",
-    "Clear cash prices",
-    "Private account area",
+  const metrics = [
+    ["Supply tracks", "4", "Aggregator, regional, mobile, and national lab paths."],
+    ["Launch states", String(supply.states), "State-by-state rules with clinician authorization."],
+    ["Cash menu items", String(supply.cashMenuCount), "Prepaid prices before a family pays."],
   ];
 
   return (
@@ -32,13 +42,13 @@ export default function Home() {
         />
         <div className="page-section relative py-14 lg:py-20">
           <div className="max-w-3xl">
-            <p className="eyebrow">Private wellness blood testing</p>
+            <p className="eyebrow">Safe cash-pay lab access</p>
             <h1 className="page-title mt-4 max-w-4xl">
-              Simple blood test ordering with clear prices.
+              Affordable lab tests with concierge help families can trust.
             </h1>
             <p className="page-copy mt-5 max-w-2xl">
-              Choose a panel, check your state, pay securely, and get plain-language lab instructions from one private
-              account.
+              Prepaid cash prices, licensed clinician review, CLIA-focused lab partners, and a simple dashboard for older
+              adults and the loved ones helping them.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -46,19 +56,19 @@ export default function Home() {
                 className="focus-ring primary-action w-full sm:w-auto"
               >
                 <Search size={19} />
-                Browse catalog
+                Browse affordable tests
                 <ArrowRight size={18} />
               </Link>
               <Link
-                href="/quiz"
+                href="/partners"
                 className="focus-ring secondary-action w-full sm:w-auto"
               >
-                <TestTube2 size={19} />
-                Find a panel
+                <Handshake size={19} />
+                See partner plan
               </Link>
             </div>
             <div className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
-              {trustItems.map((item) => (
+              {customerTrustFeatures.slice(0, 3).map((item) => (
                 <div key={item} className="flex items-center gap-2 rounded-md bg-white/90 px-3 py-3 text-sm font-semibold text-[var(--brand-dark)] shadow-sm">
                   <CheckCircle2 size={17} className="text-[var(--brand)]" />
                   {item}
@@ -83,14 +93,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="border-b border-[var(--line)] bg-white">
+        <div className="page-section py-10">
+          <div className="grid gap-4 md:grid-cols-3">
+            {metrics.map(([label, value, copy]) => (
+              <div key={label} className="premium-card p-5">
+                <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
+                <p className="mt-2 text-4xl font-semibold text-[var(--brand-dark)]">{value}</p>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="page-section">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">Popular panels</p>
-            <h2 className="mt-2 text-3xl font-semibold">Start with a trusted option</h2>
+            <p className="eyebrow">Cash-pay wellness panels</p>
+            <h2 className="mt-2 text-3xl font-semibold">Start with a trusted, simple option</h2>
           </div>
           <Link href="/builder" className="focus-ring secondary-action desktop-action text-sm">
-            <ShieldCheck size={17} />
+            <BadgeDollarSign size={17} />
             Build custom
           </Link>
         </div>

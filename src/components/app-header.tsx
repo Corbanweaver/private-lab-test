@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   Activity,
   FlaskConical,
+  Handshake,
   LayoutDashboard,
   Search,
   ShieldCheck,
@@ -14,6 +15,7 @@ const navItems: Array<{ href: string; label: string; Icon: LucideIcon }> = [
   { href: "/catalog", label: "Shop tests", Icon: Search },
   { href: "/builder", label: "Build panel", Icon: TestTube2 },
   { href: "/quiz", label: "Help me choose", Icon: Activity },
+  { href: "/partners", label: "Lab partners", Icon: Handshake },
   { href: "/dashboard", label: "My account", Icon: LayoutDashboard },
 ];
 

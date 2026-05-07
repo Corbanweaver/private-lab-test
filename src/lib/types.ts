@@ -25,6 +25,66 @@ export type LabTest = {
   description: string;
 };
 
+export type LabPartnerTier = "aggregator" | "regional" | "mobile" | "national";
+
+export type LabAccessMode = "clinician_authorized" | "direct_access" | "blocked";
+
+export type LabEligibility = {
+  state: string;
+  eligible: boolean;
+  message: string;
+  accessMode: LabAccessMode;
+  requiresClinicianAuthorization: boolean;
+};
+
+export type LabPartner = {
+  id: string;
+  name: string;
+  tier: LabPartnerTier;
+  cliaStatus: "verified" | "pending";
+  statesServed: string[];
+  cashPriceMenu: Array<{ testId: string; price: number }>;
+  drawLocations: Array<{ id: string; name: string; state: string; zip: string; address: string }>;
+  supportedTestIds: string[];
+  orderWorkflow: string;
+  requisitionProcess: string;
+  resultDelivery: "api" | "sftp" | "portal" | "manual_pdf";
+  turnaround: string;
+  criticalResultPolicy: string;
+  contact: {
+    name: string;
+    title: string;
+    email: string;
+  };
+  strengths: string[];
+};
+
+export type LabAccessRule = {
+  state: string;
+  mode: LabAccessMode;
+  partnerIds: string[];
+  note: string;
+};
+
+export type ClinicianAuthorization = {
+  id: string;
+  status: "approved" | "manual_review" | "blocked";
+  reviewer: string;
+  reason: string;
+  authorizedAt: string;
+  requiredFollowUp: string;
+};
+
+export type ConciergeTaskStatus = "scheduled" | "draw_completed" | "results_ready";
+
+export type ConciergeTask = {
+  id: string;
+  status: ConciergeTaskStatus;
+  label: string;
+  owner: "concierge" | "lab" | "family";
+  copy: string;
+};
+
 export type Panel = {
   id: string;
   name: string;
@@ -40,6 +100,8 @@ export type Panel = {
 export type OrderStatus =
   | "draft"
   | "eligible"
+  | "clinician_review"
+  | "authorized"
   | "paid"
   | "submitted_to_provider"
   | "lab_order_ready"
@@ -53,6 +115,9 @@ export type ProviderOrder = {
   orderNumber: string;
   status: OrderStatus;
   provider: string;
+  partnerId: string;
+  authorizationId: string;
+  labLocationName: string;
   requisitionUrl: string;
   appointmentUrl: string;
 };

@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { CreditCard, FileText } from "lucide-react";
+import { CheckCircle2, CreditCard, FileText, ShieldCheck } from "lucide-react";
 import { EligibilityForm } from "@/components/eligibility-form";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels } from "@/data/catalog";
+import { customerTrustFeatures } from "@/data/lab-partners";
 import { calculateCustomPanelPrice, formatCurrency } from "@/lib/catalog";
 
 export default async function CartPage({
@@ -24,7 +25,7 @@ export default async function CartPage({
           <p className="eyebrow">Cart</p>
           <h1 className="mt-2 text-3xl font-semibold">{customTests.length ? "Custom Panel" : panel?.name}</h1>
           <p className="page-copy mt-2">
-            Review your tests, confirm your state, and continue when everything looks right.
+            Review your tests, confirm your state, and continue to clinician authorization before checkout.
           </p>
           <div className="mt-5 grid gap-3">
             {(customTests.length ? customTests : labTests.filter((test) => panel?.testIds.includes(test.id))).map((test) => (
@@ -41,9 +42,21 @@ export default async function CartPage({
         <aside className="grid h-max gap-4">
           <EligibilityForm />
           <div className="premium-card p-5">
-            <div className="flex justify-between text-lg font-semibold">
+            <div className="flex items-center gap-2 text-[var(--brand-dark)]">
+              <ShieldCheck size={20} />
+              <p className="font-semibold">Cash-pay protection</p>
+            </div>
+            <div className="mt-4 flex justify-between text-lg font-semibold">
               <span>Total</span>
               <span>{formatCurrency(total)}</span>
+            </div>
+            <div className="mt-4 grid gap-2">
+              {customerTrustFeatures.map((feature) => (
+                <p key={feature} className="flex items-center gap-2 text-sm text-[var(--muted)]">
+                  <CheckCircle2 size={16} className="text-[var(--brand)]" />
+                  {feature}
+                </p>
+              ))}
             </div>
             <form action="/api/checkout" method="POST" className="mt-5 grid gap-3">
               <input type="hidden" name="panelId" value={panel?.id ?? "custom"} />

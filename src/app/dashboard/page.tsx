@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, FileText, FlaskConical, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowRight, BadgeDollarSign, FileText, FlaskConical, Headphones, ShieldCheck, UserRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
+import { customerTrustFeatures } from "@/data/lab-partners";
 import { sampleResults } from "@/data/catalog";
 import { hasSupabaseConfig } from "@/lib/supabase";
 
@@ -10,7 +11,8 @@ export default function DashboardPage() {
   const metrics: Array<[string, string, LucideIcon]> = [
     ["Active orders", "2", FlaskConical],
     ["Released reports", String(sampleResults.length), FileText],
-    ["Provider review", "On", ShieldCheck],
+    ["Clinician review", "On", ShieldCheck],
+    ["Cash-pay mode", "On", BadgeDollarSign],
     ["Account mode", configured ? "Live" : "Sample", UserRound],
   ];
 
@@ -22,7 +24,8 @@ export default function DashboardPage() {
             <p className="eyebrow">Account dashboard</p>
             <h1 className="page-title mt-2">Orders and results in one place</h1>
             <p className="page-copy mt-3 max-w-3xl">
-              Check order status, lab instructions, released reports, and private educational insights.
+              Check clinician authorization, lab instructions, concierge milestones, released reports, and private
+              educational insights.
             </p>
           </div>
           <Link href="/auth" className="focus-ring secondary-action">
@@ -35,7 +38,7 @@ export default function DashboardPage() {
             Live account storage is not connected in this preview. Orders and results are shown with sample data.
           </div>
         )}
-        <div className="mt-8 grid gap-4 md:grid-cols-4">
+        <div className="mt-8 grid gap-4 md:grid-cols-5">
           {metrics.map(([label, value, Icon]) => (
             <div key={label} className="premium-card p-5">
               <Icon className="text-[var(--brand)]" size={22} />
@@ -44,7 +47,20 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
-        <div className="mt-8 grid gap-4 lg:grid-cols-2">
+        <div className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="premium-card p-5">
+            <Headphones className="text-[var(--brand)]" size={22} />
+            <h2 className="mt-3 text-xl font-semibold">Family assurance</h2>
+            <div className="mt-4 grid gap-2">
+              {customerTrustFeatures.map((feature) => (
+                <p key={feature} className="flex items-center gap-2 text-sm text-[var(--muted)]">
+                  <ShieldCheck size={16} className="text-[var(--brand)]" />
+                  {feature}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4">
           <Link href="/orders" className="focus-ring premium-card p-5">
             <FlaskConical className="text-[var(--brand)]" size={22} />
             <h2 className="mt-3 text-xl font-semibold">Order timeline</h2>
@@ -61,6 +77,7 @@ export default function DashboardPage() {
               View results <ArrowRight size={17} />
             </span>
           </Link>
+          </div>
         </div>
       </section>
     </PageShell>
