@@ -1,5 +1,6 @@
 import { createBrowserClient, createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "@/lib/supabase/database.types";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
@@ -13,7 +14,7 @@ export function createSupabaseBrowserClient() {
     throw new Error("Missing public Supabase configuration.");
   }
 
-  return createBrowserClient(supabaseUrl, supabasePublishableKey);
+  return createBrowserClient<Database>(supabaseUrl, supabasePublishableKey);
 }
 
 export async function createSupabaseServerClient() {
@@ -23,7 +24,7 @@ export async function createSupabaseServerClient() {
 
   const cookieStore = await cookies();
 
-  return createServerClient(supabaseUrl, supabasePublishableKey, {
+  return createServerClient<Database>(supabaseUrl, supabasePublishableKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
