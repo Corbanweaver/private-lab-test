@@ -42,7 +42,7 @@ export function checkStateEligibility(state: string) {
     accessMode: accessRule.mode,
     requiresClinicianAuthorization: accessRule.mode === "clinician_authorized",
     message: eligible
-      ? "Eligible for cash-pay checkout after clinician authorization."
+      ? "Cash-pay checkout is available. A licensed clinician checks eligible orders before the lab visit."
       : accessRule.note || "Lab ordering is not available for this state in the launch rules.",
   };
 }

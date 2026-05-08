@@ -13,11 +13,11 @@ export function EligibilityForm() {
     <section className="premium-card p-5">
       <div className="flex items-center gap-2">
         <MapPin className="text-[var(--brand)]" size={20} />
-        <h2 className="text-lg font-semibold">Eligibility check</h2>
+        <h2 className="text-xl font-semibold">Where will you test?</h2>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_120px]">
         <label className="grid gap-1 text-sm font-medium">
-          ZIP code
+          ZIP code near you
           <input
             value={zip}
             onChange={(event) => setZip(event.target.value)}
@@ -41,8 +41,8 @@ export function EligibilityForm() {
       >
         <ShieldAlert size={18} />
         <p>
-          {result.message} ZIP <span className="font-mono">{zip || "not entered"}</span> will be used for lab location
-          availability and concierge scheduling.
+          {result.message} We use ZIP <span className="font-mono">{zip || "not entered"}</span> to find nearby labs
+          and scheduling help.
         </p>
       </div>
     </section>

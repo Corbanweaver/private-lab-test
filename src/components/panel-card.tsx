@@ -5,22 +5,23 @@ import type { Panel } from "@/lib/types";
 
 export function PanelCard({ panel }: { panel: Panel }) {
   const tests = getTestsForPanel(panel.id);
+  const isFeatured = panel.id === "complete-wellness";
 
   return (
-    <article className="premium-card p-5">
+    <article className={`p-5 ${isFeatured ? "glass-card ring-2 ring-[var(--brand)]" : "premium-card"}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="eyebrow text-xs">{panel.subtitle}</p>
-          <h3 className="mt-2 text-xl font-semibold text-[var(--foreground)]">{panel.name}</h3>
+          <p className="eyebrow text-xs">{isFeatured ? "Most popular" : panel.subtitle}</p>
+          <h3 className="mt-2 text-2xl font-semibold text-[var(--foreground)]">{panel.name}</h3>
         </div>
         <div className="text-right">
           <p className="text-2xl font-semibold text-[var(--brand-dark)]">{formatCurrency(panel.price)}</p>
-          <p className="text-xs text-[var(--muted)] line-through">{formatCurrency(panel.compareAt)}</p>
+          <p className="text-xs text-[var(--muted)]">cash-pay</p>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{panel.description}</p>
+      <p className="mt-3 text-base leading-7 text-[var(--muted)]">{panel.description}</p>
       <div className="mt-4 grid gap-2 text-[0.95rem] text-[var(--foreground)]">
-        {tests.slice(0, 4).map((test) => (
+        {tests.slice(0, 3).map((test) => (
           <span key={test?.id} className="flex items-center gap-2">
             <CheckCircle2 size={16} className="text-[var(--brand)]" />
             {test?.name}
@@ -39,7 +40,7 @@ export function PanelCard({ panel }: { panel: Panel }) {
         className="focus-ring primary-action mt-5 w-full"
       >
         <ShoppingCart size={18} />
-        Add panel
+        Start with this panel
       </Link>
     </article>
   );

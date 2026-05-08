@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BadgeDollarSign, CheckCircle2, ClipboardList, Handshake, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeDollarSign, CheckCircle2, ClipboardList, Handshake, ShieldCheck, Target } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labPartners, outreachWaves, partnerPacketNeeds } from "@/data/lab-partners";
 import { summarizeLabSupply } from "@/lib/lab-access";
@@ -11,20 +11,20 @@ export default function PartnersPage() {
     <PageShell>
       <section className="page-section">
         <div className="max-w-4xl">
-          <p className="eyebrow">Lab partnership growth</p>
-          <h1 className="page-title mt-2">Prepaid cash-pay volume for reliable lab partners</h1>
+          <p className="eyebrow">For lab partners</p>
+          <h1 className="page-title mt-2">We bring prepared patients and clear cash-pay orders</h1>
           <p className="page-copy mt-4">
-            We help older adults and families order affordable wellness labs through clinician authorization, clear cash
-            prices, concierge scheduling, and partner labs that can support trustworthy result delivery.
+            We help older adults and families order affordable labs, understand where to go, and get results without
+            billing confusion.
           </p>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-4">
           {[
-            ["Partners tracked", supply.partners],
-            ["CLIA verified", supply.verifiedPartners],
-            ["States mapped", supply.states],
-            ["Cash prices", supply.cashMenuCount],
+            ["Partner types", supply.partners],
+            ["Verified labs", supply.verifiedPartners],
+            ["States covered", supply.states],
+            ["Clear prices", supply.cashMenuCount],
           ].map(([label, value]) => (
             <div key={label} className="premium-card p-5">
               <ShieldCheck className="text-[var(--brand)]" size={22} />
@@ -39,15 +39,15 @@ export default function PartnersPage() {
         <div className="page-section">
           <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
             <div>
-              <p className="eyebrow">Partner packet</p>
-              <h2 className="mt-2 text-3xl font-semibold">What we bring and what we need</h2>
-              <p className="mt-3 text-[var(--muted)]">
-                Outreach starts with a clear, respectful offer: prepaid cash-pay orders, fewer confused patients, and
-                concierge support before and after collection.
+              <p className="eyebrow">Simple offer</p>
+              <h2 className="mt-2 text-3xl font-semibold">Less confusion for patients and staff</h2>
+              <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                Our goal is simple: send people who already paid, know where to go, and have someone to call if they
+                need help.
               </p>
               <div className="mt-5 rounded-md bg-[var(--soft)] p-4">
-                <p className="font-semibold text-[var(--brand-dark)]">Simple pitch</p>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                <p className="font-semibold text-[var(--brand-dark)]">Partner pitch</p>
+                <p className="mt-2 text-base leading-7 text-[var(--muted)]">
                   We send prepaid cash-pay lab orders from older adults and families, with concierge support so patients
                   arrive prepared and understand next steps. We are looking for reliable lab partners with transparent
                   pricing and electronic results.
@@ -69,9 +69,13 @@ export default function PartnersPage() {
       <section className="page-section">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">Supply strategy</p>
-            <h2 className="mt-2 text-3xl font-semibold">Aggregator first, direct contracts second</h2>
+            <p className="eyebrow">Growth path</p>
+            <h2 className="mt-2 text-3xl font-semibold">Start broad, then build deeper relationships</h2>
           </div>
+          <Link href="/partners/outreach" className="focus-ring secondary-action">
+            <Target size={18} />
+            Open outreach cockpit
+          </Link>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {outreachWaves.map((wave) => (
@@ -135,6 +139,10 @@ export default function PartnersPage() {
             <Link href="/catalog" className="focus-ring primary-action">
               <BadgeDollarSign size={18} />
               View cash-pay catalog
+            </Link>
+            <Link href="/partners/outreach" className="focus-ring secondary-action">
+              <ArrowRight size={18} />
+              Work the lab target list
             </Link>
             <Link href="/admin" className="focus-ring secondary-action">
               <ClipboardList size={18} />

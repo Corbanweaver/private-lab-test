@@ -242,8 +242,8 @@ export const customerTrustFeatures = [
   "Reviewed by a licensed clinician",
   "Prepaid cash price",
   "No insurance or Medicare billing",
-  "Concierge can help schedule",
-  "Share results with a loved one",
+  "A real person can help schedule",
+  "Private sharing with a loved one",
 ];
 
 export const conciergeTasks: ConciergeTask[] = [
@@ -252,7 +252,7 @@ export const conciergeTasks: ConciergeTask[] = [
     status: "scheduled",
     label: "Appointment scheduled",
     owner: "concierge",
-    copy: "Concierge confirms the lab location, fasting needs, and appointment time.",
+    copy: "A real person confirms the lab location, fasting needs, and appointment time.",
   },
   {
     id: "draw-completed",
@@ -266,6 +266,6 @@ export const conciergeTasks: ConciergeTask[] = [
     status: "results_ready",
     label: "Results ready",
     owner: "family",
-    copy: "Results are ready for review, with plain-language notes and clinician follow-up guidance.",
+    copy: "Results are ready with plain-language notes and next-step guidance.",
   },
 ];

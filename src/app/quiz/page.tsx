@@ -24,20 +24,24 @@ export default async function QuizPage({
 
   return (
     <PageShell>
-      <section className="page-section">
-        <div className="max-w-3xl">
-          <p className="eyebrow">Suggested panels</p>
-          <h1 className="page-title mt-2">Tell us what you want to check</h1>
-          <p className="page-copy mt-3">
-            Simple panel options for common wellness goals. These suggestions are educational and not a diagnosis.
-          </p>
+      <section className="blue-band">
+        <div className="page-section">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Help me choose</p>
+            <h1 className="page-title mt-2">What matters most today?</h1>
+            <p className="page-copy mt-3">
+              Tap one button. We will show a simple starting panel. This is education, not a diagnosis.
+            </p>
+          </div>
         </div>
-        <div className="mt-6 flex flex-wrap gap-2">
+      </section>
+      <section className="page-section">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {goals.map((goal) => (
             <Link
               key={goal}
               href={`/quiz?goal=${goal}`}
-              className={`focus-ring inline-flex min-h-12 items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold ${
+              className={`focus-ring inline-flex min-h-16 items-center justify-center gap-2 rounded-md border px-4 py-3 text-base font-semibold ${
                 selectedGoals.includes(goal)
                   ? "border-[var(--brand)] bg-[var(--brand)] text-white"
                   : "border-[var(--line)] bg-white text-[var(--brand-dark)]"

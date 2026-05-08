@@ -1,7 +1,8 @@
-import { Database, FileWarning, Handshake, MapPinned, Settings2, ShieldCheck } from "lucide-react";
+import { Database, FileWarning, Handshake, MapPinned, Settings2, ShieldCheck, Target } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels, restrictedStates } from "@/data/catalog";
+import { outreachTargets } from "@/data/lab-outreach";
 import { labPartners } from "@/data/lab-partners";
 import { summarizeLabSupply } from "@/lib/lab-access";
 
@@ -11,6 +12,7 @@ export default function AdminPage() {
     ["Tests", labTests.length, Database],
     ["Panels", panels.length, Settings2],
     ["Lab partners", supply.partners, Handshake],
+    ["Lab targets", outreachTargets.length, Target],
     ["States mapped", supply.states, MapPinned],
     ["Blocked states", restrictedStates.length, ShieldCheck],
     ["Review queue", 3, FileWarning],
@@ -20,7 +22,10 @@ export default function AdminPage() {
     <PageShell>
       <section className="page-section">
         <p className="eyebrow">Admin</p>
-        <h1 className="page-title mt-2">Catalog, orders, provider sync, and compliance controls</h1>
+        <h1 className="page-title mt-2">Keep tests, lab partners, and safety rules organized</h1>
+        <p className="page-copy mt-3 max-w-3xl">
+          A simple internal view for the team to check prices, partner coverage, and orders that need review.
+        </p>
         <div className="mt-8 grid gap-4 md:grid-cols-3 xl:grid-cols-6">
           {metrics.map(([label, value, Icon]) => (
             <div key={String(label)} className="premium-card p-5">

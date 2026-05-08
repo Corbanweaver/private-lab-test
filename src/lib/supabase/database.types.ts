@@ -127,6 +127,110 @@ export type Database = {
           },
         ];
       };
+      lab_outreach_activities: {
+        Row: {
+          activity_type: Database["public"]["Enums"]["lab_outreach_activity_type"];
+          completed_at: string | null;
+          created_at: string;
+          due_at: string | null;
+          id: string;
+          notes: string | null;
+          outcome: string;
+          target_id: string;
+        };
+        Insert: {
+          activity_type: Database["public"]["Enums"]["lab_outreach_activity_type"];
+          completed_at?: string | null;
+          created_at?: string;
+          due_at?: string | null;
+          id?: string;
+          notes?: string | null;
+          outcome: string;
+          target_id: string;
+        };
+        Update: {
+          activity_type?: Database["public"]["Enums"]["lab_outreach_activity_type"];
+          completed_at?: string | null;
+          created_at?: string;
+          due_at?: string | null;
+          id?: string;
+          notes?: string | null;
+          outcome?: string;
+          target_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "lab_outreach_activities_target_id_fkey";
+            columns: ["target_id"];
+            isOneToOne: false;
+            referencedRelation: "lab_outreach_targets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      lab_outreach_targets: {
+        Row: {
+          ask: string;
+          category: Database["public"]["Enums"]["lab_outreach_category"];
+          created_at: string;
+          evidence_needed: string[];
+          id: string;
+          last_contacted_at: string | null;
+          name: string;
+          next_follow_up_at: string | null;
+          next_step: string;
+          owner: string | null;
+          priority: number;
+          relationship_type: string;
+          source_note: string;
+          stage: Database["public"]["Enums"]["lab_outreach_stage"];
+          states_focus: string[];
+          updated_at: string;
+          website: string;
+          why_target: string;
+        };
+        Insert: {
+          ask: string;
+          category: Database["public"]["Enums"]["lab_outreach_category"];
+          created_at?: string;
+          evidence_needed?: string[];
+          id: string;
+          last_contacted_at?: string | null;
+          name: string;
+          next_follow_up_at?: string | null;
+          next_step: string;
+          owner?: string | null;
+          priority: number;
+          relationship_type: string;
+          source_note?: string;
+          stage?: Database["public"]["Enums"]["lab_outreach_stage"];
+          states_focus?: string[];
+          updated_at?: string;
+          website: string;
+          why_target: string;
+        };
+        Update: {
+          ask?: string;
+          category?: Database["public"]["Enums"]["lab_outreach_category"];
+          created_at?: string;
+          evidence_needed?: string[];
+          id?: string;
+          last_contacted_at?: string | null;
+          name?: string;
+          next_follow_up_at?: string | null;
+          next_step?: string;
+          owner?: string | null;
+          priority?: number;
+          relationship_type?: string;
+          source_note?: string;
+          stage?: Database["public"]["Enums"]["lab_outreach_stage"];
+          states_focus?: string[];
+          updated_at?: string;
+          website?: string;
+          why_target?: string;
+        };
+        Relationships: [];
+      };
       lab_partner_locations: {
         Row: {
           address: string;
@@ -399,6 +503,34 @@ export type Database = {
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
+      lab_outreach_activity_type:
+        | "email"
+        | "call"
+        | "form"
+        | "meeting"
+        | "note"
+        | "pricing"
+        | "contract"
+        | "integration";
+      lab_outreach_category:
+        | "api_network"
+        | "national_lab"
+        | "regional_lab"
+        | "mobile_phlebotomy"
+        | "specialty_lab"
+        | "retail_collection"
+        | "data_connectivity";
+      lab_outreach_stage:
+        | "research"
+        | "queued"
+        | "contacted"
+        | "meeting_booked"
+        | "packet_sent"
+        | "pricing_received"
+        | "contracting"
+        | "integrating"
+        | "active"
+        | "not_fit";
       lab_partner_clia_status: "verified" | "pending";
       lab_partner_tier: "aggregator" | "regional" | "mobile" | "national";
       order_status:
@@ -422,6 +554,28 @@ export type Database = {
 export const Constants = {
   public: {
     Enums: {
+      lab_outreach_activity_type: ["email", "call", "form", "meeting", "note", "pricing", "contract", "integration"],
+      lab_outreach_category: [
+        "api_network",
+        "national_lab",
+        "regional_lab",
+        "mobile_phlebotomy",
+        "specialty_lab",
+        "retail_collection",
+        "data_connectivity",
+      ],
+      lab_outreach_stage: [
+        "research",
+        "queued",
+        "contacted",
+        "meeting_booked",
+        "packet_sent",
+        "pricing_received",
+        "contracting",
+        "integrating",
+        "active",
+        "not_fit",
+      ],
       lab_partner_clia_status: ["verified", "pending"],
       lab_partner_tier: ["aggregator", "regional", "mobile", "national"],
       order_status: [

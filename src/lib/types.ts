@@ -29,6 +29,27 @@ export type LabPartnerTier = "aggregator" | "regional" | "mobile" | "national";
 
 export type LabAccessMode = "clinician_authorized" | "direct_access" | "blocked";
 
+export type LabOutreachCategory =
+  | "api_network"
+  | "national_lab"
+  | "regional_lab"
+  | "mobile_phlebotomy"
+  | "specialty_lab"
+  | "retail_collection"
+  | "data_connectivity";
+
+export type LabOutreachStage =
+  | "research"
+  | "queued"
+  | "contacted"
+  | "meeting_booked"
+  | "packet_sent"
+  | "pricing_received"
+  | "contracting"
+  | "integrating"
+  | "active"
+  | "not_fit";
+
 export type LabEligibility = {
   state: string;
   eligible: boolean;
@@ -57,6 +78,37 @@ export type LabPartner = {
     email: string;
   };
   strengths: string[];
+};
+
+export type LabOutreachTarget = {
+  id: string;
+  name: string;
+  category: LabOutreachCategory;
+  priority: 1 | 2 | 3 | 4 | 5;
+  stage: LabOutreachStage;
+  website: string;
+  statesFocus: string[];
+  relationshipType: string;
+  whyTarget: string;
+  ask: string;
+  nextStep: string;
+  evidenceNeeded: string[];
+  sourceNote: string;
+};
+
+export type LabOutreachCadenceStep = {
+  label: string;
+  title: string;
+  goal: string;
+  actions: string[];
+};
+
+export type LabOutreachScript = {
+  id: string;
+  channel: "email" | "phone" | "form";
+  title: string;
+  subject?: string;
+  body: string;
 };
 
 export type LabAccessRule = {

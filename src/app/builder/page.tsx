@@ -18,22 +18,29 @@ export default async function BuilderPage({
 
   return (
     <PageShell>
+      <section className="blue-band">
+        <div className="page-section">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Custom panel</p>
+            <h1 className="page-title mt-2">Pick only the tests you want</h1>
+            <p className="page-copy mt-3">
+              This page is for people who already know the names of the tests they want. If you are not sure, use Help me
+              choose.
+            </p>
+          </div>
+        </div>
+      </section>
       <section className="page-section grid gap-6 lg:grid-cols-[1fr_360px]">
         <div>
-          <p className="eyebrow">Custom builder</p>
-          <h1 className="page-title mt-2">Build your own wellness panel</h1>
-          <p className="page-copy mt-3 max-w-3xl">
-            A flexible panel for people who know exactly what they want checked.
-          </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {labTests.map((test) => (
               <TestCard key={test.id} test={test} />
             ))}
           </div>
         </div>
-        <aside className="premium-card h-max p-5 lg:sticky lg:top-40">
-          <p className="eyebrow">Current panel</p>
-          <h2 className="mt-2 text-2xl font-semibold">Custom Panel</h2>
+        <aside className="glass-card h-max p-5 lg:sticky lg:top-40">
+          <p className="eyebrow">Your picks</p>
+          <h2 className="mt-2 text-2xl font-semibold">Current panel</h2>
           <div className="mt-4 grid gap-3">
             {selected.map((test) => (
               <div key={test.id} className="rounded-md bg-[var(--soft)] p-3">
@@ -44,11 +51,11 @@ export default async function BuilderPage({
           </div>
           <dl className="mt-5 grid gap-2 text-sm">
             <div className="flex justify-between">
-              <dt>Retail tests</dt>
+              <dt>Separate price</dt>
               <dd>{formatCurrency(retail)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt>Builder price</dt>
+              <dt>Your price</dt>
               <dd className="font-semibold text-[var(--brand-dark)]">{formatCurrency(price)}</dd>
             </div>
           </dl>
@@ -57,7 +64,7 @@ export default async function BuilderPage({
             className="focus-ring primary-action mt-5 w-full"
           >
             <ShoppingCart size={18} />
-            Continue to cart
+            Continue
           </Link>
         </aside>
       </section>
