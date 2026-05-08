@@ -18,6 +18,7 @@ import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { PanelCard } from "@/components/panel-card";
 import { panels } from "@/data/catalog";
+import { healthPrograms } from "@/data/health-programs";
 import { commonLabDemand, networkExpansionPlays, trustDrivers } from "@/data/product-research";
 import { formatCurrency, getTestsForPanel } from "@/lib/catalog";
 import { summarizeLabSupply } from "@/lib/lab-access";
@@ -29,6 +30,7 @@ export default function Home() {
   const topTests = commonLabDemand.slice(0, 6);
   const trustCards = trustDrivers.slice(0, 4);
   const networkCards = networkExpansionPlays.slice(0, 3);
+  const programCards = healthPrograms.slice(0, 3);
   const steps: Array<[string, string, LucideIcon]> = [
     ["Choose tests", "Pick a ready-made panel or add individual tests.", Search],
     ["Enter ZIP and basic info", "Tell us where you want to test and who the order is for.", ClipboardList],
@@ -287,6 +289,44 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {panels.slice(0, 3).map((panel) => (
               <PanelCard key={panel.id} panel={panel} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="deep-band">
+        <div className="page-section">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-3xl">
+              <p className="eyebrow text-[#9ed5cc]">Bigger than one lab order</p>
+              <h2 className="mt-2 text-4xl font-semibold text-white">Programs turn testing into a private health platform.</h2>
+              <p className="mt-3 text-lg leading-8 text-[#dbe8e4]">
+                The long-term product should feel like Private MD Labs speed, Hims follow-through, and premium biomarker
+                tracking, with labs as the first trusted layer.
+              </p>
+            </div>
+            <Link href="/programs" className="focus-ring secondary-action">
+              View programs
+              <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {programCards.map((program) => (
+              <article key={program.id} className="pulse-pill rounded-[var(--radius)] p-5 text-[var(--foreground)]">
+                <span className="icon-tile">
+                  <program.Icon size={21} />
+                </span>
+                <p className="mt-5 text-sm font-semibold text-[var(--accent-strong)]">{program.subtitle}</p>
+                <h3 className="mt-1 text-2xl font-semibold">{program.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{program.description}</p>
+                <Link
+                  href={`/cart?panel=${program.primaryPanelId}`}
+                  className="focus-ring secondary-action mt-5 min-h-12 w-full text-sm"
+                >
+                  Start with labs
+                  <ArrowRight size={16} />
+                </Link>
+              </article>
             ))}
           </div>
         </div>

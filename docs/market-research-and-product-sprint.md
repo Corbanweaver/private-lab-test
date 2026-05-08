@@ -79,6 +79,31 @@ Product moves implemented:
 - Added `/strategy` as the working product/research dashboard.
 - Linked the strategy page from admin.
 
+## Bigger Platform Direction
+
+The next product layer should not be "more random tests." It should be named private-health programs:
+
+- Whole Body Baseline
+- Weight and Metabolic
+- Men's Hormone Baseline
+- Women's Hormone and Energy
+- Heart and Longevity
+- Private Lab Pass
+
+This borrows the scalable pattern from Hims, MEDVi, Function Health, and Private MD Labs:
+
+- Private MD Labs: fast order flow, big catalog, lab instructions.
+- Hims & Hers: recurring personalized care, strong brand trust, app-based follow-through, labs as a data layer.
+- MEDVi: narrow self-pay program around a high-intent problem.
+- Function Health: premium biomarker membership and trend dashboard.
+
+Product moves implemented:
+
+- Added `src/data/health-programs.ts`.
+- Added `/programs`.
+- Added program cards to the homepage.
+- Added benchmark lessons to `/strategy`.
+
 ## UI Direction
 
 The site should keep moving toward the feel of premium biomarker brands without copying any one product:

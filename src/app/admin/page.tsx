@@ -3,6 +3,7 @@ import { ArrowRight, Database, FileWarning, Handshake, MapPinned, Settings2, Shi
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels, restrictedStates } from "@/data/catalog";
+import { healthPrograms } from "@/data/health-programs";
 import { outreachTargets } from "@/data/lab-outreach";
 import { labPartners } from "@/data/lab-partners";
 import { commonLabDemand, networkExpansionPlays, trustDrivers } from "@/data/product-research";
@@ -19,6 +20,7 @@ export default function AdminPage() {
     ["Blocked states", restrictedStates.length, ShieldCheck],
     ["Trust drivers", trustDrivers.length, ShieldCheck],
     ["Common tests", commonLabDemand.length, Database],
+    ["Programs", healthPrograms.length, Settings2],
     ["Network plays", networkExpansionPlays.length, Handshake],
     ["Routing holds", 1, FileWarning],
   ];
@@ -40,6 +42,10 @@ export default function AdminPage() {
           <Link href="/partners/outreach" className="focus-ring secondary-action">
             <Handshake size={18} />
             Outreach cockpit
+          </Link>
+          <Link href="/programs" className="focus-ring secondary-action">
+            <Settings2 size={18} />
+            Programs
           </Link>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3 xl:grid-cols-6">

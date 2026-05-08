@@ -4,6 +4,7 @@ import {
   BadgeDollarSign,
   FlaskConical,
   LayoutDashboard,
+  Layers3,
   ListChecks,
   MapPin,
   Search,
@@ -15,14 +16,15 @@ import type { LucideIcon } from "lucide-react";
 const navItems: Array<{ href: string; label: string; Icon: LucideIcon }> = [
   { href: "/#how-it-works", label: "How it works", Icon: ListChecks },
   { href: "/catalog", label: "Choose tests", Icon: Search },
+  { href: "/programs", label: "Programs", Icon: Layers3 },
   { href: "/#pricing", label: "Pricing", Icon: BadgeDollarSign },
   { href: "/dashboard", label: "Account", Icon: LayoutDashboard },
 ];
 
 const mobileNavItems: Array<{ href: string; label: string; Icon: LucideIcon }> = [
   { href: "/catalog", label: "Tests", Icon: Search },
+  { href: "/programs", label: "Programs", Icon: Layers3 },
   { href: "/cart?panel=complete-wellness#checkout", label: "ZIP", Icon: MapPin },
-  { href: "/dashboard", label: "Account", Icon: LayoutDashboard },
 ];
 
 export function AppHeader() {

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, CheckCircle2, ExternalLink, FlaskConical, Target } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, ExternalLink, FlaskConical, Layers3, Target } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
+import { healthPrograms, scaleBenchmarks } from "@/data/health-programs";
 import {
   commonLabDemand,
   networkExpansionPlays,
@@ -31,18 +32,46 @@ export default function StrategyPage() {
                 <FlaskConical size={18} />
                 Review catalog
               </Link>
+              <Link href="/programs" className="focus-ring secondary-action">
+                <Layers3 size={18} />
+                Programs
+              </Link>
             </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ["Trust drivers", trustDrivers.length],
               ["Common tests", commonLabDemand.length],
-              ["Network plays", networkExpansionPlays.length],
+              ["Programs", healthPrograms.length],
             ].map(([label, value]) => (
               <div key={label} className="pulse-pill rounded-[var(--radius)] p-5 text-[var(--foreground)]">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
                 <p className="mt-2 text-4xl font-semibold text-[var(--brand-dark)]">{value}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 max-w-3xl">
+            <p className="eyebrow">Scale benchmarks</p>
+            <h2 className="mt-2 text-3xl font-semibold">The companies to learn from.</h2>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-4">
+            {scaleBenchmarks.map((benchmark) => (
+              <a
+                key={benchmark.company}
+                href={benchmark.sourceHref}
+                className="focus-ring premium-card p-5"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <p className="text-sm font-semibold text-[var(--accent-strong)]">{benchmark.category}</p>
+                <h3 className="mt-2 text-xl font-semibold">{benchmark.company}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{benchmark.lesson}</p>
+              </a>
             ))}
           </div>
         </div>
