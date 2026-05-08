@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Search, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { PanelCard } from "@/components/panel-card";
 import { TestCard } from "@/components/test-card";
@@ -27,16 +27,25 @@ export default async function CatalogPage({
 
   return (
     <PageShell>
-      <section className="blue-band">
-        <div className="page-section grid items-center gap-6 lg:grid-cols-[1fr_360px]">
+      <section className="deep-band">
+        <div className="page-section grid items-center gap-6 lg:grid-cols-[1fr_380px]">
           <div className="max-w-3xl">
-            <p className="eyebrow">Step 1</p>
-            <h1 className="page-title mt-2">Choose tests or a panel.</h1>
-            <p className="page-copy mt-3">
-              Pick what you want, then enter ZIP and basic info to see a nearby clinic. No doctor visit. No insurance.
+            <p className="eyebrow text-[#9ed5cc]">Step 1</p>
+            <h1 className="page-title mt-2 text-white">Choose tests or a panel.</h1>
+            <p className="mt-3 max-w-2xl text-lg leading-8 text-[#dbe8e4]">
+              Pick what you want, then enter ZIP and basic info to see a nearby clinic. No doctor visit. No insurance
+              billing.
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {["Clear prices", "Private results", "Authorization where required"].map((item) => (
+                <span key={item} className="pulse-pill flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+                  <CheckCircle2 size={15} className="text-[var(--brand)]" />
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="glass-card p-5">
+          <div className="glass-card p-5 text-[var(--foreground)]">
             <p className="eyebrow">Recommended</p>
             <h2 className="mt-2 text-2xl font-semibold">Complete Wellness</h2>
             <p className="mt-1 text-sm text-[var(--muted)]">
@@ -48,7 +57,7 @@ export default async function CatalogPage({
               </p>
               <Link href="/cart?panel=complete-wellness" className="focus-ring primary-action min-h-12 px-4 text-sm">
                 <Sparkles size={17} />
-                Start
+                Start order
                 <ArrowRight size={16} />
               </Link>
             </div>
@@ -56,7 +65,7 @@ export default async function CatalogPage({
         </div>
       </section>
       <section className="page-section">
-        <div className="mt-8">
+        <div>
           <div className="mb-4 flex items-center gap-3">
             <span className="simple-number">1</span>
             <h2 className="text-2xl font-semibold">Choose a panel</h2>
@@ -67,7 +76,7 @@ export default async function CatalogPage({
             ))}
           </div>
         </div>
-        <form className="premium-card mt-6 grid gap-3 p-4 sm:grid-cols-[1fr_220px_auto]">
+        <form className="premium-card mt-8 grid gap-3 p-4 sm:grid-cols-[1fr_220px_auto]">
           <div className="sm:col-span-3">
             <div className="flex items-center gap-3">
               <span className="simple-number">2</span>

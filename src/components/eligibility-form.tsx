@@ -92,12 +92,15 @@ export function EligibilityForm({
 
   return (
     <section className="premium-card p-5">
-      <div className="flex items-center gap-2">
-        <MapPin className="text-[var(--brand)]" size={20} />
-        <h2 className="text-xl font-semibold">ZIP and basic info</h2>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <MapPin className="text-[var(--brand)]" size={20} />
+          <h2 className="text-xl font-semibold">ZIP and basic info</h2>
+        </div>
+        <span className="pill">Step 2</span>
       </div>
       <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-        We use this to match the nearest clinic and prepare your cash-pay lab instructions.
+        We use this to match a nearby clinic and prepare your self-pay lab instructions.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <label className="grid gap-1 text-sm font-medium">
@@ -163,7 +166,7 @@ export function EligibilityForm({
       </div>
       <div
         className={`mt-4 flex items-start gap-2 rounded-md p-3 text-sm ${
-          isAvailable ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-900"
+          isAvailable ? "bg-[#e4f3ed] text-[#125044]" : "bg-[#f7ecd0] text-[#63511c]"
         }`}
       >
         {isAvailable ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
@@ -174,7 +177,7 @@ export function EligibilityForm({
         </p>
       </div>
       {isAvailable && clinic ? (
-        <div className="mt-4 rounded-md border border-[var(--line)] bg-white p-4">
+        <div className="mt-4 rounded-md border border-[var(--line)] bg-[#fcfffd] p-4">
           <div className="flex items-start gap-3">
             <span className="icon-tile">
               <Building2 size={19} />
@@ -186,13 +189,13 @@ export function EligibilityForm({
             </div>
           </div>
           <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-            <p className="rounded-md bg-[var(--soft)] p-3">
+            <p className="rounded-md bg-[var(--accent-soft)] p-3">
               <span className="block font-semibold text-[var(--brand-dark)]">
                 {clinic.distanceMiles.toFixed(1)} miles
               </span>
               from ZIP {zip || "near you"}
             </p>
-            <p className="rounded-md bg-[var(--soft)] p-3">
+            <p className="rounded-md bg-[var(--accent-soft)] p-3">
               <span className="block font-semibold text-[var(--brand-dark)]">${activeQuote?.total ?? 0} cash price</span>
               Results expected in {activeQuote?.turnaround ?? "a few days"}.
             </p>

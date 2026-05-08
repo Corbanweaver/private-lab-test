@@ -8,7 +8,7 @@ export function PanelCard({ panel }: { panel: Panel }) {
   const isFeatured = panel.id === "complete-wellness";
 
   return (
-    <article className={`p-5 ${isFeatured ? "glass-card ring-2 ring-[var(--brand)]" : "premium-card"}`}>
+    <article className={`flex h-full flex-col p-5 ${isFeatured ? "glass-card ring-1 ring-[var(--brand)]" : "premium-card"}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="eyebrow text-xs">{isFeatured ? "Most popular" : panel.subtitle}</p>
@@ -20,9 +20,9 @@ export function PanelCard({ panel }: { panel: Panel }) {
         </div>
       </div>
       <p className="mt-3 text-base leading-7 text-[var(--muted)]">{panel.description}</p>
-      <p className="mt-3 flex items-start gap-2 rounded-md bg-[var(--soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
+      <p className="mt-3 flex items-start gap-2 rounded-md bg-[var(--accent-soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
         <ShieldCheck className="mt-0.5 shrink-0" size={17} />
-        No doctor visit. No insurance. Provider authorization included where required.
+        No doctor visit. No insurance billing. Provider authorization included where required.
       </p>
       <div className="mt-4 grid gap-2 text-[0.95rem] text-[var(--foreground)]">
         {tests.slice(0, 3).map((test) => (
@@ -41,7 +41,7 @@ export function PanelCard({ panel }: { panel: Panel }) {
       </div>
       <Link
         href={`/cart?panel=${panel.id}`}
-        className="focus-ring primary-action mt-5 w-full"
+        className="focus-ring primary-action mt-auto w-full"
       >
         <ShoppingCart size={18} />
         Choose this panel

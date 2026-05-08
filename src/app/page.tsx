@@ -3,6 +3,7 @@ import Image from "next/image";
 import {
   ArrowRight,
   BadgeDollarSign,
+  Building2,
   CheckCircle2,
   ClipboardList,
   FileText,
@@ -40,18 +41,18 @@ export default function Home() {
   return (
     <PageShell>
       <section className="deep-band relative overflow-hidden">
-        <div className="page-section hero-shell grid items-center gap-10 py-12 lg:grid-cols-[0.95fr_1.05fr] lg:py-16">
-          <div>
+        <div className="page-section hero-shell grid items-center gap-10 py-12 lg:grid-cols-[0.98fr_1.02fr] lg:py-16">
+          <div className="relative z-10 min-w-0">
             <div className="pulse-pill inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
               <ShieldCheck size={16} />
-              Cash-pay labs for older adults and families
+              Private Lab Test
             </div>
-            <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-normal text-white sm:text-6xl lg:text-7xl">
-              Know what is happening in your body.
+            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[0.98] tracking-normal text-white sm:text-6xl lg:text-7xl">
+              Private blood work, ordered without the friction.
             </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-9 text-blue-100">
-              Choose tests, enter your ZIP, see a nearby clinic, and pay the clear cash price. No doctor visit. No
-              insurance. Provider authorization included where required.
+            <p className="mt-6 max-w-2xl text-xl leading-9 text-[#dbe8e4]">
+              Choose a panel, enter your ZIP, see the nearest clinic, and pay the clear self-pay price. No insurance
+              billing. Provider authorization is included where required.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/catalog" className="focus-ring primary-action w-full sm:w-auto">
@@ -64,37 +65,72 @@ export default function Home() {
                 Enter ZIP
               </Link>
             </div>
-            <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
-              {["No doctor visit", "No insurance", "Authorization included"].map((item) => (
-                <div key={item} className="pulse-pill flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-[var(--brand-dark)]">
+            <div className="mt-9 grid max-w-2xl gap-3 sm:grid-cols-3">
+              {["No doctor visit", "No insurance billing", "Private results"].map((item) => (
+                <div
+                  key={item}
+                  className="pulse-pill flex min-h-16 items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-[var(--brand-dark)]"
+                >
                   <CheckCircle2 size={17} className="text-[var(--brand)]" />
                   {item}
                 </div>
               ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-[#b9cbc6]">
+              <span className="flex items-center gap-2">
+                <FileText size={16} />
+                Clear cash prices
+              </span>
+              <span className="flex items-center gap-2">
+                <Building2 size={16} />
+                ZIP to nearby clinic
+              </span>
+              <span className="flex items-center gap-2">
+                <Headphones size={16} />
+                Human support
+              </span>
             </div>
           </div>
 
           <div className="capsule-stage">
             <Image
               src="/blue-lab-capsules.png"
-              alt="Glossy blue capsule illustration"
+              alt="Private lab testing visual"
               fill
               priority
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              className="object-cover opacity-20 mix-blend-multiply"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/82 via-white/8 to-transparent" />
-            <div className="absolute bottom-5 left-5 right-5 glass-card p-5">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#fbfdfc] via-[#fbfdfc]/70 to-[#fbfdfc]/40" />
+            <div className="absolute inset-x-5 top-5 rounded-md border border-[var(--line)] bg-[var(--brand-deep)] p-5 text-white shadow-2xl">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="eyebrow">Most popular</p>
+                  <p className="text-xs font-bold uppercase text-[#9ed5cc]">Order preview</p>
                   <h2 className="mt-2 text-2xl font-semibold">{featuredPanel.name}</h2>
-                  <p className="mt-1 text-sm text-[var(--muted)]">{featuredPanel.description}</p>
+                  <p className="mt-1 text-sm leading-6 text-[#c9d8d4]">{featuredPanel.description}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-4xl font-semibold text-[var(--brand-dark)]">{formatCurrency(featuredPanel.price)}</p>
-                  <p className="text-sm text-[var(--muted)]">cash-pay</p>
+                  <p className="text-sm text-[#c9d8d4]">self-pay</p>
+                  <p className="text-4xl font-semibold">{formatCurrency(featuredPanel.price)}</p>
                 </div>
+              </div>
+              <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/10">
+                <div className="h-full w-3/4 rounded-full bg-[var(--accent)]" />
+              </div>
+              <div className="mt-3 flex justify-between text-xs font-semibold text-[#c9d8d4]">
+                <span>Tests selected</span>
+                <span>ZIP next</span>
+              </div>
+            </div>
+            <div className="absolute bottom-5 left-5 right-5 rounded-md border border-[var(--line)] bg-[#fcfffd]/95 p-5 text-[var(--foreground)] shadow-[0_24px_70px_rgba(7,19,31,0.18)] backdrop-blur">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="eyebrow">Private result view</p>
+                  <h3 className="mt-1 text-2xl font-semibold">Markers in one place</h3>
+                </div>
+                <span className="rounded-md bg-[var(--accent-soft)] px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+                  Released
+                </span>
               </div>
               <div className="mt-4 grid gap-2 sm:grid-cols-2">
                 {featuredTests.map((test) => (
@@ -104,20 +140,32 @@ export default function Home() {
                   </p>
                 ))}
               </div>
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                {[
+                  ["Clinic", "2.4 mi"],
+                  ["Timing", "1-3 days"],
+                  ["Privacy", "Account"],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-md border border-[var(--line)] bg-white/70 p-3">
+                    <p className="text-xs text-[var(--muted)]">{label}</p>
+                    <p className="mt-1 font-semibold text-[var(--foreground)]">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="blue-band">
+      <section className="calm-band">
         <div className="page-section py-8">
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              ["Panels", String(panels.length), "Start with one simple choice."],
-              ["Supported states", String(supply.states), "Enter ZIP to find a nearby clinic."],
-              ["Checkout", "Cash-pay", "No insurance or Medicare billing."],
+              ["Curated panels", String(panels.length), "Start with one simple choice."],
+              ["Supported states", String(supply.states), "Use ZIP to route to a nearby clinic."],
+              ["Checkout", "Self-pay", "No insurance or Medicare billing."],
             ].map(([label, value, copy]) => (
-              <div key={label} className="glass-card p-5">
+              <div key={label} className="premium-card p-5">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
                 <p className="mt-2 text-4xl font-semibold text-[var(--brand-dark)]">{value}</p>
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{copy}</p>
@@ -130,7 +178,7 @@ export default function Home() {
       <section id="how-it-works" className="page-section">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-3xl">
-            <p className="eyebrow">Testing is easy</p>
+            <p className="eyebrow">The private route</p>
             <h2 className="mt-2 text-4xl font-semibold">From choosing tests to clinic instructions.</h2>
           </div>
           <Link href="/catalog" className="focus-ring secondary-action">
@@ -156,7 +204,7 @@ export default function Home() {
         <div className="page-section">
           <div className="mb-8 max-w-3xl">
             <p className="eyebrow">Start here</p>
-            <h2 className="mt-2 text-4xl font-semibold">Pick one panel. We keep you moving.</h2>
+            <h2 className="mt-2 text-4xl font-semibold">Pick one panel. Keep the order moving.</h2>
             <p className="page-copy mt-3">
               Start with a panel, then enter ZIP and basic info to see the nearest clinic.
             </p>
@@ -172,10 +220,10 @@ export default function Home() {
       <section className="deep-band">
         <div className="page-section grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="eyebrow text-blue-200">Results without panic</p>
-            <h2 className="mt-2 text-4xl font-semibold text-white">A private dashboard built for action.</h2>
-            <p className="mt-4 text-lg leading-8 text-blue-100">
-              Results are organized into plain labels, simple next steps, and shareable status for loved ones.
+            <p className="eyebrow text-[#9ed5cc]">Results without panic</p>
+            <h2 className="mt-2 text-4xl font-semibold text-white">A private dashboard built for clarity.</h2>
+            <p className="mt-4 text-lg leading-8 text-[#dbe8e4]">
+              Results are arranged with reference ranges, plain-language labels, and privacy controls for your account.
             </p>
             <div className="mt-6 grid gap-3">
               {benefits.map(([title, copy, Icon]) => (
@@ -201,7 +249,7 @@ export default function Home() {
               {[
                 ["HbA1c", "5.4%", "Looks normal"],
                 ["Vitamin D", "27 ng/mL", "Needs attention"],
-                ["LDL", "132 mg/dL", "Discuss next steps"],
+                ["LDL", "132 mg/dL", "Review with a clinician"],
               ].map(([name, value, status]) => (
                 <div key={name} className="rounded-md border border-[var(--line)] bg-white p-4">
                   <div className="flex items-center justify-between gap-4">
@@ -225,8 +273,8 @@ export default function Home() {
       <section id="pricing" className="page-section">
         <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <p className="eyebrow">Cash-pay checkout</p>
-            <h2 className="mt-2 text-4xl font-semibold">A clear cash-pay order, built for trust.</h2>
+            <p className="eyebrow">Self-pay checkout</p>
+            <h2 className="mt-2 text-4xl font-semibold">A clear order, built for trust.</h2>
             <p className="page-copy mt-3">
               Choose the panel, enter ZIP and basic info, see the nearest clinic, and pay without insurance.
             </p>

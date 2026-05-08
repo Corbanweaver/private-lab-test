@@ -48,17 +48,17 @@ export default async function CheckoutPage({
         </div>
       </section>
       <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="glass-card p-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="icon-tile h-12 w-12">
-                  <CreditCard size={24} />
-                </span>
-                <div>
-                  <p className="eyebrow">Checkout flow</p>
-                  <h2 className="text-3xl font-semibold">What happens next</h2>
-                </div>
+        <div className="glass-card p-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="icon-tile h-12 w-12">
+                <CreditCard size={24} />
+              </span>
+              <div>
+                <p className="eyebrow">Checkout flow</p>
+                <h2 className="text-3xl font-semibold">What happens next</h2>
               </div>
+            </div>
             <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring secondary-action text-sm">
               <CreditCard size={17} />
               Back to ZIP and checkout
@@ -66,14 +66,14 @@ export default async function CheckoutPage({
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {nextSteps.map(([Icon, title, copy]) => (
-              <div key={title} className="rounded-md bg-white p-4 shadow-sm">
+              <div key={title} className="rounded-md border border-[var(--line)] bg-[#fcfffd] p-4 shadow-sm">
                 <Icon className="text-[var(--brand)]" size={20} />
                 <h2 className="mt-3 font-semibold">{title}</h2>
                 <p className="mt-1 text-sm text-[var(--muted)]">{copy}</p>
               </div>
             ))}
           </div>
-          <div className="mt-6 rounded-md border border-[var(--line)] bg-white p-4">
+          <div className="mt-6 rounded-md border border-[var(--line)] bg-[#fcfffd] p-4">
             <div className="flex items-start gap-3">
               <CheckCircle2 className="mt-1 text-[var(--brand)]" size={20} />
               <div>
@@ -85,7 +85,7 @@ export default async function CheckoutPage({
               </div>
             </div>
           </div>
-          <div className="mt-4 flex items-start gap-3 rounded-md bg-[var(--soft)] p-4">
+          <div className="mt-4 flex items-start gap-3 rounded-md bg-[var(--accent-soft)] p-4">
             <LockKeyhole className="mt-1 text-[var(--brand)]" size={20} />
             <p className="text-sm leading-6 text-[var(--muted)]">
               Results stay private and can be shared with a loved one from your account.

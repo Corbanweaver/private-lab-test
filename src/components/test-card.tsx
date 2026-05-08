@@ -5,7 +5,7 @@ import type { LabTest } from "@/lib/types";
 
 export function TestCard({ test }: { test: LabTest }) {
   return (
-    <article className="premium-card p-4">
+    <article className="premium-card flex h-full flex-col p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="eyebrow text-xs">{test.category}</p>
@@ -28,8 +28,8 @@ export function TestCard({ test }: { test: LabTest }) {
           <dd className="font-medium">{test.fasting}</dd>
         </div>
       </dl>
-      <p className="mt-4 rounded-md bg-[var(--soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
-        Cash-pay test. No insurance billing.
+      <p className="mt-4 rounded-md bg-[var(--accent-soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
+        Self-pay test. No insurance billing.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {test.biomarkers.slice(0, 4).map((marker) => (
@@ -40,7 +40,7 @@ export function TestCard({ test }: { test: LabTest }) {
       </div>
       <Link
         href={`/builder?add=${test.id}`}
-        className="focus-ring secondary-action mt-4 w-full text-sm"
+        className="focus-ring secondary-action mt-auto w-full text-sm"
       >
         <Plus size={16} />
         Add to order
