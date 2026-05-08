@@ -8,13 +8,14 @@ import { labPartners } from "@/data/lab-partners";
 export default async function CheckoutPage({
   searchParams,
 }: {
-  searchParams: Promise<{ partner?: string; auth?: string; location?: string; mode?: string }>;
+  searchParams: Promise<{ partner?: string; auth?: string; location?: string; mode?: string; mock?: string }>;
 }) {
   const params = await searchParams;
   const partner = labPartners.find((item) => item.id === params.partner) ?? labPartners[0];
   const routedClinic = networkLocationDirectory.find((item) => item.id === params.location);
   const fallbackClinic = partner.drawLocations[0];
   const clinic = routedClinic ?? fallbackClinic;
+  const isSandboxCheckout = params.mock === "1";
   const nextSteps: Array<[LucideIcon, string, string]> = [
     [
       MapPin,
@@ -24,7 +25,11 @@ export default async function CheckoutPage({
         : "A nearby patient service center is selected from your ZIP.",
     ],
     [CreditCard, "Clear self-pay price", "You pay before the lab visit. No insurance billing."],
-    [FileText, "Instructions ready", "Bring your lab order instructions to the clinic. Results stay private."],
+    [
+      FileText,
+      "Requisition pending",
+      "The lab network may need a few moments to return the final requisition PDF after provider submission.",
+    ],
   ];
 
   return (
@@ -33,16 +38,21 @@ export default async function CheckoutPage({
         <div className="page-section grid gap-6 lg:grid-cols-[1fr_380px]">
           <div>
             <p className="eyebrow">Step 4</p>
-            <h1 className="page-title mt-2">Your clinic instructions are ready.</h1>
+            <h1 className="page-title mt-2">Your order is being prepared.</h1>
             <p className="page-copy mt-3 max-w-3xl">
-              No doctor visit. No insurance billing. Provider authorization included where required.
+              No doctor visit. No insurance billing. Provider authorization included where required. We show the
+              clinic now and release the requisition as soon as the provider network returns it.
             </p>
           </div>
           <div className="glass-card p-5">
             <p className="eyebrow">Current status</p>
-            <h2 className="mt-2 text-2xl font-semibold">Provider authorization included</h2>
+            <h2 className="mt-2 text-2xl font-semibold">
+              {isSandboxCheckout ? "Sandbox checkout protected" : "Provider authorization included"}
+            </h2>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Included where required for supported orders, with no separate doctor appointment.
+              {isSandboxCheckout
+                ? "This environment is connected to the lab sandbox, so payment is bypassed until live checkout is explicitly enabled."
+                : "Included where required for supported orders, with no separate doctor appointment."}
             </p>
           </div>
         </div>
@@ -82,8 +92,8 @@ export default async function CheckoutPage({
               <div>
                 <p className="font-semibold">Nearest clinic: {clinic?.name ?? partner.name}</p>
                 <p className="mt-1 text-base leading-7 text-[var(--muted)]">
-                  {clinic?.address ?? "A nearby partner clinic is selected from your ZIP."} We prepare the lab order
-                  and keep results in your private account.
+                  {clinic?.address ?? "A nearby partner clinic is selected from your ZIP."} We submit the order to the
+                  provider network, then show the requisition when it is ready.
                 </p>
               </div>
             </div>
@@ -99,7 +109,7 @@ export default async function CheckoutPage({
             className="focus-ring primary-action mt-6 shadow-[0_22px_60px_rgba(6,18,29,0.22)]"
           >
             <FlaskConical size={18} />
-            See lab instructions
+            Track order status
             <ArrowRight size={17} />
           </Link>
         </div>

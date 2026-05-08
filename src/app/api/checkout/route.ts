@@ -1,6 +1,29 @@
 import { NextResponse } from "next/server";
-import { createOrderQuote } from "@/lib/order-router";
+import { attachStripeSessionToCheckoutIntent, createCheckoutIntent } from "@/lib/checkout-intents";
+import { getProviderAdapter } from "@/lib/provider";
+import { isJunctionSandbox } from "@/lib/providers/junction";
 import { hasStripeConfig, getStripe } from "@/lib/stripe";
+import { hasSupabaseServiceConfig } from "@/lib/supabase";
+import type { LabPatientIntake } from "@/lib/types";
+
+function getPatientIntake(formData: FormData, fallback: { state: string; zip: string }): LabPatientIntake {
+  const value = (key: string) => String(formData.get(key) ?? "").trim();
+  const gender = value("gender").toLowerCase();
+
+  return {
+    firstName: value("firstName"),
+    lastName: value("lastName"),
+    email: value("email"),
+    phone: value("phone"),
+    dob: value("dob"),
+    gender: gender === "female" ? "female" : gender === "male" ? "male" : undefined,
+    addressLine1: value("addressLine1"),
+    addressLine2: value("addressLine2"),
+    city: value("city"),
+    state: fallback.state,
+    zip: fallback.zip,
+  };
+}
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -12,7 +35,8 @@ export async function POST(request: Request) {
   const state = String(formData.get("state") ?? "");
   const zip = String(formData.get("zip") ?? "");
   const collectionType = String(formData.get("collectionType") ?? "walk_in");
-  const quote = createOrderQuote({
+  const provider = getProviderAdapter();
+  const quote = await provider.quoteOrder({
     panelId,
     testIds,
     state,
@@ -24,10 +48,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: quote.unavailableReason ?? quote.customerMessage, quote }, { status: 400 });
   }
 
-  if (!hasStripeConfig()) {
+  if (process.env.LAB_PROVIDER === "junction" && hasStripeConfig() && !hasSupabaseServiceConfig()) {
+    return NextResponse.json(
+      {
+        error:
+          "Live lab orders need SUPABASE_SERVICE_ROLE_KEY so the webhook can submit the provider order after payment without exposing patient intake to Stripe.",
+      },
+      { status: 500 },
+    );
+  }
+
+  const patient = getPatientIntake(formData, { state: quote.state, zip: quote.zip });
+  const checkoutIntentId = await createCheckoutIntent({ quote, patient });
+
+  const forceMockCheckout =
+    process.env.LAB_PROVIDER === "junction" &&
+    isJunctionSandbox() &&
+    process.env.LAB_PROVIDER_SANDBOX_CHECKOUT !== "enabled";
+
+  if (!hasStripeConfig() || forceMockCheckout) {
     return NextResponse.redirect(
       new URL(
-        `/checkout?mock=1&panel=${panelId}&quote=${quote.id}&partner=${quote.partnerId}&location=${quote.selectedLocation?.id}&mode=${quote.orderMode}`,
+        `/checkout?mock=1&panel=${panelId}&quote=${quote.id}&partner=${quote.partnerId}&location=${quote.selectedLocation?.id}&mode=${quote.orderMode}&checkout=${checkoutIntentId ?? ""}`,
         request.url,
       ),
       303,
@@ -60,9 +102,18 @@ export async function POST(request: Request) {
       partnerId: quote.partnerId ?? "",
       routeId: quote.routeId ?? "",
       locationId: quote.selectedLocation?.id ?? "",
+      checkoutIntentId: checkoutIntentId ?? "",
       paymentModel: "cash_pay_only",
     },
   });
+
+  if (checkoutIntentId) {
+    await attachStripeSessionToCheckoutIntent({
+      checkoutIntentId,
+      stripeSessionId: session.id,
+      paymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : null,
+    });
+  }
 
   return NextResponse.redirect(session.url ?? new URL("/checkout", request.url), 303);
 }

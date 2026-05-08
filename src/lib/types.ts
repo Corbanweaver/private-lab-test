@@ -240,6 +240,20 @@ export type ProviderOrder = {
   appointmentUrl: string;
 };
 
+export type LabPatientIntake = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  dob?: string;
+  gender?: "male" | "female";
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+};
+
 export type BiomarkerResult = {
   name: string;
   value: string;

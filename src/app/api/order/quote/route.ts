@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createOrderQuote } from "@/lib/order-router";
+import { getProviderAdapter } from "@/lib/provider";
 import type { CollectionType } from "@/lib/types";
 
 function getCollectionType(value: unknown): CollectionType {
@@ -15,8 +15,9 @@ export async function POST(request: Request) {
     collectionType?: CollectionType;
   };
 
-  const quote = createOrderQuote({
-    panelId: body.panelId,
+  const provider = getProviderAdapter();
+  const quote = await provider.quoteOrder({
+    panelId: body.panelId ?? "complete-wellness",
     testIds: body.testIds,
     state: body.state ?? "",
     zip: body.zip ?? "",

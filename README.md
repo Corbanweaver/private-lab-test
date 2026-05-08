@@ -24,9 +24,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Real Lab Provider Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app defaults to the mock provider. To test real lab connectivity through Junction sandbox:
+
+1. Get a Junction sandbox Team API key.
+2. Set `LAB_PROVIDER=junction`, `JUNCTION_API_KEY`, `JUNCTION_BASE_URL=https://api.sandbox.us.junction.com`, and `SUPABASE_SERVICE_ROLE_KEY` in Vercel/local env.
+3. Use `GET /api/provider/live` to confirm catalog access.
+4. Use `POST /api/provider/live` with `{ "action": "locations", "zip": "80202" }` to verify live clinic lookup.
+5. Map Private Lab Test panels/tests to Junction lab test IDs in `JUNCTION_LAB_TEST_MAP`, for example:
+
+```json
+{
+  "complete-wellness": ["junction-lab-test-id"]
+}
+```
+
+Production provider order writes stay disabled unless `LAB_PROVIDER_ORDER_WRITES=enabled`. Sandbox checkout bypasses Stripe unless `LAB_PROVIDER_SANDBOX_CHECKOUT=enabled`, and direct sandbox order testing is blocked in production unless `LAB_PROVIDER_SANDBOX_TESTS=enabled`. Patient intake is stored server-side in Supabase checkout intents and is not copied into Stripe metadata.
+
+Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results.
 
 ## Learn More
 

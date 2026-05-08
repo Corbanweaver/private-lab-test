@@ -3,7 +3,8 @@ import { labPartners } from "@/data/lab-partners";
 import { checkStateEligibility } from "@/lib/catalog";
 import { getPreferredPartner, requestClinicianAuthorization } from "@/lib/lab-access";
 import { createOrderQuote, getNearestLabLocations } from "@/lib/order-router";
-import type { CollectionType, LabOrderQuote, LabPartnerTier, OrderStatus, ProviderOrder } from "@/lib/types";
+import { isJunctionConfigured, junctionProvider } from "@/lib/providers/junction";
+import type { CollectionType, LabOrderQuote, LabPartnerTier, LabPatientIntake, OrderStatus, ProviderOrder } from "@/lib/types";
 
 export type ProviderAdapter = {
   id: string;
@@ -26,6 +27,7 @@ export type ProviderAdapter = {
     zip?: string;
     total?: number;
     collectionType?: CollectionType;
+    patient?: LabPatientIntake;
   }) => Promise<ProviderOrder>;
   getLabLocations: (input: { zip: string }) => Promise<Array<{ id: string; name: string; distance: string; address: string }>>;
   getRequisition: (orderId: string) => Promise<{ orderId: string; url: string; expiresAt: string }>;
@@ -128,6 +130,10 @@ export const providerAdapters: Record<LabPartnerTier, ProviderAdapter> = {
 };
 
 export function getProviderAdapter(tier: LabPartnerTier = "aggregator") {
+  if (tier === "aggregator" && process.env.LAB_PROVIDER === "junction" && isJunctionConfigured()) {
+    return junctionProvider;
+  }
+
   return providerAdapters[tier];
 }
 

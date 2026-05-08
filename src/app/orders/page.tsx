@@ -1,20 +1,23 @@
 import { CheckCircle2, Headphones } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { conciergeTasks } from "@/data/lab-partners";
-import type { OrderStatus } from "@/lib/types";
 
-const steps: Array<{ status: OrderStatus; label: string; copy: string }> = [
-  { status: "draft", label: "You chose tests", copy: "Your panel is saved in the cart." },
-  { status: "eligible", label: "We checked your state", copy: "We confirm lab ordering is available before payment." },
-  { status: "clinician_review", label: "Authorization included", copy: "Provider authorization is handled automatically where required." },
-  { status: "authorized", label: "Order ready to prepare", copy: "Your lab order can be prepared without a doctor visit." },
-  { status: "paid", label: "Payment complete", copy: "The cash price is paid before the lab visit." },
-  { status: "submitted_to_provider", label: "Sent to lab", copy: "The lab network receives your order." },
-  { status: "lab_order_ready", label: "Ready for visit", copy: "Your instructions are ready." },
-  { status: "collected", label: "Blood draw done", copy: "The lab confirms collection." },
-  { status: "results_received", label: "Results received", copy: "Your results are added to your account." },
-  { status: "reviewed", label: "Checked for next steps", copy: "Important items are flagged clearly." },
-  { status: "released", label: "Ready to view", copy: "You and your loved one can review results." },
+const steps: Array<{ id: string; label: string; copy: string }> = [
+  { id: "draft", label: "You chose tests", copy: "Your panel is saved in the cart." },
+  { id: "eligible", label: "We checked your state", copy: "We confirm lab ordering is available before payment." },
+  { id: "authorized", label: "Authorization included", copy: "Provider authorization is handled automatically where required." },
+  { id: "paid", label: "Payment complete", copy: "The cash price is paid before the lab visit." },
+  { id: "submitted_to_provider", label: "Sent to lab", copy: "The lab network receives your order." },
+  {
+    id: "requisition_pending",
+    label: "Requisition pending",
+    copy: "Some provider networks return the requisition PDF after the order has a sample ID.",
+  },
+  { id: "lab_order_ready", label: "Ready for visit", copy: "Your final requisition and visit instructions are ready." },
+  { id: "collected", label: "Blood draw done", copy: "The lab confirms collection." },
+  { id: "results_received", label: "Results received", copy: "Your results are added to your account." },
+  { id: "reviewed", label: "Checked for next steps", copy: "Important items are flagged clearly." },
+  { id: "released", label: "Ready to view", copy: "You and your loved one can review results." },
 ];
 
 export default function OrdersPage() {
@@ -32,7 +35,7 @@ export default function OrdersPage() {
       <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mt-8 grid gap-3">
           {steps.map((step, index) => (
-            <div key={step.status} className="premium-card grid grid-cols-[44px_1fr] gap-3 p-4">
+            <div key={step.id} className="premium-card grid grid-cols-[44px_1fr] gap-3 p-4">
               <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[var(--brand)] font-mono text-sm text-white">
                 {index + 1}
               </span>

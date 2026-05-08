@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getProviderAdapter } from "@/lib/provider";
-import type { CollectionType, LabPartnerTier } from "@/lib/types";
+import type { CollectionType, LabPartnerTier, LabPatientIntake } from "@/lib/types";
 
 function getTier(value: unknown): LabPartnerTier {
   return value === "regional" || value === "mobile" || value === "national" ? value : "aggregator";
@@ -24,6 +24,7 @@ export async function POST(request: Request) {
     tier?: LabPartnerTier;
     total?: number;
     collectionType?: CollectionType;
+    patient?: LabPatientIntake;
   };
   const provider = getProviderAdapter(getTier(body.tier));
 
@@ -64,6 +65,7 @@ export async function POST(request: Request) {
         zip: body.zip,
         total: body.total,
         collectionType: getCollectionType(body.collectionType),
+        patient: body.patient,
       }),
     );
   }

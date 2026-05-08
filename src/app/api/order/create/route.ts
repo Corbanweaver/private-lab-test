@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { createOrderQuote } from "@/lib/order-router";
 import { getProviderAdapter } from "@/lib/provider";
-import type { CollectionType } from "@/lib/types";
+import type { CollectionType, LabPatientIntake } from "@/lib/types";
 
 function getCollectionType(value: unknown): CollectionType {
   return value === "mobile" || value === "kit" ? value : "walk_in";
@@ -15,10 +14,12 @@ export async function POST(request: Request) {
     zip?: string;
     collectionType?: CollectionType;
     userId?: string;
+    patient?: LabPatientIntake;
   };
 
-  const quote = createOrderQuote({
-    panelId: body.panelId,
+  const provider = getProviderAdapter();
+  const quote = await provider.quoteOrder({
+    panelId: body.panelId ?? "complete-wellness",
     testIds: body.testIds,
     state: body.state ?? "",
     zip: body.zip ?? "",
@@ -29,7 +30,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: quote.unavailableReason ?? quote.customerMessage, quote }, { status: 400 });
   }
 
-  const provider = getProviderAdapter();
   const order = await provider.createOrder({
     userId: body.userId ?? "self-pay-customer",
     panelId: quote.panelId,
@@ -38,6 +38,7 @@ export async function POST(request: Request) {
     zip: quote.zip,
     total: quote.total,
     collectionType: quote.collectionType,
+    patient: body.patient,
   });
 
   return NextResponse.json({ quote, order });

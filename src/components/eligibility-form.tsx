@@ -33,7 +33,13 @@ export function EligibilityForm({
   testIds?: string[];
 }) {
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [addressLine1, setAddressLine1] = useState("");
+  const [city, setCity] = useState("");
   const [state, setState] = useState("CO");
   const [zip, setZip] = useState("80202");
   const [collectionType, setCollectionType] = useState<CollectionType>("walk_in");
@@ -112,6 +118,19 @@ export function EligibilityForm({
             onChange={(event) => setFirstName(event.target.value)}
             className="focus-ring input-control"
             autoComplete="given-name"
+            required
+          />
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          Last name
+          <input
+            {...formProps}
+            name="lastName"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+            className="focus-ring input-control"
+            autoComplete="family-name"
+            required
           />
         </label>
         <label className="grid gap-1 text-sm font-medium">
@@ -124,6 +143,72 @@ export function EligibilityForm({
             onChange={(event) => setEmail(event.target.value)}
             className="focus-ring input-control"
             autoComplete="email"
+            required
+          />
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          Mobile phone
+          <input
+            {...formProps}
+            name="phone"
+            type="tel"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            className="focus-ring input-control"
+            autoComplete="tel"
+            required
+          />
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          Date of birth
+          <input
+            {...formProps}
+            name="dob"
+            type="date"
+            value={dob}
+            onChange={(event) => setDob(event.target.value)}
+            className="focus-ring input-control"
+            autoComplete="bday"
+            required
+          />
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          Sex for lab ranges
+          <select
+            {...formProps}
+            name="gender"
+            value={gender}
+            onChange={(event) => setGender(event.target.value)}
+            className="focus-ring input-control"
+            required
+          >
+            <option value="">Select</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+          </select>
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          Street address
+          <input
+            {...formProps}
+            name="addressLine1"
+            value={addressLine1}
+            onChange={(event) => setAddressLine1(event.target.value)}
+            className="focus-ring input-control"
+            autoComplete="address-line1"
+            required
+          />
+        </label>
+        <label className="grid gap-1 text-sm font-medium">
+          City
+          <input
+            {...formProps}
+            name="city"
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+            className="focus-ring input-control"
+            autoComplete="address-level2"
+            required
           />
         </label>
         <label className="grid gap-1 text-sm font-medium">
