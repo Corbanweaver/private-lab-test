@@ -46,7 +46,7 @@ When mapping individual test IDs, the Junction adapter requires every selected t
 
 Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results. The national lab affiliation ladder is tracked in `docs/lab-partner-outreach-plan.md` and surfaced at `/partners/outreach`.
 
-The latest product research sprint is documented in `docs/market-research-and-product-sprint.md`, the company scale playbook is in `docs/company-scale-playbook.md`, and the app exposes working strategy/program surfaces at `/strategy` and `/programs`.
+The latest product research sprint is documented in `docs/market-research-and-product-sprint.md`, the company scale playbook is in `docs/company-scale-playbook.md`, and the AI growth stack is in `docs/ai-growth-stack-plan.md`. The app exposes working strategy/program/growth surfaces at `/strategy`, `/programs`, and `/growth`.
 
 ## Learn More
 

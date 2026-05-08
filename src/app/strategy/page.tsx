@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, CheckCircle2, ExternalLink, FlaskConical, Layers3, Target } from "lucide-react";
+import { ArrowRight, BookOpen, BrainCircuit, CheckCircle2, ExternalLink, FlaskConical, Layers3, Target } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { healthPrograms, scaleBenchmarks } from "@/data/health-programs";
 import {
@@ -35,6 +35,10 @@ export default function StrategyPage() {
               <Link href="/programs" className="focus-ring secondary-action">
                 <Layers3 size={18} />
                 Programs
+              </Link>
+              <Link href="/growth" className="focus-ring secondary-action">
+                <BrainCircuit size={18} />
+                AI growth stack
               </Link>
             </div>
           </div>

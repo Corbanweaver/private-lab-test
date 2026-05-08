@@ -84,31 +84,38 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
    - Current focus.
    - Works when Junction or another provider can create real orders.
 
-2. Program landing pages
+2. AI-guided ordering and growth engine
+   - Safe panel concierge for customers.
+   - Non-PHI funnel analytics.
+   - Lifecycle reminders for requisitions, results, and retests.
+   - Lab-partner acquisition machine.
+   - Documented compliance posture before scaling PHI.
+
+3. Program landing pages
    - Whole Body Baseline.
    - Weight and Metabolic.
    - Men's Hormone Baseline.
    - Women's Hormone and Energy.
    - Heart and Longevity.
 
-3. Result dashboard
+4. Result dashboard
    - PDF result storage.
    - Structured biomarker trends.
    - Educational insights.
    - "Discuss with a clinician" prompts.
 
-4. Membership engine
+5. Membership engine
    - Annual Lab Pass.
    - 12-week metabolic follow-up.
    - Retest reminders.
    - Member pricing and support.
 
-5. Clinical marketplace
+6. Clinical marketplace
    - Optional licensed clinician review.
    - Treatment partner referrals only where compliant.
    - Clear separation between lab ordering and prescribing.
 
-6. Family/caregiver layer
+7. Family/caregiver layer
    - Permissioned result sharing.
    - Appointment support.
    - Adult caregiver notifications.
@@ -132,3 +139,4 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 - Book Getlabs or another mobile phlebotomy partner.
 - Decide whether `/strategy` and `/programs` should be public or hidden before production push.
 - Start legal/privacy review before advertising stored results, family sharing, or any treatment pathway.
+- Connect PostHog, OpenAI API, Customer.io/Resend, Twilio, and a compliance tool only with the guardrails in `docs/ai-growth-stack-plan.md`.
