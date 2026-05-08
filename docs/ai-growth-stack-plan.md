@@ -72,7 +72,7 @@ Environment:
 
 ### 3. Lifecycle Automation
 
-Tools: Customer.io, Resend, Twilio.
+Tools: Resend first, then Customer.io and Twilio when journeys become more complex.
 
 Journeys:
 
@@ -140,8 +140,9 @@ Guardrail: use synthetic data only in design tools.
 
 ## Founder Next Steps
 
+- Work through `docs/founder-action-checklist.md` in one batch setup session.
 - Create PostHog project and send the project API key/host.
-- Decide whether Customer.io or Resend should own early lifecycle email.
+- Use Resend for early lifecycle email because the account already exists.
 - Set up Twilio only after consent language and message templates are ready.
 - Start Vanta or Drata when real PHI/result workflows become the focus.
 - Request OpenAI BAA before live AI receives anything that could be PHI.

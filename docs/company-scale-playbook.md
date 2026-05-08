@@ -133,6 +133,7 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 
 ## Immediate Founder Asks
 
+- Batch the account/key/approval work in `docs/founder-action-checklist.md`.
 - Get Junction production or expanded sandbox IDs for the launch menu.
 - Apply to Quest Health's affiliate program and keep Quest-branded pages disabled until approval and brand-use terms are written.
 - Book ORDRS as the second API-network conversation.
