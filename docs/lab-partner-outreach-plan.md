@@ -79,6 +79,69 @@ Use proof points:
 
 Success condition: one national or regional enterprise conversation opened with real demand data.
 
+## National Lab Affiliation Ladder
+
+Do not treat "affiliate with Quest" as one step. There are five realistic levels:
+
+1. Affiliate/referral first
+   - Fastest public route is Quest Health's affiliate program.
+   - Use it to validate traffic, keywords, panels, and customer intent while Quest owns checkout, provider support, and results.
+   - Ask for tracking links, banners, category rules, allowed claims, reporting, and whether Private Lab Test can be approved for lab-test education pages.
+
+2. White-label or API marketplace
+   - Use Junction, ORDRS, LabTestingAPI, or Ulta Lab Tests-style partners to own more of checkout without waiting for direct Quest/Labcorp enterprise sales.
+   - Ulta's pharmacy materials describe a branded consumer lab testing website and a Quest Diagnostics bi-directional interface. This may be a practical shortcut worth qualifying.
+
+3. Provider-account ordering
+   - With a licensed clinician partner, qualify whether Quest Quanum, Labcorp provider services, or other provider portals can support client-bill/cash-pay workflows.
+   - This requires a real ordering provider/entity, correct state coverage, billing clarity, and result-routing operations.
+
+4. Enterprise direct
+   - Approach Quest Health/Quest Diagnostics and Labcorp with proof: order attempts, requested tests, abandoned ZIPs, support volume, completion rate, and projected monthly orders.
+   - Ask for partner API, catalog export, state coverage, brand-use permissions, result delivery, pricing, and support escalation.
+
+5. Regional and retail redundancy
+   - Use BioReference Direct for NY/NJ opportunities, Sonic Healthcare USA divisions for regional relationships, and Any Lab Test Now/local retail labs for cash-pay market validation.
+   - These partners may solve hard states or local price gaps faster than national enterprise deals.
+
+## Quest-Specific Path
+
+### Immediate
+
+- Apply to Quest Health's affiliate program through the official application.
+- Build Quest Health outbound pages only if approved and only with approved claims/brand rules.
+- Track clicks, panel interest, and customer drop-off so we have data for a deeper partner conversation.
+
+### After Demand Proof
+
+- Ask Quest Health partnerships about APIs for sales channels and partnerships at scale.
+- Ask whether a white-label, co-branded, referral, or integrated ordering relationship is possible.
+- Bring proof of demand, compliance posture, and support operations.
+
+### Do Not Promise Yet
+
+- Do not claim Private Lab Test is a Quest partner until accepted in writing.
+- Do not use Quest marks in marketing without permission.
+- Do not imply we can send orders directly to Quest until the provider/API/account path is signed and tested.
+
+## Labcorp-Specific Path
+
+- Labcorp OnDemand is a consumer benchmark for online test purchasing, immediate physician review, local scheduling, and private Labcorp Patient results, but a public self-serve affiliate path was not obvious from official pages.
+- Qualify business development, OnDemand partnership, provider-account, and Labcorp Link/provider services routes.
+- Because Labcorp works with Getlabs for at-home collection, pair Labcorp outreach with a Getlabs mobile draw conversation.
+
+## BioReference-Specific Path
+
+- BioReference Direct launched for New York and New Jersey patients age 18+ with clinical oversight and HIPAA-secure results.
+- Treat BioReference as a strategic state-specific partner for NY/NJ, especially because those states are often harder for direct-access testing.
+- Ask for referral/affiliate options, provider-ordering options, general wellness panel coverage, and result routing.
+
+## Sonic-Specific Path
+
+- Sonic Healthcare USA is best approached division by division, not as a generic national affiliate.
+- Start with launch states where Sonic divisions or affiliated labs have patient service centers and local account managers.
+- Ask for written cash-pay menu, clinician-authorized requisition acceptance, PSC list, result delivery, and critical-value escalation.
+
 ## Qualification Checklist
 
 Do not activate a partner until these are documented:
@@ -132,6 +195,11 @@ Track every Friday:
 - Health Gorilla lab market: https://www.healthgorilla.com/home/markets/labs
 - Getlabs partners: https://www.getlabs.com/partners
 - Quest Health affiliate program: https://www.questhealth.com/affiliate-program.html
+- Quest outreach partnerships: https://www.questdiagnostics.com/business-solutions/hospitals-health-systems/outreach-partnerships
 - Labcorp OnDemand: https://www.ondemand.labcorp.com/
+- Labcorp how it works: https://www.labcorp.com/patients/tests/how-labcorp-works
+- BioReference Direct: https://www.bioreferencedirect.com/
 - Sonic Healthcare USA division map: https://pgms.sonichealthcareusa.com/common/divmap/default.aspx
+- Any Lab Test Now franchise: https://www.anylabtestnow.com/franchise/
+- Ulta Lab Tests pharmacy program: https://content.ultalabtests.com/static/documents/PharmacyServiceOfferingNCPA.pdf
 - CMS CLIA: https://www.cms.gov/medicare/quality/clinical-laboratory-improvement-amendments

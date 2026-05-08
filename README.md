@@ -44,7 +44,7 @@ Production provider order writes stay disabled unless `LAB_PROVIDER_ORDER_WRITES
 
 When mapping individual test IDs, the Junction adapter requires every selected test to have a provider ID. Set `JUNCTION_ALLOW_PARTIAL_TEST_MAP=true` only for temporary sandbox experiments.
 
-Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results.
+Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results. The national lab affiliation ladder is tracked in `docs/lab-partner-outreach-plan.md` and surfaced at `/partners/outreach`.
 
 The latest product research sprint is documented in `docs/market-research-and-product-sprint.md`, the company scale playbook is in `docs/company-scale-playbook.md`, and the app exposes working strategy/program surfaces at `/strategy` and `/programs`.
 

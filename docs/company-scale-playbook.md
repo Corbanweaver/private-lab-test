@@ -118,6 +118,7 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 - Provider test ID mapping by panel and state.
 - ZIP-level clinic/mobile availability.
 - Cash price database by lab, test, draw fee, and region.
+- National lab affiliation ladder: affiliate/referral proof first, then white-label/API networks, then provider-account or enterprise direct contracting.
 - Result ingestion and normalized biomarkers.
 - Retest reminders and longitudinal trends.
 - Support workflows for redraws, missed requisitions, result delays, and critical values.
@@ -126,6 +127,7 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 ## Immediate Founder Asks
 
 - Get Junction production or expanded sandbox IDs for the launch menu.
+- Apply to Quest Health's affiliate program and keep Quest-branded pages disabled until approval and brand-use terms are written.
 - Book ORDRS as the second API-network conversation.
 - Book Getlabs or another mobile phlebotomy partner.
 - Decide whether `/strategy` and `/programs` should be public or hidden before production push.

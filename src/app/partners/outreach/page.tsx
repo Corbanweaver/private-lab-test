@@ -4,6 +4,7 @@ import {
   CalendarCheck,
   CheckCircle2,
   ClipboardList,
+  ExternalLink,
   Handshake,
   Mail,
   MapPinned,
@@ -23,6 +24,12 @@ import {
   summarizeOutreachTargets,
   weeklyOutreachKpis,
 } from "@/data/lab-outreach";
+import {
+  affiliationLadder,
+  affiliationModelLabels,
+  getImmediateAffiliationTargets,
+  nationalLabAffiliationTargets,
+} from "@/data/national-lab-affiliates";
 
 const metricCards = [
   {
@@ -46,6 +53,7 @@ const metricCards = [
     Icon: Send,
   },
 ];
+const immediateAffiliationTargets = getImmediateAffiliationTargets();
 
 export default function LabOutreachPage() {
   const summary = summarizeOutreachTargets();
@@ -81,6 +89,53 @@ export default function LabOutreachPage() {
             <Handshake size={18} />
             Partner page
           </Link>
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--line)] bg-white">
+        <div className="page-section">
+          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
+            <div>
+              <p className="eyebrow">Quest and national lab affiliation</p>
+              <h2 className="mt-2 text-3xl font-semibold">Start affiliate, then earn direct access.</h2>
+              <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                Quest has a public affiliate path through Quest Health, but deeper Quest/Labcorp ordering should be
+                treated like enterprise healthcare sales: bring demand proof, privacy posture, support workflows, and
+                clinical operations.
+              </p>
+              <div className="mt-5 grid gap-3">
+                {immediateAffiliationTargets.map((target) => (
+                  <a
+                    key={target.id}
+                    href={target.sourceHref}
+                    className="focus-ring premium-card flex items-start justify-between gap-4 p-4"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>
+                      <span className="block text-sm font-semibold text-[var(--accent-strong)]">
+                        {affiliationModelLabels[target.model]} - {target.timeline}
+                      </span>
+                      <span className="mt-1 block text-lg font-semibold text-[var(--brand-dark)]">{target.company}</span>
+                      <span className="mt-1 block text-sm leading-6 text-[var(--muted)]">{target.productUnlock}</span>
+                    </span>
+                    <ExternalLink className="shrink-0 text-[var(--brand)]" size={18} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="grid gap-3">
+              {affiliationLadder.map((item) => (
+                <div key={item.step} className="premium-card flex items-start gap-4 p-4">
+                  <span className="simple-number h-9 w-9 text-sm">{item.step}</span>
+                  <div>
+                    <h3 className="text-lg font-semibold">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{item.summary}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -171,6 +226,57 @@ export default function LabOutreachPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-6 max-w-3xl">
+            <p className="eyebrow">National lab target map</p>
+            <h2 className="mt-2 text-3xl font-semibold">How to become affiliated with Quest and similar labs.</h2>
+            <p className="page-copy mt-3">
+              Each target has a different entry point. Some are true affiliates, some are API shortcuts, and some require
+              enterprise proof before they will take us seriously.
+            </p>
+          </div>
+          <div className="table-shell overflow-x-auto">
+            <table className="w-full min-w-[1180px] text-left text-sm">
+              <thead className="bg-[var(--soft)] text-xs uppercase text-[var(--brand-dark)]">
+                <tr>
+                  <th className="px-4 py-3">Priority</th>
+                  <th className="px-4 py-3">Company</th>
+                  <th className="px-4 py-3">Model</th>
+                  <th className="px-4 py-3">Entry point</th>
+                  <th className="px-4 py-3">Ask</th>
+                  <th className="px-4 py-3">Unlock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {nationalLabAffiliationTargets.map((target) => (
+                  <tr key={target.id} className="border-t border-[var(--line)] align-top">
+                    <td className="px-4 py-3">
+                      <span className="simple-number h-8 w-8 text-sm">{target.priority}</span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <a
+                        href={target.sourceHref}
+                        className="focus-ring rounded-sm font-semibold text-[var(--brand-dark)] underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--brand)]"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {target.company}
+                      </a>
+                      <p className="mt-1 text-xs text-[var(--muted)]">{target.timeline}</p>
+                    </td>
+                    <td className="px-4 py-3">{affiliationModelLabels[target.model]}</td>
+                    <td className="px-4 py-3">{target.entryPoint}</td>
+                    <td className="px-4 py-3 text-[var(--muted)]">{target.ask}</td>
+                    <td className="px-4 py-3 font-medium">{target.productUnlock}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
