@@ -37,6 +37,7 @@ LAB_PROVIDER=junction
 JUNCTION_API_KEY=
 JUNCTION_BASE_URL=https://api.sandbox.us.junction.com
 JUNCTION_LAB_TEST_MAP='{"complete-wellness":["<junction lab_test_id>"]}'
+JUNCTION_ALLOW_PARTIAL_TEST_MAP=
 SUPABASE_SERVICE_ROLE_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
@@ -45,6 +46,10 @@ STRIPE_WEBHOOK_SECRET=
 Set `LAB_PROVIDER_ORDER_WRITES=enabled` only after production contracting, webhook verification, and clinical operations review. Sandbox writes are allowed without that flag.
 
 Keep `LAB_PROVIDER_SANDBOX_CHECKOUT` unset to bypass Stripe while the provider is pointed at sandbox. Keep `LAB_PROVIDER_SANDBOX_TESTS` unset in production so the direct sandbox-order test endpoint stays blocked on the public deployment.
+
+`LAB_PROVIDER_CATALOG_DEBUG=enabled` allows catalog/mapping debug actions on production. Keep it unset unless you are actively auditing the provider catalog; Preview deployments can use those actions without the flag.
+
+Keep `JUNCTION_ALLOW_PARTIAL_TEST_MAP` unset for real orders. The adapter will block an order if the selected panel relies on individual test mappings and any selected test is missing a Junction ID.
 
 ## Current Sandbox Mapping
 
@@ -58,6 +63,27 @@ The current Junction sandbox catalog exposes only a few test IDs. For now, `comp
 ```
 
 This is not the final production Complete Wellness panel. Replace it when Junction provides production IDs for CMP, CBC, lipid panel, A1C, TSH, vitamin D, B12/folate, hsCRP, ferritin, and any other launched markers.
+
+## Mapping Workflow
+
+Use a Preview deployment or a private local server:
+
+```bash
+POST /api/provider/live
+{"action":"mapping"}
+```
+
+The response includes:
+
+- `byTestId`: ranked provider candidates for each Private Lab Test test ID.
+- `suggestedMap`: high-confidence individual test mappings that match the default walk-in collection flow.
+- `panelMap`: generated complete panel-to-provider-test mappings.
+- `partialPanelMap`: panels that still have missing provider IDs.
+- `collectionMismatches`: high-confidence candidates that were skipped because they require another collection method, such as at-home phlebotomy.
+- `envValue`: compact JSON ready for `JUNCTION_LAB_TEST_MAP`.
+- `missingTestIds`: tests that still need a manual provider ID from Junction.
+
+Only use the generated `envValue` after reviewing the candidates. This keeps the production menu from silently mapping a marker to the wrong lab product.
 
 ## Operational Requirements Before Production
 

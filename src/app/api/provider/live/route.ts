@@ -4,6 +4,7 @@ import {
   isJunctionSandbox,
   isLiveProviderWriteAllowed,
   getJunctionCatalogPreview,
+  getJunctionMappingCandidates,
   junctionTestMapHelp,
 } from "@/lib/providers/junction";
 import { getProviderAdapter } from "@/lib/provider";
@@ -11,6 +12,10 @@ import type { CollectionType, LabPatientIntake } from "@/lib/types";
 
 function getCollectionType(value: unknown): CollectionType {
   return value === "mobile" || value === "kit" ? value : "walk_in";
+}
+
+function canUseCatalogDebug() {
+  return process.env.VERCEL_ENV !== "production" || process.env.LAB_PROVIDER_CATALOG_DEBUG === "enabled";
 }
 
 export async function GET() {
@@ -51,7 +56,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const body = (await request.json()) as {
-    action?: "locations" | "quote" | "catalog" | "sandbox_order";
+    action?: "locations" | "quote" | "catalog" | "mapping" | "sandbox_order";
     zip?: string;
     state?: string;
     panelId?: string;
@@ -81,8 +86,22 @@ export async function POST(request: Request) {
     if (!isJunctionConfigured()) {
       return NextResponse.json({ error: "Junction is not configured." }, { status: 503 });
     }
+    if (!canUseCatalogDebug()) {
+      return NextResponse.json({ error: "Catalog debug is disabled in production." }, { status: 403 });
+    }
 
     return NextResponse.json({ tests: await getJunctionCatalogPreview() });
+  }
+
+  if (body.action === "mapping") {
+    if (!isJunctionConfigured()) {
+      return NextResponse.json({ error: "Junction is not configured." }, { status: 503 });
+    }
+    if (!canUseCatalogDebug()) {
+      return NextResponse.json({ error: "Mapping debug is disabled in production." }, { status: 403 });
+    }
+
+    return NextResponse.json(await getJunctionMappingCandidates());
   }
 
   if (body.action === "sandbox_order") {

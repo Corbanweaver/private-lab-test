@@ -23,7 +23,10 @@ type JunctionLab = {
 
 type JunctionLabTest = {
   id: string;
+  slug?: string;
   name: string;
+  description?: string;
+  sample_type?: string;
   price?: number;
   status?: string;
   is_active?: boolean;
@@ -33,6 +36,11 @@ type JunctionLabTest = {
 };
 
 type JunctionLabTestsResponse = JunctionLabTest[] | { lab_tests?: JunctionLabTest[] };
+type JunctionLabTestsPaginatedResponse = {
+  data?: Array<JunctionLabTest | { lab_test?: JunctionLabTest }>;
+  lab_tests?: JunctionLabTest[];
+  next_cursor?: string | null;
+};
 
 type JunctionOrder = {
   id: string;
@@ -220,7 +228,12 @@ function resolveMappedLabTestIds(panelId: string, testIds: string[]) {
   const mapping = parseLabTestMap();
   const panelMapping = mapping[panelId];
   if (panelMapping) {
-    return Array.isArray(panelMapping) ? panelMapping : [panelMapping];
+    const labTestIds = Array.isArray(panelMapping) ? panelMapping : [panelMapping];
+    if (labTestIds.length === 0) {
+      throw new Error(`Junction panel mapping for ${panelId} is empty.`);
+    }
+
+    return labTestIds;
   }
 
   const mapped = testIds.flatMap((testId) => {
@@ -228,11 +241,16 @@ function resolveMappedLabTestIds(panelId: string, testIds: string[]) {
     if (!value) return [];
     return Array.isArray(value) ? value : [value];
   });
+  const missingTestIds = testIds.filter((testId) => !mapping[testId]);
 
   if (mapped.length === 0) {
     throw new Error(
       "No Junction lab test mapping found. Set JUNCTION_LAB_TEST_MAP with panel/test IDs mapped to Junction lab_test IDs.",
     );
+  }
+
+  if (missingTestIds.length > 0 && process.env.JUNCTION_ALLOW_PARTIAL_TEST_MAP !== "true") {
+    throw new Error(`Junction lab test mapping for ${panelId} is incomplete. Missing: ${missingTestIds.join(", ")}.`);
   }
 
   return Array.from(new Set(mapped));
@@ -338,8 +356,47 @@ async function getAvailableLabs() {
 }
 
 async function getAvailableLabTests() {
-  const response = await junctionFetch<JunctionLabTestsResponse>("/v3/lab_tests/?generation_method=all&status=active");
-  return Array.isArray(response) ? response : response.lab_tests ?? [];
+  try {
+    const tests: JunctionLabTest[] = [];
+    let nextCursor: string | null | undefined = null;
+
+    do {
+      const params = new URLSearchParams({
+        generation_method: "all",
+        status: "active",
+        lab_test_limit: "100",
+      });
+      if (nextCursor) params.set("next_cursor", nextCursor);
+
+      const response = await junctionFetch<JunctionLabTestsPaginatedResponse>(`/v3/lab_test?${params.toString()}`);
+      tests.push(...normalizeLabTestResponse(response));
+      nextCursor = response.next_cursor;
+    } while (nextCursor);
+
+    return tests;
+  } catch {
+    const response = await junctionFetch<JunctionLabTestsResponse>("/v3/lab_tests/?generation_method=all&status=active");
+    return normalizeLabTestResponse(response);
+  }
+}
+
+function normalizeLabTestResponse(response: JunctionLabTestsResponse | JunctionLabTestsPaginatedResponse) {
+  if (Array.isArray(response)) {
+    return response.map((entry) => normalizeLabTestEntry(entry)).filter((entry): entry is JunctionLabTest => Boolean(entry));
+  }
+
+  if ("data" in response && Array.isArray(response.data)) {
+    return response.data.map((entry) => normalizeLabTestEntry(entry)).filter((entry): entry is JunctionLabTest => Boolean(entry));
+  }
+
+  return (response.lab_tests ?? [])
+    .map((entry) => normalizeLabTestEntry(entry))
+    .filter((entry): entry is JunctionLabTest => Boolean(entry));
+}
+
+function normalizeLabTestEntry(entry: JunctionLabTest | { lab_test?: JunctionLabTest }) {
+  if ("lab_test" in entry) return entry.lab_test;
+  return entry;
 }
 
 async function createJunctionUser(clientUserId: string) {
@@ -466,14 +523,155 @@ export async function getJunctionCatalogPreview() {
   const tests = await getAvailableLabTests();
   return tests.map((test) => ({
     id: test.id,
+    slug: test.slug,
     name: test.name,
+    description: test.description,
     method: test.method,
+    sampleType: test.sample_type,
     price: test.price,
     status: test.status,
     active: test.is_active,
     lab: test.lab?.name ?? test.lab?.slug,
     markers: test.markers?.map((marker) => marker.slug || marker.name).filter(Boolean).slice(0, 12) ?? [],
   }));
+}
+
+const labTestSynonyms: Record<string, string[]> = {
+  cmp: ["comprehensive metabolic panel", "cmp", "metabolic panel", "comp metabolic panel"],
+  cbc: ["complete blood count", "cbc", "blood count", "cbc with differential", "cbc diff"],
+  lipids: ["lipid panel", "lipids", "cholesterol", "lipid"],
+  a1c: ["hemoglobin a1c", "hba1c", "a1c", "glycohemoglobin"],
+  tsh: ["tsh", "thyroid stimulating hormone"],
+  "thyroid-full": ["thyroid expanded", "thyroid panel", "free t4", "free t3", "tpo", "thyroid antibodies"],
+  "vit-d": ["vitamin d", "25-hydroxy", "25 hydroxy", "25-oh", "vit d"],
+  "b12-folate": ["b12", "folate", "vitamin b12", "b12 and folate"],
+  hscrp: ["hs-crp", "hscrp", "high sensitivity crp", "c-reactive protein"],
+  testosterone: ["testosterone", "free testosterone", "total testosterone", "shbg"],
+  estradiol: ["estradiol", "e2", "sensitive estradiol"],
+  ferritin: ["ferritin", "iron storage"],
+};
+const minimumMappingCandidateScore = 35;
+const defaultMappingMethod: JunctionCollectionMethod = "walk_in_test";
+
+function normalizeSearch(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function scoreCandidate(testId: string, candidate: Awaited<ReturnType<typeof getJunctionCatalogPreview>>[number]) {
+  const localTest = labTests.find((test) => test.id === testId);
+  const synonyms = [localTest?.name, ...(labTestSynonyms[testId] ?? [])].filter(Boolean).map((value) => normalizeSearch(String(value)));
+  const markers = candidate.markers.map((marker) => normalizeSearch(String(marker)));
+  const haystack = normalizeSearch(
+    [candidate.name, candidate.slug, candidate.description, candidate.lab, candidate.method, markers.join(" ")].filter(Boolean).join(" "),
+  );
+  let score = 0;
+  const reasons: string[] = [];
+
+  for (const synonym of synonyms) {
+    if (!synonym) continue;
+    if (haystack.includes(synonym)) {
+      score += synonym.length > 8 ? 45 : 30;
+      reasons.push(`matched "${synonym}"`);
+    }
+  }
+
+  for (const marker of markers) {
+    if (synonyms.some((synonym) => marker.includes(synonym) || synonym.includes(marker))) {
+      score += 20;
+      reasons.push(`marker "${marker}"`);
+    }
+  }
+
+  if (candidate.method === "walk_in_test") {
+    score += 8;
+    reasons.push("walk-in");
+  }
+
+  if (/labcorp|quest/i.test(String(candidate.lab ?? ""))) {
+    score += 6;
+    reasons.push("major lab");
+  }
+
+  return { score, reasons: Array.from(new Set(reasons)) };
+}
+
+export async function getJunctionMappingCandidates() {
+  const catalog = await getJunctionCatalogPreview();
+  const byTestId = Object.fromEntries(
+    labTests.map((test) => {
+      const candidates = catalog
+        .map((candidate) => {
+          const result = scoreCandidate(test.id, candidate);
+          return {
+            id: candidate.id,
+            name: candidate.name,
+            lab: candidate.lab,
+            method: candidate.method,
+            price: candidate.price,
+            markers: candidate.markers,
+            collectionCompatible: !candidate.method || candidate.method === defaultMappingMethod,
+            score: result.score,
+            reasons: result.reasons,
+          };
+        })
+        .filter((candidate) => candidate.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+
+      return [test.id, { testName: test.name, candidates }];
+    }),
+  );
+  const suggestedMap: Record<string, string> = {};
+  const collectionMismatches: Record<string, { id: string; name?: string; method?: string; score: number }> = {};
+
+  for (const [testId, entry] of Object.entries(byTestId)) {
+    const compatible = entry.candidates.find((candidate) => candidate.collectionCompatible && candidate.score >= minimumMappingCandidateScore);
+    if (compatible) {
+      suggestedMap[testId] = compatible.id;
+      continue;
+    }
+
+    const best = entry.candidates[0];
+    if (best && best.score >= minimumMappingCandidateScore && !best.collectionCompatible) {
+      collectionMismatches[testId] = {
+        id: best.id,
+        name: best.name,
+        method: best.method,
+        score: best.score,
+      };
+    }
+  }
+
+  const panelMap: Record<string, string[]> = {};
+  const partialPanelMap: Record<string, { labTestIds: string[]; missingTestIds: string[] }> = {};
+
+  for (const panel of panels) {
+    const labTestIds = Array.from(new Set(panel.testIds.map((testId) => suggestedMap[testId]).filter((id): id is string => Boolean(id))));
+    const missingTestIds = panel.testIds.filter((testId) => !suggestedMap[testId]);
+
+    if (missingTestIds.length === 0 && labTestIds.length > 0) {
+      panelMap[panel.id] = labTestIds;
+    } else {
+      partialPanelMap[panel.id] = { labTestIds, missingTestIds };
+    }
+  }
+
+  return {
+    catalogCount: catalog.length,
+    generatedAt: new Date().toISOString(),
+    defaultCollectionMethod: defaultMappingMethod,
+    byTestId,
+    suggestedMap,
+    panelMap,
+    partialPanelMap,
+    collectionMismatches,
+    envValue: JSON.stringify({ ...panelMap, ...suggestedMap }),
+    missingTestIds: labTests.filter((test) => !suggestedMap[test.id]).map((test) => test.id),
+  };
 }
 
 export const junctionProvider: ProviderAdapter = {

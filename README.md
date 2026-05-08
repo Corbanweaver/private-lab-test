@@ -40,7 +40,9 @@ The app defaults to the mock provider. To test real lab connectivity through Jun
 }
 ```
 
-Production provider order writes stay disabled unless `LAB_PROVIDER_ORDER_WRITES=enabled`. Sandbox checkout bypasses Stripe unless `LAB_PROVIDER_SANDBOX_CHECKOUT=enabled`, and direct sandbox order testing is blocked in production unless `LAB_PROVIDER_SANDBOX_TESTS=enabled`. Patient intake is stored server-side in Supabase checkout intents and is not copied into Stripe metadata.
+Production provider order writes stay disabled unless `LAB_PROVIDER_ORDER_WRITES=enabled`. Sandbox checkout bypasses Stripe unless `LAB_PROVIDER_SANDBOX_CHECKOUT=enabled`, and direct sandbox order testing is blocked in production unless `LAB_PROVIDER_SANDBOX_TESTS=enabled`. Catalog/mapping debug actions are Preview-only unless `LAB_PROVIDER_CATALOG_DEBUG=enabled`. Patient intake is stored server-side in Supabase checkout intents and is not copied into Stripe metadata.
+
+When mapping individual test IDs, the Junction adapter requires every selected test to have a provider ID. Set `JUNCTION_ALLOW_PARTIAL_TEST_MAP=true` only for temporary sandbox experiments.
 
 Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results.
 
