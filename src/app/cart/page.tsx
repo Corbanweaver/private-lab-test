@@ -7,7 +7,7 @@ import { calculateCustomPanelPrice, formatCurrency } from "@/lib/catalog";
 
 const checkoutTrustFeatures = [
   "No doctor visit",
-  "No insurance or Medicare billing",
+  "No insurance billing",
   "Provider authorization included where required",
   "Nearest-clinic instructions after checkout",
   "Private results in your account",
@@ -34,11 +34,11 @@ export default async function CartPage({
           <p className="eyebrow">Step 2</p>
           <h1 className="page-title mt-2">Enter ZIP, see a clinic, checkout.</h1>
           <p className="page-copy mt-3 max-w-3xl">
-            Add basic info, confirm a nearby clinic, then pay the clear self-pay price. No insurance is billed.
+            Add basic info, confirm a nearby clinic, then pay the clear self-pay price. No insurance billing.
           </p>
           <div className="mt-6 grid gap-3 md:grid-cols-4">
             {["Choose tests", "ZIP/basic info", "Nearest clinic", "Cash checkout"].map((item, index) => (
-              <div key={item} className="checkout-step flex items-center gap-3 p-4">
+              <div key={item} className="checkout-step flex items-center gap-3 p-4 shadow-[0_14px_34px_rgba(6,18,29,0.06)]">
                 <span className="simple-number">{index + 1}</span>
                 <p className="font-semibold">{item}</p>
               </div>
@@ -57,7 +57,10 @@ export default async function CartPage({
           </div>
           <div className="mt-5 grid gap-3">
             {(customTests.length ? customTests : labTests.filter((test) => panel?.testIds.includes(test.id))).map((test) => (
-              <div key={test.id} className="flex justify-between gap-4 rounded-md border border-[var(--line)] bg-[#fcfffd] p-3">
+              <div
+                key={test.id}
+                className="flex justify-between gap-4 rounded-[var(--radius)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] p-3"
+              >
                 <div>
                   <p className="font-medium">{test.name}</p>
                   <p className="text-sm text-[var(--muted)]">{test.fasting}</p>
@@ -90,13 +93,13 @@ export default async function CartPage({
               <input type="hidden" name="panelId" value={selectedPanelId} />
               <input type="hidden" name="testIds" value={customIds.join(",")} />
               <input type="hidden" name="amount" value={total} />
-              <button className="focus-ring primary-action">
+              <button className="focus-ring primary-action shadow-[0_22px_60px_rgba(6,18,29,0.22)]">
                 <CreditCard size={18} />
                 Pay self-pay price
                 <ArrowRight size={17} />
               </button>
             </form>
-            <div className="mt-4 flex items-start gap-2 rounded-md bg-[#fcfffd] p-3 text-sm leading-6 text-[var(--muted)]">
+            <div className="mt-4 flex items-start gap-2 rounded-[var(--radius)] border border-[rgba(6,18,29,0.1)] bg-[var(--panel-strong)] p-3 text-sm leading-6 text-[var(--muted)]">
               <LockKeyhole className="mt-1 shrink-0 text-[var(--brand)]" size={17} />
               <p>Your order and results stay in a private account.</p>
             </div>

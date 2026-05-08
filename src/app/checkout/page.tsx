@@ -23,7 +23,7 @@ export default async function CheckoutPage({
         ? `${clinic.name} is ready at ${clinic.address}.`
         : "A nearby patient service center is selected from your ZIP.",
     ],
-    [CreditCard, "Clear cash price", "You pay before the lab visit. No insurance or Medicare billing."],
+    [CreditCard, "Clear self-pay price", "You pay before the lab visit. No insurance billing."],
     [FileText, "Instructions ready", "Bring your lab order instructions to the clinic. Results stay private."],
   ];
 
@@ -35,7 +35,7 @@ export default async function CheckoutPage({
             <p className="eyebrow">Step 4</p>
             <h1 className="page-title mt-2">Your clinic instructions are ready.</h1>
             <p className="page-copy mt-3 max-w-3xl">
-              No doctor visit. No insurance. Provider authorization included where required.
+              No doctor visit. No insurance billing. Provider authorization included where required.
             </p>
           </div>
           <div className="glass-card p-5">
@@ -66,14 +66,17 @@ export default async function CheckoutPage({
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {nextSteps.map(([Icon, title, copy]) => (
-              <div key={title} className="rounded-md border border-[var(--line)] bg-[#fcfffd] p-4 shadow-sm">
+              <div
+                key={title}
+                className="rounded-[var(--radius-lg)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] p-4 shadow-[0_14px_34px_rgba(6,18,29,0.08)]"
+              >
                 <Icon className="text-[var(--brand)]" size={20} />
                 <h2 className="mt-3 font-semibold">{title}</h2>
                 <p className="mt-1 text-sm text-[var(--muted)]">{copy}</p>
               </div>
             ))}
           </div>
-          <div className="mt-6 rounded-md border border-[var(--line)] bg-[#fcfffd] p-4">
+          <div className="mt-6 rounded-[var(--radius-lg)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] p-4">
             <div className="flex items-start gap-3">
               <CheckCircle2 className="mt-1 text-[var(--brand)]" size={20} />
               <div>
@@ -85,7 +88,7 @@ export default async function CheckoutPage({
               </div>
             </div>
           </div>
-          <div className="mt-4 flex items-start gap-3 rounded-md bg-[var(--accent-soft)] p-4">
+          <div className="mt-4 flex items-start gap-3 rounded-[var(--radius-lg)] bg-[var(--accent-soft)] p-4">
             <LockKeyhole className="mt-1 text-[var(--brand)]" size={20} />
             <p className="text-sm leading-6 text-[var(--muted)]">
               Results stay private and can be shared with a loved one from your account.
@@ -93,7 +96,7 @@ export default async function CheckoutPage({
           </div>
           <Link
             href="/orders"
-            className="focus-ring primary-action mt-6"
+            className="focus-ring primary-action mt-6 shadow-[0_22px_60px_rgba(6,18,29,0.22)]"
           >
             <FlaskConical size={18} />
             See lab instructions

@@ -38,7 +38,10 @@ export default async function CatalogPage({
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               {["Clear prices", "Private results", "Authorization where required"].map((item) => (
-                <span key={item} className="pulse-pill flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+                <span
+                  key={item}
+                  className="pulse-pill flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]"
+                >
                   <CheckCircle2 size={15} className="text-[var(--brand)]" />
                   {item}
                 </span>
@@ -68,7 +71,10 @@ export default async function CatalogPage({
         <div>
           <div className="mb-4 flex items-center gap-3">
             <span className="simple-number">1</span>
-            <h2 className="text-2xl font-semibold">Choose a panel</h2>
+            <div>
+              <h2 className="text-2xl font-semibold">Choose a panel</h2>
+              <p className="text-sm text-[var(--muted)]">Compare included tests and select the right self-pay option.</p>
+            </div>
           </div>
           <div className="grid gap-4 lg:grid-cols-3">
             {panels.map((panel) => (
@@ -101,7 +107,7 @@ export default async function CatalogPage({
               <option key={item}>{item}</option>
             ))}
           </select>
-          <button className="focus-ring primary-action">
+          <button className="focus-ring primary-action shadow-[0_18px_48px_rgba(6,18,29,0.2)]">
             <Search size={18} />
             Search tests
           </button>

@@ -28,8 +28,8 @@ export function TestCard({ test }: { test: LabTest }) {
           <dd className="font-medium">{test.fasting}</dd>
         </div>
       </dl>
-      <p className="mt-4 rounded-md bg-[var(--accent-soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
-        Self-pay test. No insurance billing.
+      <p className="mt-4 rounded-[var(--radius)] bg-[var(--accent-soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
+        Self-pay test. No insurance billing. Educational insights.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {test.biomarkers.slice(0, 4).map((marker) => (

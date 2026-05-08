@@ -27,7 +27,7 @@ const mobileNavItems: Array<{ href: string; label: string; Icon: LucideIcon }> =
 
 export function AppHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-[var(--line)] bg-[var(--panel)]/88 shadow-sm backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-[var(--line)] bg-[var(--panel)]/78 shadow-[0_18px_44px_rgba(6,18,29,0.08)] backdrop-blur-2xl">
       <div className="border-b border-white/10 bg-[var(--brand-deep)] px-4 py-2 text-center text-sm font-semibold text-[#e7f2ee]">
         <span className="mx-auto flex w-full max-w-7xl min-w-0 items-center justify-center gap-2">
           <ShieldCheck size={14} className="shrink-0 text-[var(--accent)]" />
@@ -39,8 +39,11 @@ export function AppHeader() {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="focus-ring flex min-w-0 items-center gap-3 rounded-md font-semibold text-[var(--foreground)]">
           <span
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-white shadow-sm"
-            style={{ background: "linear-gradient(135deg, var(--brand-deep), var(--brand-dark), var(--brand))" }}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius)] text-white shadow-[0_18px_44px_rgba(6,18,29,0.24)]"
+            style={{
+              background:
+                "radial-gradient(120% 160% at 15% 0%, rgba(142,205,195,0.38), transparent 55%), linear-gradient(135deg, var(--brand-deep), var(--brand-dark), var(--brand))",
+            }}
           >
             <FlaskConical size={20} />
           </span>
@@ -51,7 +54,7 @@ export function AppHeader() {
             <Link
               key={href}
               href={href}
-              className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-md px-3 font-semibold transition hover:bg-[var(--accent-soft)] hover:text-[var(--foreground)]"
+              className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-[var(--radius)] px-4 font-semibold transition hover:bg-[var(--soft)] hover:text-[var(--foreground)]"
             >
               <Icon size={17} />
               {label}
@@ -61,7 +64,7 @@ export function AppHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/cart"
-            className="focus-ring flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--line)] bg-[#fcfffd] text-[var(--brand-dark)] transition hover:border-[var(--brand)] hover:shadow-md"
+            className="focus-ring flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] text-[var(--brand-dark)] transition hover:border-[color-mix(in_srgb,var(--brand)_48%,rgba(6,18,29,0.13))] hover:shadow-[0_14px_34px_rgba(6,18,29,0.12)]"
             aria-label="Cart"
             title="Cart"
           >
@@ -74,7 +77,7 @@ export function AppHeader() {
           </Link>
           <Link
             href="/dashboard"
-            className="focus-ring hidden h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--line)] bg-[#fcfffd] text-[var(--brand-dark)] transition hover:border-[var(--brand)] hover:shadow-md"
+            className="focus-ring hidden h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] text-[var(--brand-dark)] transition hover:border-[color-mix(in_srgb,var(--brand)_48%,rgba(6,18,29,0.13))] hover:shadow-[0_14px_34px_rgba(6,18,29,0.12)]"
             aria-label="Dashboard"
             title="Dashboard"
           >
@@ -88,7 +91,7 @@ export function AppHeader() {
             <Link
               key={href}
               href={href}
-              className="focus-ring flex min-h-11 min-w-0 w-full items-center justify-center gap-2 rounded-md bg-[var(--accent-soft)] px-2 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-[#dcece6]"
+              className="focus-ring flex min-h-11 min-w-0 w-full items-center justify-center gap-1.5 rounded-[var(--radius)] bg-[var(--soft)] px-1.5 text-xs font-semibold text-[var(--brand-dark)] transition hover:bg-[var(--accent-soft)]"
             >
               <Icon size={16} />
               {label}

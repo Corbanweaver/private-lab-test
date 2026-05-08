@@ -37,20 +37,26 @@ export default function Home() {
     ["Authorization included", "Provider authorization is included where required.", ShieldCheck],
     ["Real support", "A person can help with scheduling, prep, and result questions.", Headphones],
   ];
+  const trustSignals = [
+    "Self-pay pricing",
+    "Private results",
+    "Nearby lab matching",
+    "Provider authorization included where required",
+  ] as const;
 
   return (
     <PageShell>
       <section className="deep-band relative overflow-hidden">
         <div className="page-section hero-shell grid items-center gap-10 py-12 lg:grid-cols-[0.98fr_1.02fr] lg:py-16">
           <div className="relative z-10 min-w-0">
-            <div className="pulse-pill inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+            <div className="pulse-pill inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]">
               <ShieldCheck size={16} />
               Private Lab Test
             </div>
-            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[0.98] tracking-normal text-white sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 max-w-4xl text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-6xl lg:text-7xl">
               Private blood work, ordered without the friction.
             </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-9 text-[#dbe8e4]">
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#dbe8e4] sm:text-xl sm:leading-9">
               Choose a panel, enter your ZIP, see the nearest clinic, and pay the clear self-pay price. No insurance
               billing. Provider authorization is included where required.
             </p>
@@ -65,11 +71,11 @@ export default function Home() {
                 Enter ZIP
               </Link>
             </div>
-            <div className="mt-9 grid max-w-2xl gap-3 sm:grid-cols-3">
-              {["No doctor visit", "No insurance billing", "Private results"].map((item) => (
+            <div className="trust-row mt-9 max-w-4xl">
+              {trustSignals.map((item) => (
                 <div
                   key={item}
-                  className="pulse-pill flex min-h-16 items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-[var(--brand-dark)]"
+                  className="trust-pill"
                 >
                   <CheckCircle2 size={17} className="text-[var(--brand)]" />
                   {item}
@@ -102,7 +108,7 @@ export default function Home() {
               className="object-cover opacity-20 mix-blend-multiply"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#fbfdfc] via-[#fbfdfc]/70 to-[#fbfdfc]/40" />
-            <div className="absolute inset-x-5 top-5 rounded-md border border-[var(--line)] bg-[var(--brand-deep)] p-5 text-white shadow-2xl">
+            <div className="absolute inset-x-4 top-4 rounded-[var(--radius)] border border-white/10 bg-[var(--brand-deep)]/96 p-4 text-white shadow-[0_30px_70px_rgba(0,0,0,0.34)] backdrop-blur sm:inset-x-5 sm:top-5 sm:p-5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <p className="text-xs font-bold uppercase text-[#9ed5cc]">Order preview</p>
@@ -111,7 +117,7 @@ export default function Home() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-[#c9d8d4]">self-pay</p>
-                  <p className="text-4xl font-semibold">{formatCurrency(featuredPanel.price)}</p>
+                  <p className="text-3xl font-semibold sm:text-4xl">{formatCurrency(featuredPanel.price)}</p>
                 </div>
               </div>
               <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/10">
@@ -122,13 +128,13 @@ export default function Home() {
                 <span>ZIP next</span>
               </div>
             </div>
-            <div className="absolute bottom-5 left-5 right-5 rounded-md border border-[var(--line)] bg-[#fcfffd]/95 p-5 text-[var(--foreground)] shadow-[0_24px_70px_rgba(7,19,31,0.18)] backdrop-blur">
+            <div className="absolute bottom-4 left-4 right-4 rounded-[var(--radius)] border border-[rgba(6,18,29,0.14)] bg-[var(--panel-strong)]/92 p-4 text-[var(--foreground)] shadow-[0_30px_70px_rgba(6,18,29,0.18)] backdrop-blur-xl sm:bottom-5 sm:left-5 sm:right-5 sm:p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="eyebrow">Private result view</p>
-                  <h3 className="mt-1 text-2xl font-semibold">Markers in one place</h3>
+                  <h3 className="mt-1 text-xl font-semibold sm:text-2xl">Markers in one place</h3>
                 </div>
-                <span className="rounded-md bg-[var(--accent-soft)] px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+                <span className="rounded-[var(--radius)] bg-[var(--accent-soft)] px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
                   Released
                 </span>
               </div>
@@ -140,13 +146,13 @@ export default function Home() {
                   </p>
                 ))}
               </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <div className="mt-5 grid gap-2 sm:grid-cols-3">
                 {[
                   ["Clinic", "2.4 mi"],
                   ["Timing", "1-3 days"],
                   ["Privacy", "Account"],
                 ].map(([label, value]) => (
-                  <div key={label} className="rounded-md border border-[var(--line)] bg-white/70 p-3">
+                  <div key={label} className="metric-tile">
                     <p className="text-xs text-[var(--muted)]">{label}</p>
                     <p className="mt-1 font-semibold text-[var(--foreground)]">{value}</p>
                   </div>
@@ -163,7 +169,7 @@ export default function Home() {
             {[
               ["Curated panels", String(panels.length), "Start with one simple choice."],
               ["Supported states", String(supply.states), "Use ZIP to route to a nearby clinic."],
-              ["Checkout", "Self-pay", "No insurance or Medicare billing."],
+              ["Checkout", "Self-pay", "No insurance billing."],
             ].map(([label, value, copy]) => (
               <div key={label} className="premium-card p-5">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
@@ -227,7 +233,7 @@ export default function Home() {
             </p>
             <div className="mt-6 grid gap-3">
               {benefits.map(([title, copy, Icon]) => (
-                <div key={title} className="pulse-pill flex items-start gap-3 rounded-md p-4 text-[var(--foreground)]">
+                <div key={title} className="pulse-pill flex items-start gap-3 rounded-[var(--radius)] p-4 text-[var(--foreground)]">
                   <Icon className="mt-1 text-[var(--brand)]" size={20} />
                   <div>
                     <p className="font-semibold">{title}</p>
@@ -243,15 +249,17 @@ export default function Home() {
                 <p className="eyebrow">Result view</p>
                 <h3 className="mt-2 text-2xl font-semibold">Complete Wellness</h3>
               </div>
-              <span className="rounded-md bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-800">Ready</span>
+              <span className="rounded-[var(--radius)] bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-800">
+                Ready
+              </span>
             </div>
             <div className="mt-5 grid gap-3">
               {[
-                ["HbA1c", "5.4%", "Looks normal"],
-                ["Vitamin D", "27 ng/mL", "Needs attention"],
+                ["HbA1c", "5.4%", "Educational insights"],
+                ["Vitamin D", "27 ng/mL", "Discuss with a clinician"],
                 ["LDL", "132 mg/dL", "Review with a clinician"],
               ].map(([name, value, status]) => (
-                <div key={name} className="rounded-md border border-[var(--line)] bg-white p-4">
+                <div key={name} className="rounded-[var(--radius)] border border-[var(--line)] bg-white p-4">
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="font-semibold">{name}</p>
@@ -303,13 +311,16 @@ export default function Home() {
                 </p>
               ))}
             </div>
-            <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring primary-action mt-6 w-full">
+            <Link
+              href="/cart?panel=complete-wellness#checkout"
+              className="focus-ring primary-action mt-6 w-full shadow-[0_22px_60px_rgba(6,18,29,0.22)]"
+            >
               <HeartPulse size={19} />
               Enter ZIP and checkout
               <ArrowRight size={18} />
             </Link>
             <p className="mt-3 text-center text-sm text-[var(--muted)]">
-              No doctor visit. No insurance. Provider authorization included where required.
+              No insurance billing. Provider authorization included where required.
             </p>
           </div>
         </div>

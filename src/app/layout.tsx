@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClearLabs",
+  title: "Private Lab Test",
   description:
-    "Simple cash-pay lab testing with clear prices, private results, and real support.",
+    "Private blood work with clear self-pay pricing, private results, and trusted support.",
 };
 
 export default function RootLayout({
