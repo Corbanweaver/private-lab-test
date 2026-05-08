@@ -23,7 +23,7 @@ Why it matters:
 
 ### Resend
 
-Status: use this first because the account already exists.
+Status: use this first because the account already exists. App test endpoint is `POST /api/email/test`.
 
 What to do:
 
@@ -36,6 +36,12 @@ What to do:
 Why it matters:
 
 - Handles order confirmation, requisition-ready, result-ready, abandoned checkout, and retest reminder emails before we need Customer.io.
+
+How we test it:
+
+- `GET /api/email/test` reports whether `RESEND_API_KEY` and `RESEND_FROM_EMAIL` are present without exposing the key.
+- `POST /api/email/test` sends a non-PHI test email to Resend's safe `delivered@resend.dev` sink address by default.
+- To test a real inbox later, set `RESEND_TEST_RECIPIENT` to that email address. Do not enable arbitrary recipients in production.
 
 ### OpenAI Healthcare BAA
 

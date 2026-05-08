@@ -136,6 +136,7 @@ Guardrail: use synthetic data only in design tools.
 - `/growth` shows the operating stack and sprint roadmap.
 - `/api/ai/concierge` returns safe panel guidance now, with live OpenAI mode gated by env and BAA acknowledgement.
 - `/api/growth/event` accepts only approved non-PHI event fields and can forward to PostHog when configured.
+- `/api/email/test` verifies Resend configuration and can send a non-PHI test email to Resend's safe sink address.
 - `src/data/ai-growth-stack.ts` stores the tool stack, env requirements, guardrails, and sprint plan.
 
 ## Founder Next Steps
