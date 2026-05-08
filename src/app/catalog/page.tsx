@@ -4,6 +4,7 @@ import { PageShell } from "@/components/page-shell";
 import { PanelCard } from "@/components/panel-card";
 import { TestCard } from "@/components/test-card";
 import { labTests, panels } from "@/data/catalog";
+import { commonLabDemand } from "@/data/product-research";
 import { formatCurrency } from "@/lib/catalog";
 
 export default async function CatalogPage({
@@ -15,6 +16,10 @@ export default async function CatalogPage({
   const query = (params.q ?? "").toLowerCase();
   const category = params.category ?? "All";
   const categories = ["All", ...Array.from(new Set(labTests.map((test) => test.category)))];
+  const commonTests = commonLabDemand
+    .map((item) => labTests.find((test) => test.id === item.testId))
+    .filter((test): test is (typeof labTests)[number] => Boolean(test))
+    .slice(0, 8);
   const filtered = labTests.filter((test) => {
     const matchesQuery =
       !query ||
@@ -68,6 +73,28 @@ export default async function CatalogPage({
         </div>
       </section>
       <section className="page-section">
+        <div className="premium-card mb-8 grid gap-5 p-5 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="eyebrow">Common first orders</p>
+            <h2 className="mt-2 text-2xl font-semibold">Start with the labs people recognize.</h2>
+            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+              These markers anchor most low-friction wellness panels before adding deeper hormones, nutrients, or heart
+              risk upgrades.
+            </p>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {commonTests.map((test) => (
+              <Link
+                key={test.id}
+                href={`/catalog?q=${encodeURIComponent(test.name)}`}
+                className="focus-ring flex items-center justify-between gap-3 rounded-[var(--radius)] border border-[var(--line)] bg-white px-4 py-3 text-sm font-semibold transition hover:border-[color-mix(in_srgb,var(--brand)_42%,var(--line))] hover:shadow-[0_10px_28px_rgba(6,18,29,0.08)]"
+              >
+                <span>{test.name}</span>
+                <span className="text-[var(--brand-dark)]">{formatCurrency(test.price)}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
         <div>
           <div className="mb-4 flex items-center gap-3">
             <span className="simple-number">1</span>

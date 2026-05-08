@@ -46,6 +46,8 @@ When mapping individual test IDs, the Junction adapter requires every selected t
 
 Direct Quest/Labcorp enterprise integrations should come after aggregator volume proof; the current fastest path is a provider network that can issue the required authorization, generate requisitions, return PSC locations, and deliver results.
 
+The latest product research sprint is documented in `docs/market-research-and-product-sprint.md`, and the app exposes the same working strategy at `/strategy`.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -18,6 +18,7 @@ import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { PanelCard } from "@/components/panel-card";
 import { panels } from "@/data/catalog";
+import { commonLabDemand, networkExpansionPlays, trustDrivers } from "@/data/product-research";
 import { formatCurrency, getTestsForPanel } from "@/lib/catalog";
 import { summarizeLabSupply } from "@/lib/lab-access";
 
@@ -25,6 +26,9 @@ export default function Home() {
   const supply = summarizeLabSupply();
   const featuredPanel = panels.find((panel) => panel.id === "complete-wellness") ?? panels[0];
   const featuredTests = getTestsForPanel(featuredPanel.id).slice(0, 5);
+  const topTests = commonLabDemand.slice(0, 6);
+  const trustCards = trustDrivers.slice(0, 4);
+  const networkCards = networkExpansionPlays.slice(0, 3);
   const steps: Array<[string, string, LucideIcon]> = [
     ["Choose tests", "Pick a ready-made panel or add individual tests.", Search],
     ["Enter ZIP and basic info", "Tell us where you want to test and who the order is for.", ClipboardList],
@@ -181,6 +185,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="page-section">
+        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+          <div>
+            <p className="eyebrow">Why people trust it</p>
+            <h2 className="mt-2 text-4xl font-semibold">A health checkout has to feel calm before it feels clever.</h2>
+            <p className="page-copy mt-3">
+              The product is built around the things people look for first: privacy, price clarity, nearby collection,
+              and a real next step after payment.
+            </p>
+            <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring primary-action mt-6">
+              <MapPin size={18} />
+              Check nearby clinics
+              <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {trustCards.map(({ id, title, customerPromise, Icon }) => (
+              <article key={id} className="premium-card p-5">
+                <span className="icon-tile">
+                  <Icon size={21} />
+                </span>
+                <h3 className="mt-4 text-xl font-semibold">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{customerPromise}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="how-it-works" className="page-section">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-3xl">
@@ -206,6 +239,42 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-3xl">
+              <p className="eyebrow">Most requested starting points</p>
+              <h2 className="mt-2 text-4xl font-semibold">The core menu is intentionally simple first.</h2>
+              <p className="page-copy mt-3">
+                These are the tests that show up again and again in direct-access lab menus and wellness panels.
+              </p>
+            </div>
+            <Link href="/catalog" className="focus-ring secondary-action">
+              <Search size={18} />
+              Browse all tests
+            </Link>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {topTests.map((item) => (
+              <Link
+                href={`/catalog?q=${encodeURIComponent(item.label)}`}
+                key={item.testId}
+                className="focus-ring premium-card group flex min-h-36 items-start gap-4 p-5"
+              >
+                <span className="simple-number">{item.rank}</span>
+                <span className="min-w-0">
+                  <span className="block text-xl font-semibold text-[var(--foreground)]">{item.label}</span>
+                  <span className="mt-2 block text-sm leading-6 text-[var(--muted)]">{item.customerReason}</span>
+                  <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-dark)]">
+                    View test <ArrowRight className="transition group-hover:translate-x-0.5" size={15} />
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="blue-band">
         <div className="page-section">
           <div className="mb-8 max-w-3xl">
@@ -220,6 +289,32 @@ export default function Home() {
               <PanelCard key={panel.id} panel={panel} />
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="mb-8 max-w-3xl">
+          <p className="eyebrow">Network roadmap</p>
+          <h2 className="mt-2 text-4xl font-semibold">The lab network grows in layers.</h2>
+          <p className="page-copy mt-3">
+            First priority is reliable API ordering. Next comes home draw, then direct national and regional lab
+            relationships for better price and coverage.
+          </p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {networkCards.map(({ id, title, priority, lane, whyItMatters, Icon }) => (
+            <article key={id} className="premium-card p-6">
+              <div className="flex items-start justify-between gap-4">
+                <span className="icon-tile">
+                  <Icon size={21} />
+                </span>
+                <span className="pill">{priority}</span>
+              </div>
+              <p className="mt-5 text-sm font-semibold text-[var(--accent-strong)]">{lane}</p>
+              <h3 className="mt-1 text-2xl font-semibold">{title}</h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{whyItMatters}</p>
+            </article>
+          ))}
         </div>
       </section>
 

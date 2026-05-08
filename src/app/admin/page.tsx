@@ -1,9 +1,11 @@
-import { Database, FileWarning, Handshake, MapPinned, Settings2, ShieldCheck, Target } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Database, FileWarning, Handshake, MapPinned, Settings2, ShieldCheck, Target } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels, restrictedStates } from "@/data/catalog";
 import { outreachTargets } from "@/data/lab-outreach";
 import { labPartners } from "@/data/lab-partners";
+import { commonLabDemand, networkExpansionPlays, trustDrivers } from "@/data/product-research";
 import { summarizeLabSupply } from "@/lib/lab-access";
 
 export default function AdminPage() {
@@ -15,6 +17,9 @@ export default function AdminPage() {
     ["Lab targets", outreachTargets.length, Target],
     ["States mapped", supply.states, MapPinned],
     ["Blocked states", restrictedStates.length, ShieldCheck],
+    ["Trust drivers", trustDrivers.length, ShieldCheck],
+    ["Common tests", commonLabDemand.length, Database],
+    ["Network plays", networkExpansionPlays.length, Handshake],
     ["Routing holds", 1, FileWarning],
   ];
 
@@ -26,6 +31,17 @@ export default function AdminPage() {
         <p className="page-copy mt-3 max-w-3xl">
           A simple internal view for the team to check prices, partner coverage, and orders that need review.
         </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link href="/strategy" className="focus-ring primary-action">
+            <Target size={18} />
+            Product strategy
+            <ArrowRight size={17} />
+          </Link>
+          <Link href="/partners/outreach" className="focus-ring secondary-action">
+            <Handshake size={18} />
+            Outreach cockpit
+          </Link>
+        </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3 xl:grid-cols-6">
           {metrics.map(([label, value, Icon]) => (
             <div key={String(label)} className="premium-card p-5">
