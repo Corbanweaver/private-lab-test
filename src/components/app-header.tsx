@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
-  Activity,
   ArrowRight,
   BadgeDollarSign,
   FlaskConical,
   LayoutDashboard,
   ListChecks,
+  MapPin,
   Search,
   ShieldCheck,
   ShoppingCart,
@@ -14,14 +14,14 @@ import type { LucideIcon } from "lucide-react";
 
 const navItems: Array<{ href: string; label: string; Icon: LucideIcon }> = [
   { href: "/#how-it-works", label: "How it works", Icon: ListChecks },
-  { href: "/catalog", label: "Tests", Icon: Search },
+  { href: "/catalog", label: "Choose tests", Icon: Search },
   { href: "/#pricing", label: "Pricing", Icon: BadgeDollarSign },
   { href: "/dashboard", label: "Account", Icon: LayoutDashboard },
 ];
 
 const mobileNavItems: Array<{ href: string; label: string; Icon: LucideIcon }> = [
   { href: "/catalog", label: "Tests", Icon: Search },
-  { href: "/quiz", label: "Choose", Icon: Activity },
+  { href: "/cart?panel=complete-wellness#checkout", label: "ZIP", Icon: MapPin },
   { href: "/dashboard", label: "Account", Icon: LayoutDashboard },
 ];
 
@@ -31,7 +31,7 @@ export function AppHeader() {
       <div className="border-b border-[var(--line)] bg-[var(--brand-deep)] px-4 py-2 text-center text-sm font-semibold text-white">
         <span className="mx-auto flex max-w-7xl items-center justify-center gap-2">
           <ShieldCheck size={14} className="shrink-0" />
-          <span className="min-w-0">Clear cash-pay price. Private results. Real help at every step.</span>
+          <span className="min-w-0">No doctor visit. No insurance. Provider authorization included where required.</span>
         </span>
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
@@ -65,9 +65,9 @@ export function AppHeader() {
           >
             <ShoppingCart size={19} />
           </Link>
-          <Link href="/cart?panel=complete-wellness" className="focus-ring primary-action desktop-action text-sm">
-            <ShoppingCart size={17} />
-            Start testing
+          <Link href="/catalog" className="focus-ring primary-action desktop-action text-sm">
+            <Search size={17} />
+            Choose tests
             <ArrowRight size={16} />
           </Link>
           <Link

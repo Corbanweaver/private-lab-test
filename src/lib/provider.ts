@@ -2,7 +2,8 @@ import { labTests, panels } from "@/data/catalog";
 import { labPartners } from "@/data/lab-partners";
 import { checkStateEligibility } from "@/lib/catalog";
 import { getPreferredPartner, requestClinicianAuthorization } from "@/lib/lab-access";
-import type { LabPartnerTier, OrderStatus, ProviderOrder } from "@/lib/types";
+import { createOrderQuote, getNearestLabLocations } from "@/lib/order-router";
+import type { CollectionType, LabOrderQuote, LabPartnerTier, OrderStatus, ProviderOrder } from "@/lib/types";
 
 export type ProviderAdapter = {
   id: string;
@@ -10,7 +11,22 @@ export type ProviderAdapter = {
   syncCatalog: () => Promise<{ tests: number; panels: number; partners: number; syncedAt: string }>;
   checkEligibility: (input: { state: string; zip?: string }) => Promise<ReturnType<typeof checkStateEligibility>>;
   authorizeOrder: (input: { userId: string; panelId: string; state: string; total: number }) => Promise<ReturnType<typeof requestClinicianAuthorization>>;
-  createOrder: (input: { userId: string; panelId: string; state: string; zip?: string; total?: number }) => Promise<ProviderOrder>;
+  quoteOrder: (input: {
+    panelId: string;
+    testIds?: string[];
+    state: string;
+    zip: string;
+    collectionType?: CollectionType;
+  }) => Promise<LabOrderQuote>;
+  createOrder: (input: {
+    userId: string;
+    panelId: string;
+    testIds?: string[];
+    state: string;
+    zip?: string;
+    total?: number;
+    collectionType?: CollectionType;
+  }) => Promise<ProviderOrder>;
   getLabLocations: (input: { zip: string }) => Promise<Array<{ id: string; name: string; distance: string; address: string }>>;
   getRequisition: (orderId: string) => Promise<{ orderId: string; url: string; expiresAt: string }>;
   ingestResults: (orderId: string) => Promise<{ orderId: string; status: OrderStatus; receivedAt: string }>;
@@ -36,10 +52,13 @@ function createPartnerAdapter(tier: LabPartnerTier): ProviderAdapter {
     async authorizeOrder({ panelId, state, total, userId }) {
       return requestClinicianAuthorization({ panelId, state, total, userId });
     },
-    async createOrder({ panelId, state, zip = "80202", total = 1 }) {
-      const eligibility = checkStateEligibility(state);
-      if (!eligibility.eligible) {
-        throw new Error(eligibility.message);
+    async quoteOrder({ panelId, testIds, state, zip, collectionType }) {
+      return createOrderQuote({ panelId, testIds, state, zip, collectionType });
+    },
+    async createOrder({ panelId, testIds, state, zip = "80202", total = 1, collectionType }) {
+      const quote = createOrderQuote({ panelId, testIds, state, zip, collectionType });
+      if (!quote.available) {
+        throw new Error(quote.unavailableReason ?? quote.customerMessage);
       }
 
       const authorization = requestClinicianAuthorization({ panelId, state, total });
@@ -47,11 +66,8 @@ function createPartnerAdapter(tier: LabPartnerTier): ProviderAdapter {
         throw new Error(authorization.reason);
       }
 
-      const partner = getPreferredPartner(state, tier);
-      const location =
-        partner.drawLocations.find((drawLocation) => drawLocation.zip === zip) ??
-        partner.drawLocations.find((drawLocation) => drawLocation.state === eligibility.state) ??
-        partner.drawLocations[0];
+      const partner = labPartners.find((item) => item.id === quote.partnerId) ?? getPreferredPartner(state, tier);
+      const location = quote.selectedLocation;
 
       return {
         id: `${partner.id}_${panelId}_${Date.now()}`,
@@ -60,22 +76,25 @@ function createPartnerAdapter(tier: LabPartnerTier): ProviderAdapter {
         provider: partner.name,
         partnerId: partner.id,
         authorizationId: authorization.id,
+        orderMode: quote.orderMode === "blocked" ? "provider_authorization_included" : quote.orderMode,
+        locationId: location?.id ?? "nearest-lab",
         labLocationName: location?.name ?? "Partner lab location",
         requisitionUrl: "/dashboard/orders",
-        appointmentUrl: `/orders?partner=${partner.id}`,
+        appointmentUrl: `/orders?partner=${partner.id}&location=${location?.id ?? "nearest-lab"}`,
       };
     },
     async getLabLocations({ zip }) {
-      return labPartners
-        .filter((partner) => partner.tier === tier || tier === "aggregator")
-        .flatMap((partner) =>
-          partner.drawLocations.map((location, index) => ({
-            id: location.id,
-            name: location.name,
-            distance: `${(index + 1) * 1.7} mi`,
-            address: location.zip === zip ? location.address : `${location.address} (${partner.name})`,
-          })),
-        )
+      return getNearestLabLocations({ zip, state: "CO" })
+        .filter((location) => {
+          const partner = labPartners.find((item) => item.id === location.partnerId);
+          return partner?.tier === tier || tier === "aggregator";
+        })
+        .map((location) => ({
+          id: location.id,
+          name: location.name,
+          distance: `${location.distanceMiles.toFixed(1)} mi`,
+          address: location.address,
+        }))
         .slice(0, 4);
     },
     async getRequisition(orderId) {

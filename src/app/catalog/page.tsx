@@ -31,16 +31,17 @@ export default async function CatalogPage({
         <div className="page-section grid items-center gap-6 lg:grid-cols-[1fr_360px]">
           <div className="max-w-3xl">
             <p className="eyebrow">Step 1</p>
-            <h1 className="page-title mt-2">Choose your starting panel.</h1>
+            <h1 className="page-title mt-2">Choose tests or a panel.</h1>
             <p className="page-copy mt-3">
-              The fastest path is one ready-made panel. You can still search individual tests if you know exactly what
-              you want.
+              Pick what you want, then enter ZIP and basic info to see a nearby clinic. No doctor visit. No insurance.
             </p>
           </div>
           <div className="glass-card p-5">
             <p className="eyebrow">Recommended</p>
             <h2 className="mt-2 text-2xl font-semibold">Complete Wellness</h2>
-            <p className="mt-1 text-sm text-[var(--muted)]">Broad wellness screening with a clear cash price.</p>
+            <p className="mt-1 text-sm text-[var(--muted)]">
+              Broad wellness screening with a clear cash price and provider authorization included where required.
+            </p>
             <div className="mt-4 flex items-end justify-between gap-3">
               <p className="text-4xl font-semibold text-[var(--brand-dark)]">
                 {formatCurrency(panels.find((panel) => panel.id === "complete-wellness")?.price ?? 229)}
@@ -58,7 +59,7 @@ export default async function CatalogPage({
         <div className="mt-8">
           <div className="mb-4 flex items-center gap-3">
             <span className="simple-number">1</span>
-            <h2 className="text-2xl font-semibold">Ready-made panels</h2>
+            <h2 className="text-2xl font-semibold">Choose a panel</h2>
           </div>
           <div className="grid gap-4 lg:grid-cols-3">
             {panels.map((panel) => (
@@ -72,7 +73,7 @@ export default async function CatalogPage({
               <span className="simple-number">2</span>
               <div>
                 <h2 className="text-2xl font-semibold">Search individual tests</h2>
-                <p className="mt-1 text-[var(--muted)]">Only use this if you already know what you need.</p>
+                <p className="mt-1 text-[var(--muted)]">Add specific tests, then continue to ZIP and checkout.</p>
               </div>
             </div>
           </div>
@@ -93,7 +94,7 @@ export default async function CatalogPage({
           </select>
           <button className="focus-ring primary-action">
             <Search size={18} />
-            Search
+            Search tests
           </button>
         </form>
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

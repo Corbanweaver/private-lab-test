@@ -21,11 +21,11 @@ describe("catalog pricing", () => {
 
 describe("state eligibility", () => {
   it("blocks conservative restricted states", () => {
-    expect(checkStateEligibility("NY").eligible).toBe(false);
+    expect(checkStateEligibility("AZ").eligible).toBe(false);
     expect(checkStateEligibility("co").eligible).toBe(true);
   });
 
-  it("requires clinician authorization in launch states", () => {
+  it("includes provider authorization in launch states", () => {
     const result = checkStateEligibility("FL");
 
     expect(result.eligible).toBe(true);
@@ -50,10 +50,10 @@ describe("lab supply model", () => {
     expect(summary.cashMenuCount).toBeGreaterThan(0);
   });
 
-  it("blocks clinician authorization for unsupported states", () => {
+  it("blocks provider authorization for unsupported states", () => {
     const authorization = requestClinicianAuthorization({
       panelId: "complete-wellness",
-      state: "NY",
+      state: "AZ",
       total: 229,
     });
 

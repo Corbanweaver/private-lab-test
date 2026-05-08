@@ -6,8 +6,8 @@ import type { OrderStatus } from "@/lib/types";
 const steps: Array<{ status: OrderStatus; label: string; copy: string }> = [
   { status: "draft", label: "You chose tests", copy: "Your panel is saved in the cart." },
   { status: "eligible", label: "We checked your state", copy: "We confirm lab ordering is available before payment." },
-  { status: "clinician_review", label: "Order review", copy: "A licensed clinician reviews eligible lab orders." },
-  { status: "authorized", label: "Order approved", copy: "Your lab order can be prepared." },
+  { status: "clinician_review", label: "Authorization included", copy: "Provider authorization is handled automatically where required." },
+  { status: "authorized", label: "Order ready to prepare", copy: "Your lab order can be prepared without a doctor visit." },
   { status: "paid", label: "Payment complete", copy: "The cash price is paid before the lab visit." },
   { status: "submitted_to_provider", label: "Sent to lab", copy: "The lab network receives your order." },
   { status: "lab_order_ready", label: "Ready for visit", copy: "Your instructions are ready." },

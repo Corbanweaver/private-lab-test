@@ -6,7 +6,7 @@ export const labPartners: LabPartner[] = [
     name: "Aggregator API Network",
     tier: "aggregator",
     cliaStatus: "verified",
-    statesServed: ["CO", "TX", "FL", "CA", "AZ", "GA", "NC"],
+    statesServed: ["CO", "TX", "FL", "CA", "GA", "NC", "NY", "NJ", "RI"],
     cashPriceMenu: [
       { testId: "cmp", price: 24 },
       { testId: "cbc", price: 21 },
@@ -117,7 +117,7 @@ export const labPartners: LabPartner[] = [
     name: "National Reference Lab Track",
     tier: "national",
     cliaStatus: "pending",
-    statesServed: ["CO", "TX", "FL", "CA", "GA", "NC", "AZ"],
+    statesServed: ["CO", "TX", "FL", "CA", "GA", "NC", "NY", "NJ", "RI"],
     cashPriceMenu: [
       { testId: "cmp", price: 29 },
       { testId: "cbc", price: 24 },
@@ -182,21 +182,21 @@ export const labAccessRules: LabAccessRule[] = [
   },
   {
     state: "NY",
-    mode: "blocked",
-    partnerIds: [],
-    note: "Hold until state-specific lab permitting and partner workflow are reviewed.",
+    mode: "clinician_authorized",
+    partnerIds: ["aggregator-api", "national-reference"],
+    note: "Available only through a provider-authorization network that supports New York-specific lab rules.",
   },
   {
     state: "NJ",
-    mode: "blocked",
-    partnerIds: [],
-    note: "Hold until direct-access and provider-ordering restrictions are reviewed.",
+    mode: "clinician_authorized",
+    partnerIds: ["aggregator-api", "national-reference"],
+    note: "Available only through a provider-authorization network that supports New Jersey-specific lab rules.",
   },
   {
     state: "RI",
-    mode: "blocked",
-    partnerIds: [],
-    note: "Hold until state-specific ordering and result-release policy is reviewed.",
+    mode: "clinician_authorized",
+    partnerIds: ["aggregator-api", "national-reference"],
+    note: "Available only through a provider-authorization network that supports Rhode Island-specific lab rules.",
   },
 ];
 
@@ -239,7 +239,7 @@ export const partnerPacketNeeds = [
 ];
 
 export const customerTrustFeatures = [
-  "Reviewed by a licensed clinician",
+  "Provider authorization included where required",
   "Prepaid cash price",
   "No insurance or Medicare billing",
   "A real person can help schedule",

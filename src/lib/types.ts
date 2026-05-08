@@ -29,6 +29,10 @@ export type LabPartnerTier = "aggregator" | "regional" | "mobile" | "national";
 
 export type LabAccessMode = "clinician_authorized" | "direct_access" | "blocked";
 
+export type LabOrderMode = "direct_access" | "provider_authorization_included";
+
+export type CollectionType = "walk_in" | "mobile" | "kit";
+
 export type LabOutreachCategory =
   | "api_network"
   | "national_lab"
@@ -78,6 +82,66 @@ export type LabPartner = {
     email: string;
   };
   strengths: string[];
+};
+
+export type LabNetworkStatus = "active_mock" | "contracting" | "candidate";
+
+export type LabNetworkRoute = {
+  id: string;
+  name: string;
+  partnerId: string;
+  tier: LabPartnerTier;
+  status: LabNetworkStatus;
+  orderMode: LabOrderMode;
+  collectionTypes: CollectionType[];
+  statesServed: string[];
+  restrictedStates: string[];
+  priority: number;
+  priceMultiplier: number;
+  platformFee: number;
+  drawFee: number;
+  turnaround: string;
+  supportNote: string;
+};
+
+export type LabLocationOption = {
+  id: string;
+  routeId: string;
+  partnerId: string;
+  name: string;
+  address: string;
+  state: string;
+  zip: string;
+  collectionType: CollectionType;
+  distanceMiles: number;
+  drawFee: number;
+  appointmentRequired: boolean;
+};
+
+export type LabOrderQuote = {
+  id: string;
+  available: boolean;
+  panelId: string;
+  testIds: string[];
+  state: string;
+  zip: string;
+  orderMode: LabOrderMode | "blocked";
+  authorizationIncluded: boolean;
+  collectionType: CollectionType;
+  partnerId?: string;
+  partnerName?: string;
+  routeId?: string;
+  networkName?: string;
+  locationOptions: LabLocationOption[];
+  selectedLocation?: LabLocationOption;
+  subtotal: number;
+  drawFee: number;
+  total: number;
+  estimatedSavings: number;
+  turnaround: string;
+  fastingNotes: string[];
+  customerMessage: string;
+  unavailableReason?: string;
 };
 
 export type LabOutreachTarget = {
@@ -169,6 +233,8 @@ export type ProviderOrder = {
   provider: string;
   partnerId: string;
   authorizationId: string;
+  orderMode: LabOrderMode;
+  locationId: string;
   labLocationName: string;
   requisitionUrl: string;
   appointmentUrl: string;

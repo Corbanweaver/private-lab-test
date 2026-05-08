@@ -28,6 +28,9 @@ export function TestCard({ test }: { test: LabTest }) {
           <dd className="font-medium">{test.fasting}</dd>
         </div>
       </dl>
+      <p className="mt-4 rounded-md bg-[var(--soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
+        Cash-pay test. No insurance billing.
+      </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {test.biomarkers.slice(0, 4).map((marker) => (
           <span key={marker} className="pill pill-info">
@@ -40,7 +43,7 @@ export function TestCard({ test }: { test: LabTest }) {
         className="focus-ring secondary-action mt-4 w-full text-sm"
       >
         <Plus size={16} />
-        Add this test
+        Add to order
       </Link>
     </article>
   );

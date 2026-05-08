@@ -5,7 +5,7 @@ const defaultAccessRule: LabAccessRule = {
   state: "US",
   mode: "clinician_authorized",
   partnerIds: ["aggregator-api"],
-  note: "Default to clinician authorization and aggregator routing while state policy is reviewed.",
+  note: "Default to provider authorization included with aggregator routing while state policy is reviewed.",
 };
 
 export function normalizeState(state: string) {
@@ -58,7 +58,7 @@ export function requestClinicianAuthorization(input: {
       reviewer: "Clinical operations",
       reason: access.note,
       authorizedAt: new Date().toISOString(),
-      requiredFollowUp: "Concierge will notify the family that this state is not open for launch.",
+      requiredFollowUp: "Notify the customer that ordering is not available in this state yet.",
     };
   }
 
@@ -67,17 +67,17 @@ export function requestClinicianAuthorization(input: {
       id: `auth_review_${state || "unknown"}`,
       status: "manual_review",
       reviewer: "Clinical operations",
-      reason: "Order needs manual review because no prepaid cash amount was provided.",
+      reason: "Order cannot be created until a valid prepaid cash amount is provided.",
       authorizedAt: new Date().toISOString(),
-      requiredFollowUp: "Concierge verifies the selected panel and price before checkout.",
+      requiredFollowUp: "Collect payment before creating a lab order.",
     };
   }
 
   return {
     id: `auth_${state}_${input.panelId}_${Math.abs(Math.round(input.total * 100))}`,
     status: "approved",
-    reviewer: "Licensed clinician network",
-    reason: "Cash-pay wellness order approved for launch workflow.",
+    reviewer: "Provider authorization network",
+    reason: "Provider authorization is included automatically for this cash-pay wellness order.",
     authorizedAt: new Date().toISOString(),
     requiredFollowUp: "Abnormal or critical results should be discussed with a qualified clinician.",
   };

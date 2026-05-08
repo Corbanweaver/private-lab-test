@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle2, ShoppingCart } from "lucide-react";
+import { CheckCircle2, ShieldCheck, ShoppingCart } from "lucide-react";
 import { getTestsForPanel, formatCurrency } from "@/lib/catalog";
 import type { Panel } from "@/lib/types";
 
@@ -20,6 +20,10 @@ export function PanelCard({ panel }: { panel: Panel }) {
         </div>
       </div>
       <p className="mt-3 text-base leading-7 text-[var(--muted)]">{panel.description}</p>
+      <p className="mt-3 flex items-start gap-2 rounded-md bg-[var(--soft)] p-3 text-sm font-medium leading-6 text-[var(--brand-dark)]">
+        <ShieldCheck className="mt-0.5 shrink-0" size={17} />
+        No doctor visit. No insurance. Provider authorization included where required.
+      </p>
       <div className="mt-4 grid gap-2 text-[0.95rem] text-[var(--foreground)]">
         {tests.slice(0, 3).map((test) => (
           <span key={test?.id} className="flex items-center gap-2">
@@ -40,7 +44,7 @@ export function PanelCard({ panel }: { panel: Panel }) {
         className="focus-ring primary-action mt-5 w-full"
       >
         <ShoppingCart size={18} />
-        Start with this panel
+        Choose this panel
       </Link>
     </article>
   );

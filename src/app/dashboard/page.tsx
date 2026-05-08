@@ -11,7 +11,7 @@ export default function DashboardPage() {
   const metrics: Array<[string, string, LucideIcon]> = [
     ["Orders", "2", FlaskConical],
     ["Results ready", String(sampleResults.length), FileText],
-    ["Clinician check", "On", ShieldCheck],
+    ["Auth included", "On", ShieldCheck],
     ["Cash price", "On", BadgeDollarSign],
     ["Account", configured ? "Live" : "Sample", UserRound],
   ];

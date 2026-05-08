@@ -3,8 +3,15 @@ import { ArrowRight, CheckCircle2, CreditCard, FileText, LockKeyhole, ShieldChec
 import { EligibilityForm } from "@/components/eligibility-form";
 import { PageShell } from "@/components/page-shell";
 import { labTests, panels } from "@/data/catalog";
-import { customerTrustFeatures } from "@/data/lab-partners";
 import { calculateCustomPanelPrice, formatCurrency } from "@/lib/catalog";
+
+const checkoutTrustFeatures = [
+  "No doctor visit",
+  "No insurance or Medicare billing",
+  "Provider authorization included where required",
+  "Nearest-clinic instructions after checkout",
+  "Private results in your account",
+];
 
 export default async function CartPage({
   searchParams,
@@ -18,18 +25,19 @@ export default async function CartPage({
   const customPrice = calculateCustomPanelPrice(customIds);
   const total = customTests.length ? customPrice : panel?.price ?? 0;
   const selectedName = customTests.length ? "Custom Panel" : panel?.name;
+  const selectedPanelId = customTests.length ? "custom" : panel?.id ?? "complete-wellness";
 
   return (
     <PageShell>
       <section className="blue-band">
         <div className="page-section">
           <p className="eyebrow">Step 2</p>
-          <h1 className="page-title mt-2">Review and checkout.</h1>
+          <h1 className="page-title mt-2">Enter ZIP, see a clinic, checkout.</h1>
           <p className="page-copy mt-3 max-w-3xl">
-            Your price is shown before you pay. We check state availability and prepare the lab order after checkout.
+            Add basic info, confirm a nearby clinic, then pay the clear cash price. No insurance is billed.
           </p>
-          <div className="mt-6 grid gap-3 md:grid-cols-3">
-            {["Choose panel", "Confirm state", "Checkout"].map((item, index) => (
+          <div className="mt-6 grid gap-3 md:grid-cols-4">
+            {["Choose tests", "ZIP/basic info", "Nearest clinic", "Cash checkout"].map((item, index) => (
               <div key={item} className="glass-card flex items-center gap-3 p-4">
                 <span className="simple-number">{index + 1}</span>
                 <p className="font-semibold">{item}</p>
@@ -60,34 +68,31 @@ export default async function CartPage({
           </div>
         </div>
         <aside id="checkout" className="grid h-max gap-4 lg:sticky lg:top-40">
-          <EligibilityForm />
+          <EligibilityForm formId="cash-checkout-form" panelId={selectedPanelId} testIds={customIds} />
           <div className="glass-card p-5">
             <div className="flex items-center gap-2 text-[var(--brand-dark)]">
               <ShieldCheck size={20} />
-              <p className="font-semibold">Secure cash-pay checkout</p>
+              <p className="font-semibold">Cash checkout, no insurance</p>
             </div>
             <div className="mt-4 flex justify-between text-lg font-semibold">
-              <span>Total</span>
+              <span>Panel price</span>
               <span>{formatCurrency(total)}</span>
             </div>
             <div className="mt-4 grid gap-2">
-              {customerTrustFeatures.map((feature) => (
+              {checkoutTrustFeatures.map((feature) => (
                 <p key={feature} className="flex items-center gap-2 text-sm text-[var(--muted)]">
                   <CheckCircle2 size={16} className="text-[var(--brand)]" />
                   {feature}
                 </p>
               ))}
             </div>
-            <form action="/api/checkout" method="POST" className="mt-5 grid gap-3">
-              <input type="hidden" name="panelId" value={panel?.id ?? "custom"} />
+            <form id="cash-checkout-form" action="/api/checkout" method="POST" className="mt-5 grid gap-3">
+              <input type="hidden" name="panelId" value={selectedPanelId} />
+              <input type="hidden" name="testIds" value={customIds.join(",")} />
               <input type="hidden" name="amount" value={total} />
-              <label className="grid gap-1 text-sm font-medium">
-                State
-                <input name="state" defaultValue="CO" className="focus-ring input-control uppercase" />
-              </label>
               <button className="focus-ring primary-action">
                 <CreditCard size={18} />
-                Continue to checkout
+                Pay cash and get instructions
                 <ArrowRight size={17} />
               </button>
             </form>
@@ -97,7 +102,7 @@ export default async function CartPage({
             </div>
             <Link href="/checkout" className="focus-ring secondary-action mt-3 w-full text-sm">
               <FileText size={16} />
-              Review next steps
+              See visit instructions
             </Link>
           </div>
         </aside>

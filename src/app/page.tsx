@@ -8,12 +8,10 @@ import {
   FileText,
   Headphones,
   HeartPulse,
-  LockKeyhole,
+  MapPin,
   Search,
   ShieldCheck,
   ShoppingCart,
-  Sparkles,
-  Stethoscope,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
@@ -27,14 +25,15 @@ export default function Home() {
   const featuredPanel = panels.find((panel) => panel.id === "complete-wellness") ?? panels[0];
   const featuredTests = getTestsForPanel(featuredPanel.id).slice(0, 5);
   const steps: Array<[string, string, LucideIcon]> = [
-    ["Choose your panel", "Pick a ready-made wellness panel or answer one simple question.", Search],
-    ["Checkout once", "Pay the clear cash price before anything goes to the lab.", BadgeDollarSign],
-    ["Get guided results", "See results, next steps, and support in your private account.", FileText],
+    ["Choose tests", "Pick a ready-made panel or add individual tests.", Search],
+    ["Enter ZIP and basic info", "Tell us where you want to test and who the order is for.", ClipboardList],
+    ["See the nearest clinic", "Preview a nearby patient service center before checkout.", MapPin],
+    ["Pay cash, get instructions", "Pay the clear price and receive lab visit instructions.", BadgeDollarSign],
   ];
   const benefits: Array<[string, string, LucideIcon]> = [
-    ["No surprise bill", "Cash-pay pricing is shown before checkout.", BadgeDollarSign],
-    ["Clinician reviewed", "Eligible orders are checked before the lab visit.", Stethoscope],
-    ["Family peace of mind", "Share status and results with someone you trust.", LockKeyhole],
+    ["No doctor visit", "Start online without scheduling a separate physician appointment.", HeartPulse],
+    ["No insurance billing", "Cash-pay pricing is shown before checkout.", BadgeDollarSign],
+    ["Authorization included", "Provider authorization is included where required.", ShieldCheck],
     ["Real support", "A person can help with scheduling, prep, and result questions.", Headphones],
   ];
 
@@ -51,22 +50,22 @@ export default function Home() {
               Know what is happening in your body.
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-9 text-blue-100">
-              A simple lab testing flow with clear prices, private results, and real help so nobody has to figure it
-              out alone.
+              Choose tests, enter your ZIP, see a nearby clinic, and pay the clear cash price. No doctor visit. No
+              insurance. Provider authorization included where required.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/cart?panel=complete-wellness" className="focus-ring primary-action w-full sm:w-auto">
-                <Sparkles size={19} />
-                Start testing
+              <Link href="/catalog" className="focus-ring primary-action w-full sm:w-auto">
+                <Search size={19} />
+                Choose tests
                 <ArrowRight size={18} />
               </Link>
-              <Link href="/catalog" className="focus-ring secondary-action w-full sm:w-auto">
-                <ClipboardList size={19} />
-                See all panels
+              <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring secondary-action w-full sm:w-auto">
+                <MapPin size={19} />
+                Enter ZIP
               </Link>
             </div>
             <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
-              {["Private results", "Clear price", "Lab help"].map((item) => (
+              {["No doctor visit", "No insurance", "Authorization included"].map((item) => (
                 <div key={item} className="pulse-pill flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-[var(--brand-dark)]">
                   <CheckCircle2 size={17} className="text-[var(--brand)]" />
                   {item}
@@ -115,8 +114,8 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             {[
               ["Panels", String(panels.length), "Start with one simple choice."],
-              ["States checked", String(supply.states), "Availability is checked before payment."],
-              ["Support", "Included", "Scheduling and results help are built in."],
+              ["Supported states", String(supply.states), "Enter ZIP to find a nearby clinic."],
+              ["Checkout", "Cash-pay", "No insurance or Medicare billing."],
             ].map(([label, value, copy]) => (
               <div key={label} className="glass-card p-5">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
@@ -132,14 +131,14 @@ export default function Home() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-3xl">
             <p className="eyebrow">Testing is easy</p>
-            <h2 className="mt-2 text-4xl font-semibold">Three steps from checkout to clarity.</h2>
+            <h2 className="mt-2 text-4xl font-semibold">From choosing tests to clinic instructions.</h2>
           </div>
-          <Link href="/cart?panel=complete-wellness" className="focus-ring secondary-action">
+          <Link href="/catalog" className="focus-ring secondary-action">
             <ShoppingCart size={18} />
-            Start with Complete Wellness
+            Choose tests
           </Link>
         </div>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {steps.map(([title, copy, Icon], index) => (
             <article key={title} className="premium-card p-6">
               <div className="flex items-center justify-between">
@@ -159,7 +158,7 @@ export default function Home() {
             <p className="eyebrow">Start here</p>
             <h2 className="mt-2 text-4xl font-semibold">Pick one panel. We keep you moving.</h2>
             <p className="page-copy mt-3">
-              The most important action is choosing a starting panel. You can add more later.
+              Start with a panel, then enter ZIP and basic info to see the nearest clinic.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -202,7 +201,7 @@ export default function Home() {
               {[
                 ["HbA1c", "5.4%", "Looks normal"],
                 ["Vitamin D", "27 ng/mL", "Needs attention"],
-                ["LDL", "132 mg/dL", "Ask a clinician"],
+                ["LDL", "132 mg/dL", "Discuss next steps"],
               ].map(([name, value, status]) => (
                 <div key={name} className="rounded-md border border-[var(--line)] bg-white p-4">
                   <div className="flex items-center justify-between gap-4">
@@ -226,10 +225,10 @@ export default function Home() {
       <section id="pricing" className="page-section">
         <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <p className="eyebrow">Your membership starts here</p>
+            <p className="eyebrow">Cash-pay checkout</p>
             <h2 className="mt-2 text-4xl font-semibold">A clear cash-pay order, built for trust.</h2>
             <p className="page-copy mt-3">
-              We keep the choice simple: start with the Complete Wellness panel, confirm your state, and checkout.
+              Choose the panel, enter ZIP and basic info, see the nearest clinic, and pay without insurance.
             </p>
           </div>
           <div className="glass-card p-6">
@@ -246,9 +245,9 @@ export default function Home() {
             <div className="mt-5 grid gap-3">
               {[
                 "Blood count, metabolic, thyroid, glucose, nutrients, and inflammation",
-                "Licensed clinician review for eligible orders",
-                "Private account for results and family sharing",
-                "Scheduling help available if the lab visit feels confusing",
+                "No doctor visit. Provider authorization included where required.",
+                "Cash-pay checkout with no insurance or Medicare billing",
+                "Nearest-clinic instructions after checkout",
               ].map((item) => (
                 <p key={item} className="flex items-start gap-2 text-base leading-7 text-[var(--muted)]">
                   <CheckCircle2 className="mt-1 shrink-0 text-[var(--brand)]" size={18} />
@@ -256,12 +255,14 @@ export default function Home() {
                 </p>
               ))}
             </div>
-            <Link href="/cart?panel=complete-wellness" className="focus-ring primary-action mt-6 w-full">
+            <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring primary-action mt-6 w-full">
               <HeartPulse size={19} />
-              Start testing
+              Enter ZIP and checkout
               <ArrowRight size={18} />
             </Link>
-            <p className="mt-3 text-center text-sm text-[var(--muted)]">No insurance billing in this checkout flow.</p>
+            <p className="mt-3 text-center text-sm text-[var(--muted)]">
+              No doctor visit. No insurance. Provider authorization included where required.
+            </p>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import type { LabTest, Panel, ResultReport } from "@/lib/types";
 
-export const restrictedStates = ["AZ", "NY", "NJ", "RI"] as const;
+export const restrictedStates = ["AZ"] as const;
 
 export const labTests: LabTest[] = [
   {

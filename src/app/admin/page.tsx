@@ -15,7 +15,7 @@ export default function AdminPage() {
     ["Lab targets", outreachTargets.length, Target],
     ["States mapped", supply.states, MapPinned],
     ["Blocked states", restrictedStates.length, ShieldCheck],
-    ["Review queue", 3, FileWarning],
+    ["Routing holds", 1, FileWarning],
   ];
 
   return (

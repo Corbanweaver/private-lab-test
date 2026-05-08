@@ -1,37 +1,35 @@
 import { NextResponse } from "next/server";
-import { checkStateEligibility } from "@/lib/catalog";
-import { getPreferredPartner } from "@/lib/lab-access";
-import { getProviderAdapter } from "@/lib/provider";
+import { createOrderQuote } from "@/lib/order-router";
 import { hasStripeConfig, getStripe } from "@/lib/stripe";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
   const panelId = String(formData.get("panelId") ?? "complete-wellness");
-  const amount = Number(formData.get("amount") ?? 0);
+  const testIds = String(formData.get("testIds") ?? "")
+    .split(",")
+    .map((testId) => testId.trim())
+    .filter(Boolean);
   const state = String(formData.get("state") ?? "");
-  const eligibility = checkStateEligibility(state);
-
-  if (!eligibility.eligible) {
-    return NextResponse.json({ error: eligibility.message }, { status: 400 });
-  }
-
-  const provider = getProviderAdapter("aggregator");
-  const authorization = await provider.authorizeOrder({
-    userId: "checkout-user",
+  const zip = String(formData.get("zip") ?? "");
+  const collectionType = String(formData.get("collectionType") ?? "walk_in");
+  const quote = createOrderQuote({
     panelId,
-    state: eligibility.state,
-    total: amount,
+    testIds,
+    state,
+    zip,
+    collectionType: collectionType === "mobile" || collectionType === "kit" ? collectionType : "walk_in",
   });
 
-  if (authorization.status !== "approved") {
-    return NextResponse.json({ error: authorization.reason }, { status: 400 });
+  if (!quote.available) {
+    return NextResponse.json({ error: quote.unavailableReason ?? quote.customerMessage, quote }, { status: 400 });
   }
-
-  const partner = getPreferredPartner(eligibility.state, "aggregator");
 
   if (!hasStripeConfig()) {
     return NextResponse.redirect(
-      new URL(`/checkout?mock=1&panel=${panelId}&auth=${authorization.id}&partner=${partner.id}`, request.url),
+      new URL(
+        `/checkout?mock=1&panel=${panelId}&quote=${quote.id}&partner=${quote.partnerId}&location=${quote.selectedLocation?.id}&mode=${quote.orderMode}`,
+        request.url,
+      ),
       303,
     );
   }
@@ -46,7 +44,7 @@ export async function POST(request: Request) {
         quantity: 1,
         price_data: {
           currency: "usd",
-          unit_amount: Math.max(amount, 1) * 100,
+          unit_amount: Math.max(quote.total, 1) * 100,
           product_data: {
             name: panelId === "custom" ? "Custom blood work panel" : `Lab panel: ${panelId}`,
           },
@@ -55,9 +53,13 @@ export async function POST(request: Request) {
     ],
     metadata: {
       panelId,
-      state: eligibility.state,
-      authorizationId: authorization.id,
-      partnerId: partner.id,
+      state: quote.state,
+      zip: quote.zip,
+      quoteId: quote.id,
+      orderMode: quote.orderMode,
+      partnerId: quote.partnerId ?? "",
+      routeId: quote.routeId ?? "",
+      locationId: quote.selectedLocation?.id ?? "",
       paymentModel: "cash_pay_only",
     },
   });

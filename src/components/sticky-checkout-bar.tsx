@@ -24,7 +24,7 @@ export function StickyCheckoutBar() {
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">Complete Wellness starts here</p>
-            <p className="truncate text-xs text-[var(--muted)]">$229 cash-pay • review before lab visit • private results</p>
+            <p className="truncate text-xs text-[var(--muted)]">$229 cash-pay - no insurance - private results</p>
           </div>
         </div>
         <Link
