@@ -53,16 +53,28 @@ Keep `JUNCTION_ALLOW_PARTIAL_TEST_MAP` unset for real orders. The adapter will b
 
 ## Current Sandbox Mapping
 
-The current Junction sandbox catalog exposes only a few test IDs. For now, `complete-wellness` is mapped to the walk-in CMP sandbox test so the full provider flow can be exercised safely:
+The current reviewed Junction sandbox screenshots provide these usable IDs:
 
 ```json
 {
-  "complete-wellness": ["c533549c-1e62-4afe-9a0e-0567a9b2bcc2"],
-  "cmp": "c533549c-1e62-4afe-9a0e-0567a9b2bcc2"
+  "804106": "A1C, CBC, CMP, LIPID, TSH, URGM, VIT D 25OH",
+  "803570": "CMP, Lipid, HsCRP, TSH",
+  "804513": "B12, CMP, Copp, FE, FOL, MG, Selen, VitA, VitB1, VitC, VitD, VitE, Zinc",
+  "004598": "Ferritin",
+  "801762": "ATG, FT3, FT4, T3, T4, T4A, TSH",
+  "804466": "CBC, CMP, DHEAS, SHBG, FT3, FT4, TESTO F/T, TSH, VITD 25OH",
+  "7116": "Hemoglobin A1c",
+  "7325": "Estradiol (E2), Sensitive or Estradiol/LH/Progesterone depending catalog row"
 }
 ```
 
-This is not the final production Complete Wellness panel. Replace it when Junction provides production IDs for CMP, CBC, lipid panel, A1C, TSH, vitamin D, B12/folate, hsCRP, ferritin, and any other launched markers.
+Use this `JUNCTION_LAB_TEST_MAP` only for sandbox order-flow testing:
+
+```json
+{"essential-wellness":["804106"],"complete-wellness":["804106","803570","804513","004598"],"energy-check":["804106","801762","804513","004598"],"heart-metabolic":["803570","7116"],"hormone-baseline":["804466","7325"],"a1c":"7116","ferritin":"004598","estradiol":"7325","thyroid-full":"801762"}
+```
+
+This is not the final production menu. Several IDs are bundled panels that include extra markers and duplicate overlap. Provider ID `7325` appeared for both an estradiol panel and an estradiol-sensitive biomarker row, so confirm the exact lab/provider row before production use. Replace the sandbox mapping when Junction provides production IDs for CMP, CBC, lipid panel, A1C, TSH, vitamin D, B12/folate, hsCRP, ferritin, and any other launched markers.
 
 ## Mapping Workflow
 

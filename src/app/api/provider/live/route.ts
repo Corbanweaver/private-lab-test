@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import {
+  junctionScreenshotSandboxEnvValue,
+  junctionScreenshotSandboxLabTestMap,
+} from "@/data/junction-sandbox-map";
+import {
   isJunctionConfigured,
   isJunctionSandbox,
   isLiveProviderWriteAllowed,
@@ -30,6 +34,8 @@ export async function GET() {
       nextSetup:
         "Add JUNCTION_API_KEY, LAB_PROVIDER=junction, JUNCTION_LAB_TEST_MAP, and SUPABASE_SERVICE_ROLE_KEY to test live provider connectivity.",
       labTestMapExample: `{ "complete-wellness": ["<junction lab_test_id>"], ${junctionTestMapHelp} }`,
+      screenshotSandboxLabTestMap: junctionScreenshotSandboxLabTestMap,
+      screenshotSandboxEnvValue: junctionScreenshotSandboxEnvValue,
     });
   }
 

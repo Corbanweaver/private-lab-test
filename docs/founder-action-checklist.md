@@ -65,12 +65,13 @@ Why it matters:
 
 ### Junction Production Menu
 
-Status: needed.
+Status: sandbox screenshots captured; production menu still needed.
 
 What to do:
 
 - Ask Junction for production or expanded sandbox lab test IDs for CMP, CBC, lipids, A1c, TSH, vitamin D, B12/folate, hs-CRP, ferritin, thyroid, and hormone tests.
 - Send the test IDs/menu export.
+- Confirm whether provider ID `7325` should be used for estradiol sensitive, the estradiol/LH/progesterone panel, or both depending lab/provider.
 
 Why it matters:
 
