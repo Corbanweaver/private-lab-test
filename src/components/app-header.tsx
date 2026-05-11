@@ -9,7 +9,6 @@ import {
   MapPin,
   Search,
   ShieldCheck,
-  ShoppingCart,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -70,10 +69,10 @@ export function AppHeader() {
           <Link
             href="/cart"
             className="focus-ring flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius)] border border-white/60 bg-white/70 text-[var(--brand-dark)] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition hover:border-[color-mix(in_srgb,var(--brand)_48%,rgba(255,255,255,0.7))] hover:shadow-[0_14px_34px_rgba(16,22,21,0.12)]"
-            aria-label="Cart"
-            title="Cart"
+            aria-label="Selected panels"
+            title="Selected panels"
           >
-            <ShoppingCart size={19} />
+            <ClipboardList size={19} />
           </Link>
           <Link href="/#waitlist" className="focus-ring primary-action desktop-action text-sm">
             <Search size={17} />

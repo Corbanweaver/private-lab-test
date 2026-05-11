@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, ShoppingCart } from "lucide-react";
+import { ArrowRight, ClipboardList, ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const hiddenRoutes = ["/admin", "/partners"];
@@ -32,7 +32,7 @@ export function StickyCheckoutBar() {
           href={isCart ? "/cart?panel=complete-wellness#waitlist" : "/cart?panel=complete-wellness#waitlist"}
           className="focus-ring primary-action min-h-11 shrink-0 px-3 text-xs shadow-[0_18px_48px_rgba(16,22,21,0.22)] sm:min-h-12 sm:px-4 sm:text-sm"
         >
-          <ShoppingCart size={17} />
+          <ClipboardList size={17} />
           Join waitlist
           <ArrowRight className="hidden sm:block" size={16} />
         </Link>

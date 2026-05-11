@@ -57,15 +57,20 @@ export function WaitlistForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="liquid-glass grid gap-4 p-5">
+    <form
+      onSubmit={handleSubmit}
+      className={`waitlist-form liquid-glass grid ${compact ? "waitlist-form--compact gap-3 p-4" : "gap-4 p-5"}`}
+    >
       <div className="flex items-start gap-3">
         <span className="icon-tile">
           <Mail size={20} />
         </span>
         <div>
           <p className="premium-section-label">Early access</p>
-          <h2 className="mt-1 text-2xl font-semibold">Join the {selectedName} waitlist</h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+          <h2 className={`mt-1 font-semibold ${compact ? "text-xl" : "text-2xl"}`}>
+            Join the {selectedName} waitlist
+          </h2>
+          <p className={`mt-2 text-sm leading-6 text-[var(--muted)] ${compact ? "hidden" : ""}`}>
             We will invite people by region once full in-app ordering is ready. No payment or medical intake today.
           </p>
         </div>
@@ -74,7 +79,7 @@ export function WaitlistForm({
       <input type="hidden" name="panelId" value={panelId} />
       <input type="hidden" name="source" value={source} />
 
-      <div className={`grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}>
+      <div className="grid gap-3 sm:grid-cols-2">
         <label className="grid gap-1 text-sm font-medium">
           First name
           <input name="firstName" className="focus-ring input-control" autoComplete="given-name" />
@@ -123,7 +128,7 @@ export function WaitlistForm({
         </p>
       ) : null}
 
-      <p className="flex items-start gap-2 text-xs leading-5 text-[var(--muted)]">
+      <p className={`items-start gap-2 text-xs leading-5 text-[var(--muted)] ${compact ? "hidden md:flex" : "flex"}`}>
         <MapPin className="mt-0.5 shrink-0 text-[var(--brand)]" size={14} />
         We use ZIP/state only to understand launch demand and lab coverage.
       </p>

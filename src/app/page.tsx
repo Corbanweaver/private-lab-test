@@ -52,29 +52,46 @@ export default function Home() {
 
   return (
     <PageShell>
-      <section className="deep-band relative overflow-hidden">
-        <div className="page-section hero-shell grid items-center gap-10 py-12 lg:grid-cols-[0.94fr_1.06fr] lg:py-16">
+      <section className="hero-premium-band relative overflow-hidden">
+        <Image
+          src="/blue-lab-capsules.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-background-image object-cover"
+        />
+        <div className="page-section hero-shell grid items-center gap-10 py-12 lg:grid-cols-[0.92fr_1.08fr] lg:py-16">
           <div className="relative z-10 min-w-0">
             <div className="flex flex-wrap gap-2">
-              <div className="pulse-pill inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+              <div className="hero-badge inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold">
                 <ShieldCheck size={16} />
                 Early access
               </div>
-              <div className="pulse-pill inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+              <div className="hero-badge inline-flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold">
                 <ClipboardList size={16} />
                 No payment today
               </div>
             </div>
-            <p className="mt-3 max-w-full break-all text-[10px] font-medium leading-4 text-white/50">
+            <p className="site-verification">
               Impact-Site-Verification: b12d44aa-c34a-4466-a4d3-b092a424eaf0
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[0.98] tracking-normal text-white sm:text-5xl lg:text-[4.25rem]">
-              Blood work without the office visit.
+            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[0.98] tracking-normal text-white sm:text-5xl lg:text-[4.5rem]">
+              Private lab testing without the office visit.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-[#dbe8e4] sm:text-lg sm:leading-8">
-              Join the waitlist for direct-access wellness labs. We are proving demand before turning on expensive
-              backend ordering, so there is no payment or medical intake today.
+              Join early access while we build full in-app lab ordering. Tell us the panel and ZIP you want first, pay
+              nothing today, and help shape the first launch regions.
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/#waitlist" className="focus-ring primary-action">
+                Join early access
+                <ArrowRight size={17} />
+              </Link>
+              <Link href="/catalog" className="focus-ring hero-secondary-action">
+                Explore panels
+              </Link>
+            </div>
             <form
               action="/catalog"
               className="hero-search-card mt-6 rounded-[var(--radius)] border border-white/60 bg-white/90 p-3 text-[var(--foreground)] shadow-[0_26px_80px_rgba(16,22,21,0.2)] backdrop-blur-2xl"
@@ -122,7 +139,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-[#c8d7d2]">
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-[#d7e7e2]">
               <span className="flex items-center gap-2">
                 <FileText size={16} />
                 Pricing shared before launch
@@ -138,66 +155,38 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="capsule-stage">
-            <Image
-              src="/blue-lab-capsules.png"
-              alt="Private lab testing visual"
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover opacity-35 mix-blend-multiply"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#f8f9f4] via-[#f8f9f4]/68 to-[#f8f9f4]/34" />
-            <div className="absolute inset-x-4 top-4 rounded-[var(--radius)] border border-white/15 bg-[rgba(16,20,19,0.9)] p-4 text-white shadow-[0_30px_70px_rgba(0,0,0,0.34)] backdrop-blur-2xl sm:inset-x-5 sm:top-5 sm:p-5">
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-bold uppercase text-[#9ed5cc]">Whole-body check</p>
-                  <h2 className="mt-2 text-2xl font-semibold">{featuredPanel.name}</h2>
-                  <p className="mt-1 text-sm leading-6 text-[#c9d8d4]">{featuredPanel.description}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-[#c9d8d4]">status</p>
-                  <p className="text-3xl font-semibold sm:text-4xl">Waitlist</p>
-                </div>
+          <div className="hero-command-center relative z-10">
+            <div className="hero-command-top">
+              <div>
+                <p className="text-xs font-bold uppercase text-[#9ed5cc]">Whole-body check</p>
+                <h2 className="mt-2 text-2xl font-semibold text-white">{featuredPanel.name}</h2>
+                <p className="mt-1 text-sm leading-6 text-[#c9d8d4]">{featuredPanel.description}</p>
               </div>
-              <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-3/4 rounded-full bg-[var(--accent)]" />
-              </div>
-              <div className="mt-3 flex justify-between text-xs font-semibold text-[#c9d8d4]">
-                <span>Panel interest</span>
-                <span>Launch list next</span>
+              <div className="hero-status-chip">
+                <span>Status</span>
+                <strong>Waitlist</strong>
               </div>
             </div>
-            <div className="absolute bottom-4 left-4 right-4 rounded-[var(--radius)] border border-white/60 bg-white/70 p-4 text-[var(--foreground)] shadow-[0_30px_70px_rgba(16,22,21,0.18)] backdrop-blur-2xl sm:bottom-5 sm:left-5 sm:right-5 sm:p-5">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="eyebrow">Private result view</p>
-                  <h3 className="mt-1 text-xl font-semibold sm:text-2xl">Markers in one place</h3>
+            <WaitlistForm panelId={featuredPanel.id} selectedName={featuredPanel.name} source="hero" compact />
+            <div className="hero-proof-grid">
+              {[
+                ["5", "curated panels"],
+                [String(supply.states), "mapped states"],
+                ["0", "payment today"],
+              ].map(([value, label]) => (
+                <div key={label} className="hero-proof-tile">
+                  <p>{value}</p>
+                  <span>{label}</span>
                 </div>
-                <span className="rounded-[var(--radius)] bg-[var(--accent-soft)] px-3 py-2 text-sm font-semibold text-[var(--brand-dark)]">
-                  Released
+              ))}
+            </div>
+            <div className="hero-marker-strip">
+              {featuredTests.map((test) => (
+                <span key={test?.id}>
+                  <CheckCircle2 size={14} />
+                  {test?.name}
                 </span>
-              </div>
-              <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                {featuredTests.map((test) => (
-                  <p key={test?.id} className="flex items-center gap-2 text-sm font-medium text-[var(--foreground)]">
-                    <CheckCircle2 size={15} className="text-[var(--brand)]" />
-                    {test?.name}
-                  </p>
-                ))}
-              </div>
-              <div className="mt-5 grid gap-2 sm:grid-cols-3">
-                {[
-                  ["Clinic", "2.4 mi"],
-                  ["Launch", "By region"],
-                  ["Privacy", "Account"],
-                ].map(([label, value]) => (
-                  <div key={label} className="metric-tile">
-                    <p className="text-xs text-[var(--muted)]">{label}</p>
-                    <p className="mt-1 font-semibold text-[var(--foreground)]">{value}</p>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
