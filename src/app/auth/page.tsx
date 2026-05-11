@@ -15,8 +15,10 @@ export default function AuthPage() {
             <p className="page-copy mt-3 max-w-2xl">
               Your account keeps orders, lab instructions, results, and trusted family access in one safe place.
             </p>
-            <div className="premium-card mt-6 p-5">
-              <LockKeyhole className="text-[var(--brand)]" />
+            <div className="liquid-glass mt-6 p-5">
+              <span className="icon-tile">
+                <LockKeyhole size={20} />
+              </span>
               <h2 className="mt-3 text-xl font-semibold">Your information stays private</h2>
               <p className="mt-2 text-base leading-7 text-[var(--muted)]">
                 We use a private account so lab orders and results are not shared by email or left in the open.

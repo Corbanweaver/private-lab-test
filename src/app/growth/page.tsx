@@ -63,7 +63,7 @@ export default function GrowthPage() {
       <section className="page-section">
         <div className="mb-8 max-w-3xl">
           <p className="eyebrow">The stack</p>
-          <h2 className="mt-2 text-3xl font-semibold">Tools that make the company bigger than checkout.</h2>
+          <h2 className="mt-2 text-3xl font-semibold">Tools that make the company bigger than one order.</h2>
           <p className="page-copy mt-3">
             Each tool has a lane, an activation point, and hard guardrails so growth does not outrun trust.
           </p>

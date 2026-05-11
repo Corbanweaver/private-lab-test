@@ -6,7 +6,7 @@ Use this as the batch setup list for accounts, keys, approvals, and decisions th
 
 ### PostHog
 
-Status: needed.
+Status: connected and tested.
 
 What to do:
 
@@ -23,7 +23,7 @@ Why it matters:
 
 ### Resend
 
-Status: use this first because the account already exists. App test endpoint is `POST /api/email/test`.
+Status: connected and tested. App test endpoint is `POST /api/email/test`.
 
 What to do:
 
@@ -58,7 +58,7 @@ Why it matters:
 
 ### Quest Health Affiliate
 
-Status: needed.
+Status: application submitted; Impact verification token added to `privatelabtest.com`.
 
 What to do:
 
@@ -68,6 +68,38 @@ What to do:
 Why it matters:
 
 - Fastest legitimate Quest-branded path while direct national-lab contracting matures.
+
+### Ulta Lab Tests
+
+Status: accepted. App now supports an Ulta partner checkout path through `/partners/order` and `/api/partners/referral`.
+
+What to collect now:
+
+- Exact affiliate, healthcare professional, or co-branded portal URL.
+- Any panel-specific URLs for Complete Wellness, Essential Wellness, Heart/Metabolic, Energy, and Hormone panels.
+- Approved wording and brand-use rules.
+- Commission/margin and payout timing.
+- Whether custom panels can be created in their portal.
+- Whether results stay only in Ulta's portal or can be exported/reported later.
+
+Set in Vercel:
+
+- `ULTA_PARTNER_STATUS=approved`
+- `ULTA_AFFILIATE_URL=your_tracked_ulta_url`
+- Optional: `ULTA_PANEL_URL_MAP={"complete-wellness":"https://panel-specific-url"}`
+
+Still ask on the call:
+
+- Whether the best setup is affiliate, healthcare professional account, co-branded portal, or another partner structure.
+- Whether Private Lab Test can deep-link to specific tests or custom panels.
+- Whether users can preview nearby draw sites before payment.
+- Who handles physician authorization, requisitions, abnormal results, and result delivery.
+- Whether results stay in Ulta's portal or can be exported/reported later.
+- Exact commission/margin, payout timing, allowed claims, and state restrictions.
+
+Why it matters:
+
+- This may be the fastest way to make the site useful for real customers while API-native ordering is still being negotiated.
 
 ### Junction Production Menu
 
@@ -82,6 +114,19 @@ What to do:
 Why it matters:
 
 - Turns the sandbox flow into real orderable panels.
+
+### Clinical Review Partner
+
+Status: needed before marketing medical advice, clinician interpretation, or treatment pathways.
+
+What to do:
+
+- Identify an Everly/PWNHealth-style partner or licensed telehealth group that can support lab-result review.
+- Ask for state coverage, clinician documentation, critical-value handling, BAA posture, patient messaging, pricing, and API/export options.
+
+Why it matters:
+
+- Educational lab insights can be built now, but actual medical advice needs licensed clinician operations.
 
 ## Later
 

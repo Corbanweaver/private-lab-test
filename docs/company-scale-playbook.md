@@ -10,6 +10,8 @@ The first wedge is Private MD Labs-style ordering: choose tests, enter ZIP, pay 
 
 The bigger company is Hims/Function-style continuity: recurring programs, biomarker trends, clinician review options, family support, and future treatment pathways only where licensed providers and state operations support them.
 
+The updated product thesis is documented in `docs/telehealth-lab-membership-roadmap.md`: Private Lab Test should become a lab-first telehealth membership, not just a one-time test catalog.
+
 ## What To Borrow
 
 ### Private MD Labs
@@ -78,11 +80,26 @@ Avoid:
 
 Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-function-membership
 
+### Superpower
+
+Borrow:
+
+- Simple biomarker membership pitch.
+- AI-forward dashboard and repeated testing story.
+- Lower-friction pricing narrative that makes advanced labs feel more mainstream.
+
+Avoid:
+
+- Letting AI-generated copy sound like diagnosis, treatment, or medical advice before clinician review is operational.
+
+Source: https://superpower.com/
+
 ## Product Stack To Build
 
 1. Self-pay lab checkout
    - Current focus.
    - Works when Junction or another provider can create real orders.
+   - Now also supports approved partner checkout redirects for Ulta, and Quest when approved.
 
 2. AI-guided ordering and growth engine
    - Safe panel concierge for customers.
@@ -106,14 +123,17 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 
 5. Membership engine
    - Annual Lab Pass.
+   - Lab Pass Plus with clinician result review where licensed.
    - 12-week metabolic follow-up.
    - Retest reminders.
    - Member pricing and support.
+   - Clear renewal notices and easy cancellation.
 
 6. Clinical marketplace
    - Optional licensed clinician review.
    - Treatment partner referrals only where compliant.
    - Clear separation between lab ordering and prescribing.
+   - State-aware clinician licensure and scope-of-practice checks.
 
 7. Family/caregiver layer
    - Permissioned result sharing.
@@ -128,16 +148,21 @@ Source: https://www.functionhealth.com/faqs/which-tests-are-included-with-a-func
 - National lab affiliation ladder: affiliate/referral proof first, then white-label/API networks, then provider-account or enterprise direct contracting.
 - Result ingestion and normalized biomarkers.
 - Retest reminders and longitudinal trends.
+- Result-release, abnormal-follow-up, retest, program-progress, and member-savings retention loops.
 - Support workflows for redraws, missed requisitions, result delays, and critical values.
 - Privacy-first account and consent controls.
+- Separation between educational insights, licensed clinician review, and future treatment pathways.
 
 ## Immediate Founder Asks
 
 - Batch the account/key/approval work in `docs/founder-action-checklist.md`.
 - Get Junction production or expanded sandbox IDs for the launch menu.
 - Apply to Quest Health's affiliate program and keep Quest-branded pages disabled until approval and brand-use terms are written.
-- Book ORDRS as the second API-network conversation.
+- Turn Quest/Ulta approval into affiliate, deep-link, or co-branded real-ordering paths.
+- Add Ulta's tracked URL to `ULTA_AFFILIATE_URL`; add Quest's Impact URL later to `QUEST_AFFILIATE_URL`.
+- Keep ORDRS as a later backup because the signup/onboarding path is currently too circular.
 - Book Getlabs or another mobile phlebotomy partner.
+- Identify the clinician infrastructure partner that can support result review, telehealth visits, state matching, documentation, and critical-value workflows.
 - Decide whether `/strategy` and `/programs` should be public or hidden before production push.
 - Start legal/privacy review before advertising stored results, family sharing, or any treatment pathway.
 - Connect PostHog, OpenAI API, Customer.io/Resend, Twilio, and a compliance tool only with the guardrails in `docs/ai-growth-stack-plan.md`.

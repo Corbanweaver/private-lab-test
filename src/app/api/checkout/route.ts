@@ -26,6 +26,16 @@ function getPatientIntake(formData: FormData, fallback: { state: string; zip: st
 }
 
 export async function POST(request: Request) {
+  if (process.env.LAB_ORDERING_MODE !== "enabled") {
+    return NextResponse.json(
+      {
+        error:
+          "Paid lab checkout is paused while Private Lab Test validates demand through the waitlist.",
+      },
+      { status: 409 },
+    );
+  }
+
   const formData = await request.formData();
   const panelId = String(formData.get("panelId") ?? "complete-wellness");
   const testIds = String(formData.get("testIds") ?? "")

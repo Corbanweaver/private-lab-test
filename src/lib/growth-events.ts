@@ -6,7 +6,8 @@ export type GrowthEventName =
   | "checkout_completed"
   | "results_ready"
   | "retest_reminder_due"
-  | "partner_outreach_sent";
+  | "partner_outreach_sent"
+  | "waitlist_joined";
 
 export type GrowthEventPayload = {
   event: GrowthEventName;
@@ -30,6 +31,7 @@ const allowedEventProperties: Record<GrowthEventName, string[]> = {
   results_ready: ["panel_id", "state", "source"],
   retest_reminder_due: ["program_id", "panel_id", "days_since_order", "source"],
   partner_outreach_sent: ["target_id", "category", "state_focus", "source"],
+  waitlist_joined: ["panel_id", "state", "source", "interest"],
 };
 
 const sensitiveFieldPatterns = [
@@ -58,7 +60,8 @@ export function isGrowthEventName(value: unknown): value is GrowthEventName {
     value === "checkout_completed" ||
     value === "results_ready" ||
     value === "retest_reminder_due" ||
-    value === "partner_outreach_sent"
+    value === "partner_outreach_sent" ||
+    value === "waitlist_joined"
   );
 }
 

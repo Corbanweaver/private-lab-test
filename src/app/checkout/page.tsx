@@ -1,78 +1,60 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, CreditCard, FileText, FlaskConical, LockKeyhole, MapPin } from "lucide-react";
+import { ArrowRight, CheckCircle2, ClipboardList, FileText, MapPin, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
-import { networkLocationDirectory } from "@/data/lab-network";
-import { labPartners } from "@/data/lab-partners";
+import { WaitlistForm } from "@/components/waitlist-form";
 
-export default async function CheckoutPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ partner?: string; auth?: string; location?: string; mode?: string; mock?: string }>;
-}) {
-  const params = await searchParams;
-  const partner = labPartners.find((item) => item.id === params.partner) ?? labPartners[0];
-  const routedClinic = networkLocationDirectory.find((item) => item.id === params.location);
-  const fallbackClinic = partner.drawLocations[0];
-  const clinic = routedClinic ?? fallbackClinic;
-  const isSandboxCheckout = params.mock === "1";
-  const nextSteps: Array<[LucideIcon, string, string]> = [
-    [
-      MapPin,
-      "Nearest clinic",
-      clinic
-        ? `${clinic.name} is ready at ${clinic.address}.`
-        : "A nearby patient service center is selected from your ZIP.",
-    ],
-    [CreditCard, "Clear self-pay price", "You pay before the lab visit. No insurance billing."],
-    [
-      FileText,
-      "Requisition pending",
-      "The lab network may need a few moments to return the final requisition PDF after provider submission.",
-    ],
-  ];
+const nextSteps: Array<[LucideIcon, string, string]> = [
+  [ClipboardList, "Join the waitlist", "Share email, ZIP, state, and the panel you want first."],
+  [MapPin, "Map demand by region", "We use waitlist ZIP/state signals to choose launch areas and lab coverage."],
+  [FileText, "Open ordering later", "Launch pricing and full ordering details are shared before anyone pays."],
+];
 
+export default function CheckoutPage() {
   return (
     <PageShell>
       <section className="blue-band">
-        <div className="page-section grid gap-6 lg:grid-cols-[1fr_380px]">
+        <div className="page-section grid gap-6 lg:grid-cols-[1fr_420px]">
           <div>
-            <p className="eyebrow">Step 4</p>
-            <h1 className="page-title mt-2">Your order is being prepared.</h1>
+            <p className="eyebrow">Ordering paused</p>
+            <h1 className="page-title mt-2">We are not taking payments yet.</h1>
             <p className="page-copy mt-3 max-w-3xl">
-              No doctor visit. No insurance billing. Provider authorization included where required. We show the
-              clinic now and release the requisition as soon as the provider network returns it.
+              Junction is the right full backend for direct in-app lab ordering, but the monthly cost only makes sense
+              after we prove demand. For now, Private Lab Test is collecting launch interest instead of payment.
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/#waitlist" className="focus-ring primary-action">
+                Join waitlist
+                <ArrowRight size={17} />
+              </Link>
+              <Link href="/catalog" className="focus-ring secondary-action">
+                Browse panels
+              </Link>
+            </div>
           </div>
           <div className="glass-card p-5">
-            <p className="eyebrow">Current status</p>
-            <h2 className="mt-2 text-2xl font-semibold">
-              {isSandboxCheckout ? "Sandbox checkout protected" : "Provider authorization included"}
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {isSandboxCheckout
-                ? "This environment is connected to the lab sandbox, so payment is bypassed until live checkout is explicitly enabled."
-                : "Included where required for supported orders, with no separate doctor appointment."}
+            <div className="flex items-center gap-2 text-[var(--brand-dark)]">
+              <ShieldCheck size={21} />
+              <p className="font-semibold">No payment or medical intake today</p>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+              We will only turn paid ordering back on when the provider API, state coverage, pricing, authorization,
+              and result flow are ready end to end.
             </p>
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+
+      <section className="page-section grid gap-6 lg:grid-cols-[1fr_420px]">
         <div className="glass-card p-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="icon-tile h-12 w-12">
-                <CreditCard size={24} />
-              </span>
-              <div>
-                <p className="eyebrow">Checkout flow</p>
-                <h2 className="text-3xl font-semibold">What happens next</h2>
-              </div>
+          <div className="flex items-center gap-3">
+            <span className="icon-tile h-12 w-12">
+              <ClipboardList size={24} />
+            </span>
+            <div>
+              <p className="eyebrow">Launch flow</p>
+              <h2 className="text-3xl font-semibold">What happens next</h2>
             </div>
-            <Link href="/cart?panel=complete-wellness#checkout" className="focus-ring secondary-action text-sm">
-              <CreditCard size={17} />
-              Back to ZIP and checkout
-            </Link>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {nextSteps.map(([Icon, title, copy]) => (
@@ -90,29 +72,19 @@ export default async function CheckoutPage({
             <div className="flex items-start gap-3">
               <CheckCircle2 className="mt-1 text-[var(--brand)]" size={20} />
               <div>
-                <p className="font-semibold">Nearest clinic: {clinic?.name ?? partner.name}</p>
+                <p className="font-semibold">The target is still full in-app ordering.</p>
                 <p className="mt-1 text-base leading-7 text-[var(--muted)]">
-                  {clinic?.address ?? "A nearby partner clinic is selected from your ZIP."} We submit the order to the
-                  provider network, then show the requisition when it is ready.
+                  The waitlist gives us leverage before paying for the backend: which panels people want, which states
+                  matter first, and whether the product deserves the next investment.
                 </p>
               </div>
             </div>
           </div>
-          <div className="mt-4 flex items-start gap-3 rounded-[var(--radius-lg)] bg-[var(--accent-soft)] p-4">
-            <LockKeyhole className="mt-1 text-[var(--brand)]" size={20} />
-            <p className="text-sm leading-6 text-[var(--muted)]">
-              Results stay private and can be shared with a loved one from your account.
-            </p>
-          </div>
-          <Link
-            href="/orders"
-            className="focus-ring primary-action mt-6 shadow-[0_22px_60px_rgba(6,18,29,0.22)]"
-          >
-            <FlaskConical size={18} />
-            Track order status
-            <ArrowRight size={17} />
-          </Link>
         </div>
+
+        <aside id="waitlist" className="h-max scroll-mt-48 lg:sticky lg:top-40">
+          <WaitlistForm selectedName="Complete Wellness" source="checkout-paused" compact />
+        </aside>
       </section>
     </PageShell>
   );

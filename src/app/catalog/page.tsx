@@ -5,7 +5,6 @@ import { PanelCard } from "@/components/panel-card";
 import { TestCard } from "@/components/test-card";
 import { labTests, panels } from "@/data/catalog";
 import { commonLabDemand } from "@/data/product-research";
-import { formatCurrency } from "@/lib/catalog";
 
 export default async function CatalogPage({
   searchParams,
@@ -38,11 +37,11 @@ export default async function CatalogPage({
             <p className="eyebrow text-[#9ed5cc]">Step 1</p>
             <h1 className="page-title mt-2 text-white">Choose tests or a panel.</h1>
             <p className="mt-3 max-w-2xl text-lg leading-8 text-[#dbe8e4]">
-              Pick what you want, then enter ZIP and basic info to see a nearby clinic. No doctor visit. No insurance
-              billing.
+              Pick what you want, then join the launch list. No payment, no DOB, and no medical intake until full
+              ordering is ready.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              {["Clear prices", "Private results", "Authorization where required"].map((item) => (
+              {["Launch pricing before orders", "Private results planned", "Full in-app ordering planned"].map((item) => (
                 <span
                   key={item}
                   className="pulse-pill flex items-center gap-2 rounded-[var(--radius)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]"
@@ -57,15 +56,13 @@ export default async function CatalogPage({
             <p className="eyebrow">Recommended</p>
             <h2 className="mt-2 text-2xl font-semibold">Complete Wellness</h2>
             <p className="mt-1 text-sm text-[var(--muted)]">
-              Broad wellness screening with a clear cash price and provider authorization included where required.
+              Broad wellness screening interest list for the first in-app ordering launch.
             </p>
             <div className="mt-4 flex items-end justify-between gap-3">
-              <p className="text-4xl font-semibold text-[var(--brand-dark)]">
-                {formatCurrency(panels.find((panel) => panel.id === "complete-wellness")?.price ?? 229)}
-              </p>
-              <Link href="/cart?panel=complete-wellness" className="focus-ring primary-action min-h-12 px-4 text-sm">
+              <p className="text-2xl font-semibold text-[var(--brand-dark)]">Waitlist open</p>
+              <Link href="/cart?panel=complete-wellness#waitlist" className="focus-ring primary-action min-h-12 px-4 text-sm">
                 <Sparkles size={17} />
-                Start order
+                Join list
                 <ArrowRight size={16} />
               </Link>
             </div>
@@ -73,7 +70,7 @@ export default async function CatalogPage({
         </div>
       </section>
       <section className="page-section">
-        <div className="premium-card mb-8 grid gap-5 p-5 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="glass-card mb-8 grid gap-5 p-5 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="eyebrow">Common first orders</p>
             <h2 className="mt-2 text-2xl font-semibold">Start with the labs people recognize.</h2>
@@ -87,10 +84,10 @@ export default async function CatalogPage({
               <Link
                 key={test.id}
                 href={`/catalog?q=${encodeURIComponent(test.name)}`}
-                className="focus-ring flex items-center justify-between gap-3 rounded-[var(--radius)] border border-[var(--line)] bg-white px-4 py-3 text-sm font-semibold transition hover:border-[color-mix(in_srgb,var(--brand)_42%,var(--line))] hover:shadow-[0_10px_28px_rgba(6,18,29,0.08)]"
+                className="focus-ring flex items-center justify-between gap-3 rounded-[var(--radius)] border border-white/60 bg-white/70 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.62)] transition hover:border-[color-mix(in_srgb,var(--brand)_42%,rgba(255,255,255,0.7))] hover:shadow-[0_10px_28px_rgba(16,22,21,0.08)]"
               >
                 <span>{test.name}</span>
-                <span className="text-[var(--brand-dark)]">{formatCurrency(test.price)}</span>
+                <span className="text-[var(--brand-dark)]">Waitlist</span>
               </Link>
             ))}
           </div>
@@ -100,7 +97,7 @@ export default async function CatalogPage({
             <span className="simple-number">1</span>
             <div>
               <h2 className="text-2xl font-semibold">Choose a panel</h2>
-              <p className="text-sm text-[var(--muted)]">Compare included tests and select the right self-pay option.</p>
+              <p className="text-sm text-[var(--muted)]">Compare included tests and select what you want when ordering opens.</p>
             </div>
           </div>
           <div className="grid gap-4 lg:grid-cols-3">
@@ -109,13 +106,13 @@ export default async function CatalogPage({
             ))}
           </div>
         </div>
-        <form className="premium-card mt-8 grid gap-3 p-4 sm:grid-cols-[1fr_220px_auto]">
+        <form className="liquid-glass mt-8 grid gap-3 p-4 sm:grid-cols-[1fr_220px_auto]">
           <div className="sm:col-span-3">
             <div className="flex items-center gap-3">
               <span className="simple-number">2</span>
               <div>
                 <h2 className="text-2xl font-semibold">Search individual tests</h2>
-                <p className="mt-1 text-[var(--muted)]">Add specific tests, then continue to ZIP and checkout.</p>
+                <p className="mt-1 text-[var(--muted)]">Add specific tests, then join the launch list.</p>
               </div>
             </div>
           </div>
@@ -134,7 +131,7 @@ export default async function CatalogPage({
               <option key={item}>{item}</option>
             ))}
           </select>
-          <button className="focus-ring primary-action shadow-[0_18px_48px_rgba(6,18,29,0.2)]">
+          <button className="focus-ring primary-action shadow-[0_18px_48px_rgba(16,22,21,0.2)]">
             <Search size={18} />
             Search tests
           </button>

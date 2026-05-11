@@ -96,19 +96,19 @@ export const nationalLabAffiliationTargets: NationalLabAffiliationTarget[] = [
     company: "Ulta Lab Tests",
     model: "api_marketplace",
     priority: 1,
-    timeline: "Now",
-    entryPoint: "Ulta Lab Tests partner/white-label inquiry",
+    timeline: "Accepted - configure now",
+    entryPoint: "Approved Ulta Lab Tests partner account",
     whyItMatters:
-      "Potential shortcut to Quest-connected ordering with a branded consumer lab testing website and Quest bi-directional interface already described in partner materials.",
-    ask: "Request a Private Lab Test-branded lab ordering site, wholesale/affiliate economics, result access, available states, Quest test catalog, and API/embed options.",
+      "Fastest shortcut to live cash-pay ordering while deeper API and direct national-lab contracts mature.",
+    ask: "Request the exact tracked/co-branded URL, panel-specific links, custom panel options, result access, available states, Quest test catalog, and API/embed options.",
     requirements: [
-      "Commercial agreement",
-      "Brand and compliance review",
+      "Tracked affiliate or co-branded URL",
+      "Allowed claims and brand wording",
       "Confirmation of who is ordering provider of record",
       "Result ownership and export terms",
     ],
-    proofToBring: ["Launch panels", "Domain and brand", "Projected order volume", "Support workflow"],
-    productUnlock: "A white-label Quest-connected ordering option while direct Quest enterprise talks mature.",
+    proofToBring: ["Acceptance email", "Launch panels", "Domain and brand", "Projected order volume", "Support workflow"],
+    productUnlock: "A real partner checkout path from Private Lab Test panel selection into Ulta's ordering flow.",
     sourceHref: "https://content.ultalabtests.com/static/documents/PharmacyServiceOfferingNCPA.pdf",
   },
   {
@@ -192,5 +192,7 @@ export const affiliationLadder = [
 ];
 
 export function getImmediateAffiliationTargets() {
-  return nationalLabAffiliationTargets.filter((target) => target.timeline.startsWith("Now"));
+  return nationalLabAffiliationTargets.filter(
+    (target) => target.timeline.startsWith("Now") || target.timeline.startsWith("Accepted"),
+  );
 }

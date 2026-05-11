@@ -31,7 +31,8 @@ export default function AdminPage() {
         <p className="eyebrow">Admin</p>
         <h1 className="page-title mt-2">Keep tests, lab partners, and safety rules organized</h1>
         <p className="page-copy mt-3 max-w-3xl">
-          A simple internal view for the team to check prices, partner coverage, and orders that need review.
+          A simple internal view for the team to check partner coverage, waitlist demand, and orders that will need
+          review once paid ordering opens.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/strategy" className="focus-ring primary-action">
@@ -80,7 +81,7 @@ export default function AdminPage() {
                   <td className="px-4 py-3 capitalize">{partner.tier}</td>
                   <td className="px-4 py-3 capitalize">{partner.cliaStatus}</td>
                   <td className="px-4 py-3">{partner.statesServed.join(", ")}</td>
-                  <td className="px-4 py-3">{partner.cashPriceMenu.length} prices</td>
+                  <td className="px-4 py-3">{partner.cashPriceMenu.length} menu items</td>
                   <td className="px-4 py-3 uppercase">{partner.resultDelivery.replace("_", " ")}</td>
                   <td className="px-4 py-3 text-[var(--muted)]">{partner.criticalResultPolicy}</td>
                 </tr>
@@ -95,7 +96,7 @@ export default function AdminPage() {
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Provider code</th>
                 <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Price</th>
+                <th className="px-4 py-3">Public display</th>
                 <th className="px-4 py-3">Prep</th>
               </tr>
             </thead>
@@ -105,7 +106,7 @@ export default function AdminPage() {
                   <td className="px-4 py-3 font-medium">{test.name}</td>
                   <td className="px-4 py-3 font-mono text-xs">{test.providerCode}</td>
                   <td className="px-4 py-3">{test.category}</td>
-                  <td className="px-4 py-3">${test.price}</td>
+                  <td className="px-4 py-3">Hidden until launch</td>
                   <td className="px-4 py-3 text-[var(--muted)]">{test.fasting}</td>
                 </tr>
               ))}

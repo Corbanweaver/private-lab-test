@@ -1,7 +1,16 @@
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, CheckCircle2, Clock, Layers3, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Layers3, ShieldCheck } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
-import { healthPrograms, membershipConcepts, programStageLabels, scaleBenchmarks } from "@/data/health-programs";
+import {
+  careLayerStageLabels,
+  healthPrograms,
+  membershipConcepts,
+  programStageLabels,
+  retentionLoops,
+  scaleBenchmarks,
+  subscriptionTiers,
+  telehealthCareLayers,
+} from "@/data/health-programs";
 
 export default function ProgramsPage() {
   const livePrograms = healthPrograms.filter((program) => program.stage === "live_lab_path");
@@ -15,13 +24,13 @@ export default function ProgramsPage() {
             <p className="eyebrow text-[#9ed5cc]">Private health programs</p>
             <h1 className="page-title mt-2 text-white">The bigger platform starts with labs.</h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-[#dbe8e4]">
-              Private Lab Test can grow from fast self-pay lab checkout into recurring private-health programs:
-              baseline testing, metabolic tracking, hormones, longevity, caregiver support, and eventually licensed
-              clinician pathways where appropriate.
+              Private Lab Test can grow from a validated lab waitlist into recurring private-health programs: baseline
+              testing, metabolic tracking, hormones, longevity, caregiver support, and eventually licensed clinician
+              pathways where appropriate.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/catalog" className="focus-ring primary-action">
-                Choose a lab panel
+                Choose a waitlist panel
                 <ArrowRight size={17} />
               </Link>
               <Link href="/strategy" className="focus-ring secondary-action">
@@ -32,8 +41,8 @@ export default function ProgramsPage() {
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ["Live lab paths", livePrograms.length],
-              ["Expansion tracks", futurePrograms.length],
-              ["Benchmarks", scaleBenchmarks.length],
+              ["Care layers", telehealthCareLayers.length],
+              ["Retention loops", retentionLoops.length],
             ].map(([label, value]) => (
               <div key={label} className="pulse-pill rounded-[var(--radius)] p-5 text-[var(--foreground)]">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
@@ -45,12 +54,79 @@ export default function ProgramsPage() {
       </section>
 
       <section className="page-section">
+        <div className="mb-8 grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+          <div>
+            <p className="eyebrow">Lab advice architecture</p>
+            <h2 className="mt-2 text-3xl font-semibold">Advice should come in layers, not one risky blur.</h2>
+          </div>
+          <p className="page-copy">
+            The product can educate and organize results now. Medical interpretation, diagnosis, treatment decisions,
+            and prescribing should only happen through licensed clinicians with state-aware operations.
+          </p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-5">
+          {telehealthCareLayers.map((layer) => (
+            <article key={layer.id} className="premium-card p-5">
+              <div className="flex items-start justify-between gap-3">
+                <span className="icon-tile">
+                  <layer.Icon size={21} />
+                </span>
+                <span className="pill">{careLayerStageLabels[layer.stage]}</span>
+              </div>
+              <h3 className="mt-5 text-xl font-semibold">{layer.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{layer.customerPromise}</p>
+              <div className="mt-4 border-t border-[var(--line)] pt-4">
+                <p className="text-xs font-bold uppercase text-[var(--brand-dark)]">Guardrail</p>
+                <p className="mt-2 text-xs leading-5 text-[var(--muted)]">{layer.whatItMustNotDo[0]}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 max-w-3xl">
+            <p className="eyebrow">Recurring engine</p>
+            <h2 className="mt-2 text-3xl font-semibold">Subscriptions should sell confidence, not lock-in.</h2>
+            <p className="page-copy mt-3">
+              The membership product should be transparent: what labs are included, when retesting happens, what support
+              is included, and how cancellation works.
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-4">
+            {subscriptionTiers.map((tier) => (
+              <article key={tier.id} className="premium-card p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="icon-tile">
+                    <Layers3 size={21} />
+                  </span>
+                  <span className="pill">{tier.status === "design_next" ? "Design next" : "Needs ops"}</span>
+                </div>
+                <h3 className="mt-5 text-xl font-semibold">{tier.title}</h3>
+                <p className="mt-2 text-sm font-semibold text-[var(--brand-dark)]">{tier.positioning}</p>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{tier.cadence}</p>
+                <ul className="mt-4 grid gap-2">
+                  {tier.includes.slice(0, 3).map((item) => (
+                    <li key={item} className="simple-list-item text-sm text-[var(--muted)]">
+                      <CheckCircle2 className="mt-1 shrink-0 text-[var(--brand)]" size={15} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
         <div className="mb-8 max-w-3xl">
           <p className="eyebrow">Live first</p>
           <h2 className="mt-2 text-3xl font-semibold">Programs we can sell as lab-first paths.</h2>
           <p className="page-copy mt-3">
-            These tracks use the current panels and keep the promise honest: labs, private results, educational context,
-            and clinician discussion prompts where needed.
+            These tracks use the current panels and keep the promise honest: lab interest, private result design,
+            educational context, and clinician discussion prompts where needed once ordering is live.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
@@ -75,7 +151,7 @@ export default function ProgramsPage() {
               </div>
               <div className="mt-5 grid gap-2 rounded-[var(--radius)] bg-[var(--soft)] p-4 text-sm">
                 <p className="flex items-start gap-2">
-                  <BadgeDollarSign className="mt-0.5 shrink-0 text-[var(--brand)]" size={16} />
+                  <ShieldCheck className="mt-0.5 shrink-0 text-[var(--brand)]" size={16} />
                   <span>{program.priceAnchor}</span>
                 </p>
                 <p className="flex items-start gap-2">
@@ -83,8 +159,8 @@ export default function ProgramsPage() {
                   <span>{program.cadence}</span>
                 </p>
               </div>
-              <Link href={`/cart?panel=${program.primaryPanelId}`} className="focus-ring primary-action mt-auto w-full">
-                Start this path
+              <Link href={`/cart?panel=${program.primaryPanelId}#waitlist`} className="focus-ring primary-action mt-auto w-full">
+                Join waitlist
                 <ArrowRight size={17} />
               </Link>
             </article>
@@ -138,8 +214,8 @@ export default function ProgramsPage() {
             <h2 className="mt-2 text-3xl font-semibold">Membership ideas that turn one order into a relationship.</h2>
           </div>
           <p className="page-copy">
-            The big companies compound because they keep helping after checkout. For this product, the cleanest version
-            is retesting, trend dashboards, support, and later optional clinician review.
+            The big companies compound because they keep helping after the first signup. For this product, the cleanest
+            version is retesting, trend dashboards, support, and later optional clinician review.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
@@ -157,6 +233,32 @@ export default function ProgramsPage() {
               <p className="mt-3 text-xs leading-5 text-[var(--muted)]">{concept.operationalNeed}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 max-w-3xl">
+            <p className="eyebrow">Retention loops</p>
+            <h2 className="mt-2 text-3xl font-semibold">The moments that bring people back.</h2>
+            <p className="page-copy mt-3">
+              Long-term customers come from useful follow-through: result clarity, retest timing, clinician access, and
+              member savings that feel fair.
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-5">
+            {retentionLoops.map((loop) => (
+              <article key={loop.id} className="premium-card p-5">
+                <span className="icon-tile">
+                  <loop.Icon size={21} />
+                </span>
+                <p className="mt-5 text-sm font-semibold text-[var(--accent-strong)]">{loop.trigger}</p>
+                <h3 className="mt-1 text-xl font-semibold">{loop.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{loop.customerValue}</p>
+                <p className="mt-4 text-xs leading-5 text-[var(--muted)]">{loop.guardrail}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

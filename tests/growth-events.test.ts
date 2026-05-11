@@ -66,4 +66,29 @@ describe("growth event privacy", () => {
     expect(config.configured).toBe(false);
     expect(config.host).toBe("https://us.i.posthog.com");
   });
+
+  it("tracks waitlist joins without forwarding email or ZIP", () => {
+    const payload = buildGrowthEvent({
+      event: "waitlist_joined",
+      userId: "person@example.com",
+      anonymousId: "waitlist-visitor-1",
+      properties: {
+        panel_id: "complete-wellness",
+        state: "CO",
+        zip: "80202",
+        email: "person@example.com",
+        interest: "Complete Wellness",
+        source: "homepage",
+      },
+    });
+
+    expect(payload.distinctId).toBe("waitlist-visitor-1");
+    expect(payload.properties).toEqual({
+      panel_id: "complete-wellness",
+      state: "CO",
+      interest: "Complete Wellness",
+      source: "homepage",
+      app: "private-lab-test",
+    });
+  });
 });

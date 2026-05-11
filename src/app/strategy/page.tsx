@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, BrainCircuit, CheckCircle2, ExternalLink, FlaskConical, Layers3, Target } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
-import { healthPrograms, scaleBenchmarks } from "@/data/health-programs";
+import {
+  careLayerStageLabels,
+  retentionLoops,
+  scaleBenchmarks,
+  subscriptionTiers,
+  telehealthCareLayers,
+} from "@/data/health-programs";
 import {
   commonLabDemand,
   networkExpansionPlays,
@@ -46,7 +52,7 @@ export default function StrategyPage() {
             {[
               ["Trust drivers", trustDrivers.length],
               ["Common tests", commonLabDemand.length],
-              ["Programs", healthPrograms.length],
+              ["Care layers", telehealthCareLayers.length],
             ].map(([label, value]) => (
               <div key={label} className="pulse-pill rounded-[var(--radius)] p-5 text-[var(--foreground)]">
                 <p className="text-sm font-semibold text-[var(--muted)]">{label}</p>
@@ -63,7 +69,7 @@ export default function StrategyPage() {
             <p className="eyebrow">Scale benchmarks</p>
             <h2 className="mt-2 text-3xl font-semibold">The companies to learn from.</h2>
           </div>
-          <div className="grid gap-4 lg:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {scaleBenchmarks.map((benchmark) => (
               <a
                 key={benchmark.company}
@@ -82,21 +88,107 @@ export default function StrategyPage() {
       </section>
 
       <section className="page-section">
-        <div className="mb-8 max-w-3xl">
-          <p className="eyebrow">Customer trust</p>
-          <h2 className="mt-2 text-3xl font-semibold">What people need to believe before they order.</h2>
+        <div className="mb-8 grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+          <div>
+            <p className="eyebrow">Telehealth direction</p>
+            <h2 className="mt-2 text-3xl font-semibold">The next MedVi move is care continuity, not just more tests.</h2>
+          </div>
+          <p className="page-copy">
+            The platform should become a relationship: order labs, understand results, talk to a clinician when needed,
+            retest on a sane cadence, and join a transparent membership when the value is obvious.
+          </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {trustDrivers.map(({ id, title, priority, productMove, Icon }) => (
-            <article key={id} className="premium-card p-5">
-              <span className="icon-tile">
-                <Icon size={21} />
-              </span>
-              <p className="mt-4 text-sm font-semibold text-[var(--accent-strong)]">{priority}</p>
-              <h3 className="mt-1 text-xl font-semibold">{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{productMove}</p>
+        <div className="grid gap-4 lg:grid-cols-5">
+          {telehealthCareLayers.map((layer) => (
+            <article key={layer.id} className="premium-card p-5">
+              <div className="flex items-start justify-between gap-3">
+                <span className="icon-tile">
+                  <layer.Icon size={21} />
+                </span>
+                <span className="pill">{careLayerStageLabels[layer.stage]}</span>
+              </div>
+              <h3 className="mt-5 text-xl font-semibold">{layer.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{layer.customerPromise}</p>
+              <p className="mt-4 text-xs leading-5 text-[var(--muted)]">{layer.operationalRequirements[0]}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-3xl">
+              <p className="eyebrow">Subscription model</p>
+              <h2 className="mt-2 text-3xl font-semibold">The recurring products we should build toward.</h2>
+            </div>
+            <Link href="/programs" className="focus-ring secondary-action">
+              Programs
+              <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="table-shell overflow-x-auto">
+            <table className="w-full min-w-[1040px] text-left text-sm">
+              <thead className="bg-[var(--soft)] text-xs uppercase text-[var(--brand-dark)]">
+                <tr>
+                  <th className="px-4 py-3">Tier</th>
+                  <th className="px-4 py-3">Cadence</th>
+                  <th className="px-4 py-3">Positioning</th>
+                  <th className="px-4 py-3">Safeguard</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subscriptionTiers.map((tier) => (
+                  <tr key={tier.id} className="border-t border-[var(--line)] align-top">
+                    <td className="px-4 py-3 font-semibold">{tier.title}</td>
+                    <td className="px-4 py-3 text-[var(--muted)]">{tier.cadence}</td>
+                    <td className="px-4 py-3">{tier.positioning}</td>
+                    <td className="px-4 py-3 text-[var(--muted)]">{tier.safeguards[0]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="mb-8 max-w-3xl">
+          <p className="eyebrow">Retention</p>
+          <h2 className="mt-2 text-3xl font-semibold">What makes customers come back.</h2>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-5">
+          {retentionLoops.map((loop) => (
+            <article key={loop.id} className="premium-card p-5">
+              <span className="icon-tile">
+                <loop.Icon size={21} />
+              </span>
+              <h3 className="mt-5 text-xl font-semibold">{loop.title}</h3>
+              <p className="mt-2 text-sm font-semibold text-[var(--brand-dark)]">{loop.businessValue}</p>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{loop.customerValue}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="calm-band">
+        <div className="page-section">
+          <div className="mb-8 max-w-3xl">
+            <p className="eyebrow">Customer trust</p>
+            <h2 className="mt-2 text-3xl font-semibold">What people need to believe before they order.</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {trustDrivers.map(({ id, title, priority, productMove, Icon }) => (
+              <article key={id} className="premium-card p-5">
+                <span className="icon-tile">
+                  <Icon size={21} />
+                </span>
+                <p className="mt-4 text-sm font-semibold text-[var(--accent-strong)]">{priority}</p>
+                <h3 className="mt-1 text-xl font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{productMove}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

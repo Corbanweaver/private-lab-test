@@ -89,6 +89,10 @@ export default function LabOutreachPage() {
             <Handshake size={18} />
             Partner page
           </Link>
+          <Link href="/partners/order" className="focus-ring secondary-action">
+            <ExternalLink size={18} />
+            Partner status
+          </Link>
         </div>
       </section>
 

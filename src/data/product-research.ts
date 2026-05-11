@@ -73,9 +73,29 @@ export const productResearchSources: ProductResearchSource[] = [
     note: "Shows best-seller demand for CBC, CMP, lipid panel, HbA1c, and broader health profiles.",
   },
   {
+    label: "Quest Health Affiliate Program",
+    href: "https://www.questhealth.com/affiliate-program.html",
+    note: "Useful for the first approved Quest referral path while deeper lab ordering contracts are pursued.",
+  },
+  {
+    label: "Ulta Lab Tests Partner Program",
+    href: "https://www.ultalabtests.com/healthcare-professional/whypartner",
+    note: "Potential co-branded or partner path for real cash-pay ordering before a full API network is contracted.",
+  },
+  {
     label: "Labcorp OnDemand Products",
     href: "https://www.ondemand.labcorp.com/products?category_id=22",
     note: "Lists common cash-pay wellness tests including CMP, CBC, lipids, HbA1c, hs-CRP, vitamin D, and ferritin.",
+  },
+  {
+    label: "Hims Labs",
+    href: "https://www.hims.com/labs",
+    note: "Shows the direction of consumer health platforms: labs as an input to personalized plans and provider review.",
+  },
+  {
+    label: "Superpower",
+    href: "https://superpower.com/",
+    note: "AI-forward biomarker membership benchmark for premium positioning, dashboard clarity, and retesting cadence.",
   },
   {
     label: "Junction Lab Testing API",
@@ -103,9 +123,24 @@ export const productResearchSources: ProductResearchSource[] = [
     note: "CMS regulates U.S. human-specimen laboratory testing through CLIA.",
   },
   {
+    label: "HHS Telehealth Licensure",
+    href: "https://telehealth.hhs.gov/providers/getting-started/licensure",
+    note: "Telehealth programs need state-aware clinician licensure and scope-of-practice workflows.",
+  },
+  {
+    label: "FDA Clinical Decision Support Software Guidance",
+    href: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/clinical-decision-support-software",
+    note: "Useful guardrail for separating transparent education from software that may influence clinical decisions.",
+  },
+  {
     label: "HHS Online Tracking Guidance",
     href: "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html",
     note: "Highlights health-data obligations and risk when third-party tracking technologies are used.",
+  },
+  {
+    label: "FTC Negative Option Rule",
+    href: "https://www.ftc.gov/legal-library/browse/rules/negative-option-rule",
+    note: "Even as subscription rules evolve, clear consent, renewal notices, and cancellation flows are product-trust requirements.",
   },
   {
     label: "Function Health FAQ",
@@ -231,6 +266,19 @@ export const commonLabDemand: CommonLabDemand[] = [
 
 export const networkExpansionPlays: NetworkExpansionPlay[] = [
   {
+    id: "ulta-quest-approved-ordering",
+    title: "Turn Ulta and Quest approvals into real order paths",
+    lane: "Commercial ordering",
+    priority: "Now",
+    targetNames: ["Ulta Lab Tests", "Quest Health"],
+    whyItMatters:
+      "Affiliate or co-branded ordering can make the product real for customers while API contracts are still in progress.",
+    ask: "Request deep links, co-branded portal options, approved wording, test menu/prices, commission, state restrictions, and result workflow.",
+    productUnlock: "Lets Private Lab Test recommend panels and route users to a legitimate cash-pay checkout immediately after approval.",
+    Icon: Building2,
+    sourceIds: ["ulta-partner", "quest-affiliate"],
+  },
+  {
     id: "junction-production-menu",
     title: "Finish the Junction production menu",
     lane: "API network",
@@ -244,12 +292,12 @@ export const networkExpansionPlays: NetworkExpansionPlay[] = [
   },
   {
     id: "ordrs-backup",
-    title: "Open an ORDRS commercial track",
+    title: "Keep ORDRS as a later commercial track",
     lane: "API backup",
-    priority: "Now",
+    priority: "Later",
     targetNames: ["ORDRS"],
-    whyItMatters: "A second API network reduces platform risk and may offer broader menu or better location coverage.",
-    ask: "Ask for sandbox, supported labs, state coverage, physician oversight terms, pricing, results payloads, and test menu export.",
+    whyItMatters: "A second API network still reduces platform risk, but their current signup flow is too gated to block launch.",
+    ask: "Revisit after Ulta/Quest/Junction momentum, then ask for sandbox, supported labs, state coverage, physician oversight terms, pricing, results payloads, and menu export.",
     productUnlock: "Lets the app compare network availability and select the best provider by ZIP, panel, and price.",
     Icon: Building2,
     sourceIds: ["ordrs"],
@@ -277,6 +325,19 @@ export const networkExpansionPlays: NetworkExpansionPlay[] = [
     productUnlock: "Gives a higher-grade interoperability path for structured results and enterprise partners.",
     Icon: HeartPulse,
     sourceIds: ["health-gorilla"],
+  },
+  {
+    id: "clinical-infrastructure-partner",
+    title: "Find the clinical oversight layer",
+    lane: "Telehealth infrastructure",
+    priority: "Next",
+    targetNames: ["Everly Health Solutions", "PWNHealth-style networks", "licensed telehealth groups"],
+    whyItMatters:
+      "Lab advice, clinician review, and future treatment paths require licensed providers, protocols, documentation, and state coverage.",
+    ask: "Request DTC lab review workflows, state coverage, clinician notes, critical-value handling, API/export options, BAA posture, and pricing.",
+    productUnlock: "Turns results from educational dashboards into a credible telehealth product with clinician-backed interpretation.",
+    Icon: HeartPulse,
+    sourceIds: ["hhs-licensure"],
   },
   {
     id: "quest-labcorp-direct",
@@ -320,13 +381,20 @@ export function getSourceById(id: string) {
     "jd-power-telehealth": "J.D. Power 2024 U.S. Telehealth Satisfaction Study",
     "hhs-privacy": "HHS Telehealth Privacy for Patients",
     "quest-health": "Quest Health Shop Tests",
+    "quest-affiliate": "Quest Health Affiliate Program",
+    "ulta-partner": "Ulta Lab Tests Partner Program",
     "labcorp-ondemand": "Labcorp OnDemand Products",
+    hims: "Hims Labs",
+    superpower: "Superpower",
     junction: "Junction Lab Testing API",
     ordrs: "ORDRS",
     getlabs: "Getlabs Partners",
     "health-gorilla": "Health Gorilla Lab Network",
     clia: "CMS CLIA",
+    "hhs-licensure": "HHS Telehealth Licensure",
+    "fda-cds": "FDA Clinical Decision Support Software Guidance",
     "hhs-tracking": "HHS Online Tracking Guidance",
+    "ftc-negative-option": "FTC Negative Option Rule",
     function: "Function Health FAQ",
   };
 

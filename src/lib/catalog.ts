@@ -14,7 +14,7 @@ export function getTestsForPanel(panelId: string) {
   if (!panel) return [];
   return panel.testIds
     .map((testId) => labTests.find((test) => test.id === testId))
-    .filter((test) => Boolean(test));
+    .filter((test): test is (typeof labTests)[number] => Boolean(test));
 }
 
 export function calculatePanelRetail(testIds: string[]) {
@@ -42,7 +42,7 @@ export function checkStateEligibility(state: string) {
     accessMode: accessRule.mode,
     requiresClinicianAuthorization: accessRule.mode === "clinician_authorized",
     message: eligible
-      ? "Cash-pay checkout is available. No doctor visit or insurance is needed; provider authorization is included automatically where required."
+      ? "Launch coverage is available. No doctor visit or insurance is planned for the direct-access flow when ordering opens."
       : accessRule.note || "Lab ordering is not available for this state in the launch rules.",
   };
 }

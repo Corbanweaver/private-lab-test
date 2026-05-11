@@ -57,12 +57,14 @@ Product moves implemented:
 
 The fastest real product path is still:
 
-1. Finish the Junction production menu mapping.
-2. Open an ORDRS commercial backup.
+1. Turn Ulta and Quest approval into real ordering paths, even if the first version is affiliate or co-branded checkout.
+2. Finish the Junction production menu mapping for API-native ordering.
 3. Add Getlabs or equivalent mobile phlebotomy for home draw.
-4. Qualify Health Gorilla for deeper ordering/result connectivity.
-5. Use real demand data to approach Quest, Labcorp, Sonic divisions, and BioReference.
-6. Build a regional CLIA lab sweep for better local cash prices.
+4. Identify the clinical oversight partner for result review and future telehealth.
+5. Qualify Health Gorilla for deeper ordering/result connectivity.
+6. Keep ORDRS as a later API backup because current self-serve onboarding is too circular.
+7. Use real demand data to approach Quest, Labcorp, Sonic divisions, and BioReference.
+8. Build a regional CLIA lab sweep for better local cash prices.
 
 Research signal:
 
@@ -78,10 +80,12 @@ Product moves implemented:
 - Added a homepage network roadmap.
 - Added `/strategy` as the working product/research dashboard.
 - Linked the strategy page from admin.
+- Reprioritized Ulta/Quest approved ordering ahead of ORDRS.
+- Added approved partner checkout routing through `/partners/order` and `/api/partners/referral`.
 
 ## Bigger Platform Direction
 
-The next product layer should not be "more random tests." It should be named private-health programs:
+The next product layer should not be "more random tests." It should be named private-health programs and transparent memberships:
 
 - Whole Body Baseline
 - Weight and Metabolic
@@ -89,6 +93,8 @@ The next product layer should not be "more random tests." It should be named pri
 - Women's Hormone and Energy
 - Heart and Longevity
 - Private Lab Pass
+- Lab Pass Plus with clinician result review where available
+- Metabolic Tracking with baseline, 12-week retest, and 6-month monitoring
 
 This borrows the scalable pattern from Hims, MEDVi, Function Health, and Private MD Labs:
 
@@ -103,6 +109,40 @@ Product moves implemented:
 - Added `/programs`.
 - Added program cards to the homepage.
 - Added benchmark lessons to `/strategy`.
+- Added telehealth care layers, retention loops, and subscription-tier models.
+
+## Telehealth And Lab Advice Direction
+
+The product should support advice in layers:
+
+1. Educational lab insights can launch first.
+   - Explain markers.
+   - Show trends and flags.
+   - Suggest questions for a clinician.
+   - Avoid diagnosis, treatment, medication, or supplement instructions.
+
+2. Licensed clinician review comes next.
+   - Requires state-aware clinician network, clinical protocols, documentation, privacy review, and critical-value workflows.
+   - This is the first layer that should be marketed as medical interpretation.
+
+3. Treatment pathways come later.
+   - Metabolic, hormone, thyroid, and other future programs should only go live through licensed clinical partners.
+   - Labs can support a visit, but the platform should not auto-prescribe from results.
+
+Retention should come from five moments:
+
+- Result-release summary.
+- Out-of-range follow-up.
+- Retest reminders.
+- Program progress.
+- Member savings and priority support.
+
+Research signal:
+
+- Hims Labs packages tests with provider-developed action plans: https://www.hims.com/labs
+- Superpower and Function Health show that consumers will pay for biomarker memberships and repeated testing: https://superpower.com/ and https://www.functionhealth.com/
+- HHS telehealth licensure guidance reinforces that clinician workflows need state-aware operations: https://telehealth.hhs.gov/providers/getting-started/licensure
+- FDA clinical decision support guidance is a guardrail for software that may influence medical decisions: https://www.fda.gov/regulatory-information/search-fda-guidance-documents/clinical-decision-support-software
 
 ## UI Direction
 

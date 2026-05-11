@@ -3,11 +3,11 @@ import { PageShell } from "@/components/page-shell";
 import { conciergeTasks } from "@/data/lab-partners";
 
 const steps: Array<{ id: string; label: string; copy: string }> = [
-  { id: "draft", label: "You chose tests", copy: "Your panel is saved in the cart." },
-  { id: "eligible", label: "We checked your state", copy: "We confirm lab ordering is available before payment." },
-  { id: "authorized", label: "Authorization included", copy: "Provider authorization is handled automatically where required." },
-  { id: "paid", label: "Payment complete", copy: "The cash price is paid before the lab visit." },
-  { id: "submitted_to_provider", label: "Sent to lab", copy: "The lab network receives your order." },
+  { id: "draft", label: "You chose tests", copy: "Your panel interest is saved for launch planning." },
+  { id: "eligible", label: "We checked your state", copy: "We use region demand to decide where ordering opens first." },
+  { id: "authorized", label: "Authorization layer planned", copy: "Provider authorization will be handled through the backend partner where required." },
+  { id: "pricing_ready", label: "Pricing shared", copy: "Launch pricing is shown before any customer is asked to pay." },
+  { id: "submitted_to_provider", label: "Sent to lab", copy: "The future lab network receives the order only after paid ordering is live." },
   {
     id: "requisition_pending",
     label: "Requisition pending",
@@ -25,10 +25,10 @@ export default function OrdersPage() {
     <PageShell>
       <section className="blue-band">
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-          <p className="eyebrow">My order</p>
-          <h1 className="page-title mt-2">What is happening now?</h1>
+          <p className="eyebrow">Launch preview</p>
+          <h1 className="page-title mt-2">What will happen when ordering opens?</h1>
           <p className="page-copy mt-3">
-            A simple checklist so you always know the next step.
+            A simple checklist for the future order flow. Today, the product is waitlist-only.
           </p>
         </div>
       </section>

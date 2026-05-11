@@ -97,16 +97,21 @@ export function EligibilityForm({
   }, [collectionType, panelId, quoteRequestKey, state, testIdsKey, zip]);
 
   return (
-    <section className="premium-card p-5">
+    <section className="liquid-glass p-5">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <MapPin className="text-[var(--brand)]" size={20} />
-          <h2 className="text-xl font-semibold">ZIP and basic info concierge</h2>
+          <span className="icon-tile h-10 w-10">
+            <MapPin size={20} />
+          </span>
+          <div>
+            <p className="premium-section-label">Launch coverage preview</p>
+            <h2 className="text-xl font-semibold">ZIP and basic info</h2>
+          </div>
         </div>
         <span className="pill">Step 2</span>
       </div>
       <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-        We match your nearest lab and prepare your self-pay instructions in one flow.
+        This legacy form previews coverage only. Public ordering is paused while the waitlist validates demand.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <label className="grid gap-1 text-sm font-medium">
@@ -250,7 +255,7 @@ export function EligibilityForm({
         </label>
       </div>
       <div
-        className={`mt-4 flex items-start gap-2 rounded-[var(--radius)] border p-3 text-sm ${
+        className={`mt-4 flex items-start gap-2 rounded-[var(--radius)] border p-3 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] ${
           isAvailable
             ? "border-[rgba(31,111,104,0.22)] bg-[rgba(31,111,104,0.08)] text-[var(--brand-dark)]"
             : "border-[rgba(195,166,91,0.28)] bg-[rgba(195,166,91,0.12)] text-[color-mix(in_srgb,var(--foreground)_78%,#63511c)]"
@@ -264,7 +269,7 @@ export function EligibilityForm({
         </p>
       </div>
       {isAvailable && clinic ? (
-        <div className="mt-4 rounded-[var(--radius-lg)] border border-[rgba(6,18,29,0.13)] bg-[var(--panel-strong)] p-4 shadow-[0_14px_34px_rgba(6,18,29,0.08)]">
+        <div className="mt-4 rounded-[var(--radius-lg)] border border-white/60 bg-white/70 p-4 shadow-[0_14px_34px_rgba(16,22,21,0.08)]">
           <div className="flex items-start gap-3">
             <span className="icon-tile">
               <Building2 size={19} />
@@ -276,15 +281,15 @@ export function EligibilityForm({
             </div>
           </div>
           <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-            <p className="rounded-[var(--radius)] bg-[var(--accent-soft)] p-3">
+            <p className="liquid-field p-3">
               <span className="block font-semibold text-[var(--brand-dark)]">
                 {clinic.distanceMiles.toFixed(1)} miles
               </span>
               Distance from ZIP {zip || "near you"}
             </p>
-            <p className="rounded-[var(--radius)] bg-[var(--accent-soft)] p-3">
-              <span className="block font-semibold text-[var(--brand-dark)]">${activeQuote?.total ?? 0} self-pay</span>
-              Timing: {activeQuote?.turnaround ?? "a few days"}
+            <p className="liquid-field p-3">
+              <span className="block font-semibold text-[var(--brand-dark)]">Launch pricing pending</span>
+              Timing preview: {activeQuote?.turnaround ?? "a few days"}
             </p>
           </div>
         </div>

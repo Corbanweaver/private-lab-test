@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, FileText, FlaskConical, Headphones, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowRight, ClipboardList, FileText, FlaskConical, Headphones, ShieldCheck, UserRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { customerTrustFeatures } from "@/data/lab-partners";
@@ -12,7 +12,7 @@ export default function DashboardPage() {
     ["Orders", "2", FlaskConical],
     ["Results ready", String(sampleResults.length), FileText],
     ["Auth included", "On", ShieldCheck],
-    ["Cash price", "On", BadgeDollarSign],
+    ["Waitlist", "On", ClipboardList],
     ["Account", configured ? "Live" : "Sample", UserRound],
   ];
 

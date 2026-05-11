@@ -19,11 +19,15 @@ describe("product research model", () => {
   it("keeps immediate network work focused on real ordering coverage", () => {
     const nowPlays = networkExpansionPlays.filter((play) => play.priority === "Now");
 
-    expect(nowPlays.map((play) => play.id)).toEqual(["junction-production-menu", "ordrs-backup", "getlabs-mobile"]);
+    expect(nowPlays.map((play) => play.id)).toEqual([
+      "ulta-quest-approved-ordering",
+      "junction-production-menu",
+      "getlabs-mobile",
+    ]);
   });
 
   it("tracks source-backed trust and privacy decisions", () => {
     expect(trustDrivers.some((driver) => driver.id === "privacy")).toBe(true);
-    expect(productResearchSources.length).toBeGreaterThanOrEqual(8);
+    expect(productResearchSources.length).toBeGreaterThanOrEqual(14);
   });
 });

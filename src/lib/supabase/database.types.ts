@@ -701,6 +701,45 @@ export type Database = {
           },
         ];
       };
+      waitlist_leads: {
+        Row: {
+          created_at: string;
+          email: string;
+          first_name: string | null;
+          id: string;
+          interest: string | null;
+          panel_id: string | null;
+          source: string;
+          state: string | null;
+          updated_at: string;
+          zip: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          first_name?: string | null;
+          id?: string;
+          interest?: string | null;
+          panel_id?: string | null;
+          source?: string;
+          state?: string | null;
+          updated_at?: string;
+          zip?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          first_name?: string | null;
+          id?: string;
+          interest?: string | null;
+          panel_id?: string | null;
+          source?: string;
+          state?: string | null;
+          updated_at?: string;
+          zip?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
+import { ArrowRight, ClipboardList } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { TestCard } from "@/components/test-card";
 import { labTests } from "@/data/catalog";
-import { calculateCustomPanelPrice, calculatePanelRetail, formatCurrency } from "@/lib/catalog";
 
 export default async function BuilderPage({
   searchParams,
@@ -13,8 +12,6 @@ export default async function BuilderPage({
   const params = await searchParams;
   const selectedIds = Array.isArray(params.add) ? params.add : params.add ? [params.add] : ["cmp", "cbc", "lipids"];
   const selected = labTests.filter((test) => selectedIds.includes(test.id));
-  const retail = calculatePanelRetail(selectedIds);
-  const price = calculateCustomPanelPrice(selectedIds);
 
   return (
     <PageShell>
@@ -24,8 +21,8 @@ export default async function BuilderPage({
             <p className="eyebrow">Custom panel</p>
             <h1 className="page-title mt-2">Pick only the tests you want</h1>
             <p className="page-copy mt-3">
-              This page is for people who already know the names of the tests they want. If you are not sure, use Help me
-              choose.
+              This page is for people who already know the names of the tests they want. Save your interest now and we
+              will share launch pricing before orders open.
             </p>
           </div>
         </div>
@@ -49,22 +46,17 @@ export default async function BuilderPage({
               </div>
             ))}
           </div>
-          <dl className="mt-5 grid gap-2 text-sm">
-            <div className="flex justify-between">
-              <dt>Separate price</dt>
-              <dd>{formatCurrency(retail)}</dd>
-            </div>
-            <div className="flex justify-between">
-              <dt>Your price</dt>
-              <dd className="font-semibold text-[var(--brand-dark)]">{formatCurrency(price)}</dd>
-            </div>
-          </dl>
+          <div className="mt-5 rounded-[var(--radius)] border border-white/60 bg-white/70 p-4 text-sm leading-6 text-[var(--muted)]">
+            <p className="font-semibold text-[var(--brand-dark)]">{selected.length} tests selected</p>
+            <p>Pricing is hidden until launch economics are confirmed.</p>
+          </div>
           <Link
-            href={`/cart?custom=${selectedIds.join(",")}`}
+            href={`/cart?custom=${selectedIds.join(",")}#waitlist`}
             className="focus-ring primary-action mt-5 w-full"
           >
-            <ShoppingCart size={18} />
-            Continue
+            <ClipboardList size={18} />
+            Join waitlist
+            <ArrowRight size={17} />
           </Link>
         </aside>
       </section>

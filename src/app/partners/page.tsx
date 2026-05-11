@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, CheckCircle2, ClipboardList, Handshake, ShieldCheck, Target } from "lucide-react";
+import { ArrowRight, CheckCircle2, ClipboardList, Handshake, ShieldCheck, Target } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
 import { labPartners, outreachWaves, partnerPacketNeeds } from "@/data/lab-partners";
 import { summarizeLabSupply } from "@/lib/lab-access";
@@ -12,10 +12,10 @@ export default function PartnersPage() {
       <section className="page-section">
         <div className="max-w-4xl">
           <p className="eyebrow">For lab partners</p>
-          <h1 className="page-title mt-2">We bring prepared patients and clear cash-pay orders</h1>
+          <h1 className="page-title mt-2">We bring prepared demand before paid ordering opens</h1>
           <p className="page-copy mt-4">
-            We help older adults and families order affordable labs, understand where to go, and get results without
-            billing confusion.
+            We help people choose affordable labs, understand where to go, and join the right launch region before
+            payment is turned on.
           </p>
         </div>
 
@@ -24,7 +24,7 @@ export default function PartnersPage() {
             ["Partner types", supply.partners],
             ["Verified labs", supply.verifiedPartners],
             ["States covered", supply.states],
-            ["Clear prices", supply.cashMenuCount],
+            ["Menu signals", supply.cashMenuCount],
           ].map(([label, value]) => (
             <div key={label} className="premium-card p-5">
               <ShieldCheck className="text-[var(--brand)]" size={22} />
@@ -42,15 +42,15 @@ export default function PartnersPage() {
               <p className="eyebrow">Simple offer</p>
               <h2 className="mt-2 text-3xl font-semibold">Less confusion for patients and staff</h2>
               <p className="mt-3 text-base leading-7 text-[var(--muted)]">
-                Our goal is simple: send people who already paid, know where to go, and have someone to call if they
-                need help.
+                Our goal is simple: learn where demand is strongest, then send people who understand the process and
+                have someone to call if they need help.
               </p>
               <div className="mt-5 rounded-md bg-[var(--soft)] p-4">
                 <p className="font-semibold text-[var(--brand-dark)]">Partner pitch</p>
                 <p className="mt-2 text-base leading-7 text-[var(--muted)]">
-                  We send prepaid cash-pay lab orders from older adults and families, with concierge support so patients
-                  arrive prepared and understand next steps. We are looking for reliable lab partners with transparent
-                  pricing and electronic results.
+                  We are building demand for direct-access wellness labs, with concierge support so patients arrive
+                  prepared and understand next steps once ordering is live. We are looking for reliable lab partners
+                  with transparent launch pricing and electronic results.
                 </p>
               </div>
             </div>
@@ -75,6 +75,10 @@ export default function PartnersPage() {
           <Link href="/partners/outreach" className="focus-ring secondary-action">
             <Target size={18} />
             Open outreach cockpit
+          </Link>
+          <Link href="/partners/order" className="focus-ring secondary-action">
+            <Handshake size={18} />
+            Partner status
           </Link>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -137,12 +141,16 @@ export default function PartnersPage() {
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/catalog" className="focus-ring primary-action">
-              <BadgeDollarSign size={18} />
-              View cash-pay catalog
+              <ClipboardList size={18} />
+              View waitlist catalog
             </Link>
             <Link href="/partners/outreach" className="focus-ring secondary-action">
               <ArrowRight size={18} />
               Work the lab target list
+            </Link>
+            <Link href="/partners/order" className="focus-ring secondary-action">
+              <Handshake size={18} />
+              Check partner status
             </Link>
             <Link href="/admin" className="focus-ring secondary-action">
               <ClipboardList size={18} />
